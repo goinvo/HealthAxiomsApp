@@ -22,6 +22,7 @@
 		76717FD817BD71C3009C5A05 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB717BD71C2009C5A05 /* UIKit.framework */; };
 		76717FE017BD71C3009C5A05 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76717FDE17BD71C3009C5A05 /* InfoPlist.strings */; };
 		76717FE217BD71C3009C5A05 /* HealthAxiomsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 76717FE117BD71C3009C5A05 /* HealthAxiomsTests.m */; };
+		7673020417BEA40300B8F2F3 /* HAAxiomsList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7673020317BEA40300B8F2F3 /* HAAxiomsList.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		76717FDD17BD71C3009C5A05 /* HealthAxiomsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HealthAxiomsTests-Info.plist"; sourceTree = "<group>"; };
 		76717FDF17BD71C3009C5A05 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		76717FE117BD71C3009C5A05 /* HealthAxiomsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthAxiomsTests.m; sourceTree = "<group>"; };
+		7673020317BEA40300B8F2F3 /* HAAxiomsList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HAAxiomsList.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				76717FCC17BD71C2009C5A05 /* HAViewController.m */,
 				76717FCE17BD71C2009C5A05 /* Images.xcassets */,
 				76717FBA17BD71C2009C5A05 /* Supporting Files */,
+				7673020317BEA40300B8F2F3 /* HAAxiomsList.plist */,
 			);
 			path = HealthAxioms;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76717FCA17BD71C2009C5A05 /* Main_iPad.storyboard in Resources */,
+				7673020417BEA40300B8F2F3 /* HAAxiomsList.plist in Resources */,
 				76717FCF17BD71C2009C5A05 /* Images.xcassets in Resources */,
 				76717FC717BD71C2009C5A05 /* Main_iPhone.storyboard in Resources */,
 				76717FBE17BD71C2009C5A05 /* InfoPlist.strings in Resources */,
@@ -469,6 +473,7 @@
 				76717FE717BD71C3009C5A05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		76717FE817BD71C3009C5A05 /* Build configuration list for PBXNativeTarget "HealthAxiomsTests" */ = {
 			isa = XCConfigurationList;
@@ -477,6 +482,7 @@
 				76717FEA17BD71C3009C5A05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

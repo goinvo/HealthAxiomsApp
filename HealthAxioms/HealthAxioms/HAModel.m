@@ -37,19 +37,28 @@ static HAModel *instance = nil;
         _axiomCardsList = [NSMutableArray arrayWithCapacity:[_axiomsDict count]];
 
         for (NSString *str in [_axiomsDict allKeys]) {
-            int num= [str integerValue];
+            int num = [str integerValue];
+//Calculating the aspect ratio to be used elsewhere
+            if (num == 1) {
+                
+                UIImage *tmpImage = [UIImage imageNamed:_axiomsDict[str][@"front_image"]];
+                _cardAspectRatio = tmpImage.size.width/ tmpImage.size.height;
+            }
             NSDictionary *dict = _axiomsDict[str];
-            HABaseCard *baseCard = [[HABaseCard alloc]initWithFrontImage:dict[@"front_image"]
-                                                               backImage:dict[@"back_image"]
-                                                                   index:num];
-            [_axiomCardsList addObject:baseCard];
+            
+            @autoreleasepool {
+
+                HABaseCard *baseCard = [[HABaseCard alloc]initWithFrontImage:dict[@"front_image"]
+                                                                   backImage:dict[@"back_image"]
+                                                                        text:dict[@"text"]
+                                                                       index:num];
+                [_axiomCardsList addObject:baseCard];
+            }
         }
         
         //Sorting the entries in the array based on Index
         NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES];
         _axiomCardsList = [NSMutableArray arrayWithArray:[_axiomCardsList sortedArrayUsingDescriptors:@[descriptor]] ];
-        
-        
     }
     return self;
 }
@@ -60,5 +69,9 @@ static HAModel *instance = nil;
     return nil;
 }
 
+-(int)totalAxioms{
+
+    return [_axiomCardsList count];
+}
 
 @end

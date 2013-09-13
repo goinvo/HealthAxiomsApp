@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		763B071717D0E3B60078F049 /* UITextView+HAAxiomStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */; };
 		76717FB417BD71C2009C5A05 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB317BD71C2009C5A05 /* Foundation.framework */; };
 		76717FB617BD71C2009C5A05 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB517BD71C2009C5A05 /* CoreGraphics.framework */; };
 		76717FB817BD71C2009C5A05 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB717BD71C2009C5A05 /* UIKit.framework */; };
@@ -22,6 +23,7 @@
 		76717FE017BD71C3009C5A05 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76717FDE17BD71C3009C5A05 /* InfoPlist.strings */; };
 		76717FE217BD71C3009C5A05 /* HealthAxiomsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 76717FE117BD71C3009C5A05 /* HealthAxiomsTests.m */; };
 		7673020417BEA40300B8F2F3 /* HAAxiomsList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7673020317BEA40300B8F2F3 /* HAAxiomsList.plist */; };
+		7688C28417C669A500C1F749 /* HACardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7688C28317C669A500C1F749 /* HACardView.m */; };
 		76DFE7C617C2973200A3EBC4 /* HAAxiomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DFE7C517C2973200A3EBC4 /* HAAxiomCell.m */; };
 		76DFE7CA17C2A5FE00A3EBC4 /* HAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DFE7C917C2A5FE00A3EBC4 /* HAViewController.m */; };
 		76DFE7CE17C2A64700A3EBC4 /* HADetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DFE7CD17C2A64700A3EBC4 /* HADetailViewController.m */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		763B071517D0E3B60078F049 /* UITextView+HAAxiomStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextView+HAAxiomStyle.h"; path = "Categories/UITextView+HAAxiomStyle.h"; sourceTree = "<group>"; };
+		763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextView+HAAxiomStyle.m"; path = "Categories/UITextView+HAAxiomStyle.m"; sourceTree = "<group>"; };
 		76717FB017BD71C2009C5A05 /* HealthAxioms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthAxioms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76717FB317BD71C2009C5A05 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		76717FB517BD71C2009C5A05 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,6 +63,8 @@
 		76717FDF17BD71C3009C5A05 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		76717FE117BD71C3009C5A05 /* HealthAxiomsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthAxiomsTests.m; sourceTree = "<group>"; };
 		7673020317BEA40300B8F2F3 /* HAAxiomsList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HAAxiomsList.plist; sourceTree = "<group>"; };
+		7688C28217C669A500C1F749 /* HACardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACardView.h; sourceTree = "<group>"; };
+		7688C28317C669A500C1F749 /* HACardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACardView.m; sourceTree = "<group>"; };
 		76DFE7C417C2973200A3EBC4 /* HAAxiomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HAAxiomCell.h; sourceTree = "<group>"; };
 		76DFE7C517C2973200A3EBC4 /* HAAxiomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HAAxiomCell.m; sourceTree = "<group>"; };
 		76DFE7C817C2A5FE00A3EBC4 /* HAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HAViewController.h; path = ../HAViewController.h; sourceTree = "<group>"; };
@@ -95,6 +101,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		763B071817D0E4140078F049 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				763B071517D0E3B60078F049 /* UITextView+HAAxiomStyle.h */,
+				763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		76717FA717BD71C2009C5A05 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +143,7 @@
 		76717FB917BD71C2009C5A05 /* HealthAxioms */ = {
 			isa = PBXGroup;
 			children = (
+				763B071817D0E4140078F049 /* Categories */,
 				76DFE7CB17C2A60400A3EBC4 /* Controllers */,
 				76ED655C17C2725800316BDC /* Views */,
 				76ED655B17C2725200316BDC /* Models */,
@@ -135,7 +151,6 @@
 				76717FC317BD71C2009C5A05 /* HAAppDelegate.m */,
 				76717FCE17BD71C2009C5A05 /* Images.xcassets */,
 				76717FBA17BD71C2009C5A05 /* Supporting Files */,
-				7673020317BEA40300B8F2F3 /* HAAxiomsList.plist */,
 			);
 			path = HealthAxioms;
 			sourceTree = "<group>";
@@ -183,6 +198,7 @@
 		76ED655B17C2725200316BDC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7673020317BEA40300B8F2F3 /* HAAxiomsList.plist */,
 				76ED655D17C2728D00316BDC /* HAModel.h */,
 				76ED655E17C2728D00316BDC /* HAModel.m */,
 				76ED656017C274A100316BDC /* HABaseCard.h */,
@@ -198,6 +214,8 @@
 				76717FC817BD71C2009C5A05 /* Main_iPad.storyboard */,
 				76DFE7C417C2973200A3EBC4 /* HAAxiomCell.h */,
 				76DFE7C517C2973200A3EBC4 /* HAAxiomCell.m */,
+				7688C28217C669A500C1F749 /* HACardView.h */,
+				7688C28317C669A500C1F749 /* HACardView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -307,9 +325,11 @@
 			files = (
 				76ED656217C274A100316BDC /* HABaseCard.m in Sources */,
 				76DFE7C617C2973200A3EBC4 /* HAAxiomCell.m in Sources */,
+				763B071717D0E3B60078F049 /* UITextView+HAAxiomStyle.m in Sources */,
 				76717FC017BD71C2009C5A05 /* main.m in Sources */,
 				76DFE7CE17C2A64700A3EBC4 /* HADetailViewController.m in Sources */,
 				76DFE7CA17C2A5FE00A3EBC4 /* HAViewController.m in Sources */,
+				7688C28417C669A500C1F749 /* HACardView.m in Sources */,
 				76ED655F17C2728D00316BDC /* HAModel.m in Sources */,
 				76717FC417BD71C2009C5A05 /* HAAppDelegate.m in Sources */,
 			);

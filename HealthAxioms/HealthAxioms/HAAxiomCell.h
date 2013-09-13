@@ -14,5 +14,4 @@
 @property (nonatomic, weak)IBOutlet UIImageView *imgView;
 @property (nonatomic, strong)HABaseCard *axiomCard;
 
-
 @end

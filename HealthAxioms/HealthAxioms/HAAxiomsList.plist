@@ -4,10 +4,13 @@
 <dict>
 	<key>1</key>
 	<dict>
-		<key>front_image</key>		
+		<key>front_image</key>
 		<string>Bring-The-Examine-Room-To-Me-Front</string>
 		<key>back_image</key>
-		<string>Bring-The-Exam-Room-Back</string>
+		<string>Tmp</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>2</key>
 	<dict>
@@ -15,6 +18,9 @@
 		<string>Life-Coach-Front</string>
 		<key>back_image</key>
 		<string>Doctor-As-Life-Coach-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>3</key>
 	<dict>
@@ -22,6 +28,9 @@
 		<string>Eat-Food-Front</string>
 		<key>back_image</key>
 		<string>Eat-More-Food-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>4</key>
 	<dict>
@@ -29,13 +38,19 @@
 		<string>Examine-Yourself-Front</string>
 		<key>back_image</key>
 		<string>Examine-Yourself-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>5</key>
 	<dict>
-		<key>front_image</key>		
+		<key>front_image</key>
 		<string>Exercise-Is-Medicine-Front</string>
 		<key>back_image</key>
 		<string>Exercise-Is-Medicine-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>6</key>
 	<dict>
@@ -43,6 +58,9 @@
 		<string>Get-More-Sleep-Front</string>
 		<key>back_image</key>
 		<string>Get-More-Sleep-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>7</key>
 	<dict>
@@ -50,6 +68,9 @@
 		<string>Give-me-My-Data-Front</string>
 		<key>back_image</key>
 		<string>Give-Me-My-Data-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>8</key>
 	<dict>
@@ -57,20 +78,41 @@
 		<string>Have-More-Sex-Front</string>
 		<key>back_image</key>
 		<string>Have-More-Sex-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. 
+		
+		Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. 
+		
+		Bathroom &quot;smart&quot; mirrors are available for the rich. 
+		
+		Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>9</key>
 	<dict>
 		<key>front_image</key>
-		<string></string>
+		<string>Tmp</string>
 		<key>back_image</key>
 		<string>Increase-Your-Happiness-Quotient-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. 
+		
+Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. 
+		
+Bathroom &quot;smart&quot; mirrors are available for the rich. 
+		
+Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>10</key>
 	<dict>
 		<key>front_image</key>
 		<string>Keep-Good-Records-Front</string>
-		<key>back_image</key>		
+		<key>back_image</key>
 		<string>Keep-Good-Records-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>11</key>
 	<dict>
@@ -78,6 +120,9 @@
 		<string>Know-The-Cost-Front</string>
 		<key>back_image</key>
 		<string>Know-The-Cost-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>12</key>
 	<dict>
@@ -85,6 +130,9 @@
 		<string>Know-Your-Numbers-Front</string>
 		<key>back_image</key>
 		<string>Know-Your-Numbers-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>13</key>
 	<dict>
@@ -92,6 +140,9 @@
 		<string>Let-Patients-Help-Front</string>
 		<key>back_image</key>
 		<string>Let-Patients-Help-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>14</key>
 	<dict>
@@ -99,6 +150,9 @@
 		<string>Live-Care-Plan-Front</string>
 		<key>back_image</key>
 		<string>Live-Your-CarePlan-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>15</key>
 	<dict>
@@ -106,6 +160,9 @@
 		<string>Medicare-For-all-Front</string>
 		<key>back_image</key>
 		<string>Medicare-For-All-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>16</key>
 	<dict>
@@ -113,13 +170,19 @@
 		<string>Meditate-And-Propser-Front</string>
 		<key>back_image</key>
 		<string>Meditate-And-Prosper-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>17</key>
 	<dict>
 		<key>front_image</key>
 		<string>Move-More-Front</string>
-		<key>back_image</key>		
+		<key>back_image</key>
 		<string>Move-More-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>18</key>
 	<dict>
@@ -127,6 +190,9 @@
 		<string>Quit-Smoking-Front</string>
 		<key>back_image</key>
 		<string>Quit-Smoking-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>19</key>
 	<dict>
@@ -134,6 +200,9 @@
 		<string>Baby-Steps-Front</string>
 		<key>back_image</key>
 		<string>Take-Baby-Steps-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>20</key>
 	<dict>
@@ -141,6 +210,9 @@
 		<string>Tell-them-it-was-Great-Front</string>
 		<key>back_image</key>
 		<string>Tell-Them-It-Was-Great-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>21</key>
 	<dict>
@@ -148,6 +220,9 @@
 		<string>Doctor-in-your-Pocket-Front</string>
 		<key>back_image</key>
 		<string>The-Doctor-Is-In-Your-Pocket-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>22</key>
 	<dict>
@@ -155,6 +230,9 @@
 		<string>Wash-Yours-Hands-Front</string>
 		<key>back_image</key>
 		<string>Wash-Your-Hands-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 	<key>23</key>
 	<dict>
@@ -162,6 +240,9 @@
 		<string>Take-Meds-on-Time-Front</string>
 		<key>back_image</key>
 		<string>Take-Meds-On-Time-Back</string>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		</string>
 	</dict>
 </dict>
 </plist>

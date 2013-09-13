@@ -8,10 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HADetailViewController : UIViewController
+@protocol HADetailViewCtrlDelegate <NSObject>
+
+-(CGRect)handleScrollForAxiomAtIndex:(int)axiomIndex;
+
+@end
+
+@interface HADetailViewController : UIViewController <UIScrollViewDelegate , UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign) CGRect initRect;
-@property (nonatomic, weak)IBOutlet UIImageView *imgView;
+@property (nonatomic, weak)IBOutlet UIScrollView *frontScroll;
+@property (nonatomic, assign) int startAxiomIndex;
+@property (nonatomic, readwrite) BOOL willDealloc;
+@property (nonatomic, assign)id <HADetailViewCtrlDelegate>delegate;
 
-
+-(void)addItemsToScrollView;
+-(IBAction)handleTap:(id)sender;
 @end

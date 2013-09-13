@@ -23,9 +23,11 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
 
 #define ITEM_WIDTH ((WINDOW_WIDTH -PADDING*4)/3)
 
-@interface HAViewController ()
+@interface HAViewController () <HADetailViewCtrlDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *axiomsCollectionView;
+//@property (strong, nonatomic)  NSIndexPath *hiddenCellIndex;
+@property (nonatomic, assign) int hiddenCellIndex;
 @end
 
 @implementation HAViewController{
@@ -34,30 +36,33 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     CGSize cellSizeToUse;
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 -(void)viewWillAppear:(BOOL)animated{
 
     [super viewWillAppear:animated];
+}
+
+-(void)awakeFromNib{
+
+    [super awakeFromNib];
+    axiomsModel = [HAModel sharedModel];
+    
+    HABaseCard *card = (HABaseCard *)axiomsModel.axiomCardsList[0];
+    NSString *itemName = [card.frontImage copy];
+    UIImage *img = [UIImage imageNamed:itemName];
+    float ratio = img.size.width/img.size.height ;
+    float height = ITEM_WIDTH/ratio;
+
+    cellSizeToUse = CGSizeMake(ITEM_WIDTH, height);
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    axiomsModel = [HAModel sharedModel];
-    
-    _axiomsCollectionView.delegate = self;
-    _axiomsCollectionView.dataSource = self;
-    
-    HABaseCard *card = (HABaseCard *)axiomsModel.axiomCardsList[0];
-    NSString *itemName = [card.frontImage copy];
-    UIImage *img = [UIImage imageNamed:itemName];
-    
-    float ratio = img.size.width/img.size.height ;
-    float height = ITEM_WIDTH/ratio;
-    
-    cellSizeToUse = CGSizeMake(ITEM_WIDTH, height);
- //   self.modalPresentationStyle = UIModalPresentationCurrentContext;
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,11 +89,6 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
                                                                        forIndexPath:indexPath];
     HABaseCard *card = axiomsModel.axiomCardsList[indexPath.row];
     [axiomCell setAxiomCard:card];
-    NSString *imgName = [card.frontImage copy];
-    
-    if (imgName && [imgName length]>1) {
-        axiomCell.imgView.image = [UIImage imageNamed:imgName];
-    }
     
     return axiomCell;
 }
@@ -97,31 +97,23 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
 
 #pragma mark Collection View Delegate Methods
 
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
-
-}
-
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-
 
     HAAxiomCell *cell = (HAAxiomCell *)[collectionView cellForItemAtIndexPath:indexPath];
 //    NSLog(@"item details are \n frontImage:%@ \n backImage:%@", cell.axiomCard.frontImage, cell.axiomCard.backImage);
-
-    HADetailViewController *viewCtrl = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
-    
     float yOffset = cell.frame.origin.y - collectionView.contentOffset.y;
-
-//    NSLog(@"yOffset is %f", yOffset);
     CGRect newFrame = CGRectMake(cell.frame.origin.x, yOffset, cell.frame.size.width, cell.frame.size.height);
     
+    HADetailViewController *viewCtrl = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
     [viewCtrl.view setFrame:newFrame];
+    viewCtrl.startAxiomIndex = indexPath.row +1;
     viewCtrl.initRect = newFrame;
-    [viewCtrl.imgView setImage:[UIImage imageNamed:cell.axiomCard.frontImage]];
-
+    [viewCtrl addItemsToScrollView];
     [self.view addSubview:viewCtrl.view];
 
+    
     float win_Width =[UIScreen mainScreen].bounds.size.width;
-    float win_Height =[UIScreen mainScreen].bounds.size.height;
+    float win_Height =[UIScreen mainScreen].applicationFrame.size.height;
     
     float xScale = win_Width / cell.frame.size.width;
     float yScale = win_Height / cell.frame.size.height;
@@ -135,13 +127,28 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
                         options: UIViewAnimationOptionAllowAnimatedContent| UIViewAnimationOptionBeginFromCurrentState
                      animations:^(){
                          [selfView setCenter:CGPointMake(win_Width*0.5, win_Height*0.5)];
-                         [selfView setTransform:CGAffineTransformScale(CGAffineTransformIdentity, xScale, yScale)];
+                         [viewCtrl.view setFrame:self.view.frame];
+//                         [selfView setTransform:CGAffineTransformScale(CGAffineTransformIdentity, xScale, yScale)];
                      }
                      completion:^(BOOL finished){
                      
                          if (finished) {
                              [self addChildViewController:viewCtrl];
+
+                             [viewCtrl addObserver:self
+                                    forKeyPath:@"willDealloc"
+                                       options:NSKeyValueObservingOptionNew
+                                       context:nil];
+
+                             viewCtrl.delegate = self;
+                             [viewCtrl.view setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
+                             [viewCtrl.view setFrame:self.view.frame];
                              [viewCtrl didMoveToParentViewController:self];
+                             
+                             
+                             [cell setHidden:YES];
+                             self.hiddenCellIndex = [indexPath indexAtPosition:1];
+                             NSLog(@"selected index :%d",self.hiddenCellIndex);
                          }
                      }
      ];
@@ -151,6 +158,16 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
 
 #pragma mark CollectionView FlowLayout Delegate methods
 
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+
+    return PADDING;
+}
+
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+
+    return 5.0f;
+}
+
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
     return cellSizeToUse;
@@ -158,10 +175,76 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
 
-    if (section <3) {
-        return UIEdgeInsetsMake(PADDING*3, PADDING, PADDING, PADDING);
+    UIEdgeInsets insetToReturn = UIEdgeInsetsMake(PADDING, PADDING, PADDING, PADDING);
+    
+    if (section <=2) {
+        insetToReturn = UIEdgeInsetsMake(PADDING*3, PADDING, PADDING, PADDING);
     }
-    return UIEdgeInsetsMake(PADDING, PADDING, PADDING, PADDING);
+    NSLog(@"inset To Return is %@", NSStringFromUIEdgeInsets(insetToReturn));
+    return insetToReturn;
+}
+
+#pragma mark -
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+
+    if ([keyPath isEqualToString:@"willDealloc"]) {
+        NSIndexPath *indexPathToUse = [NSIndexPath indexPathForItem:self.hiddenCellIndex
+                                                          inSection:0];
+        HAAxiomCell *cellToUnhide = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPathToUse];
+        [cellToUnhide setHidden:NO];
+    }
+}
+
+#pragma mark Handle Detailed Axioms Scroll Delegate methods
+
+-(CGRect)manageVisibilityForCellAtIndex:(int)index isVisible:(BOOL)visible{
+    
+    NSIndexPath *indexPathToUse = [NSIndexPath indexPathForItem:index
+                                                 inSection:0];
+    
+    NSArray *visibleIndexes = [self.axiomsCollectionView indexPathsForVisibleItems];
+    
+    if (![visibleIndexes containsObject:indexPathToUse]) {
+        //means the item is not visible right now
+        [self.axiomsCollectionView scrollToItemAtIndexPath:indexPathToUse
+                                          atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                                  animated:NO];
+        [self.axiomsCollectionView reloadItemsAtIndexPaths:@[indexPathToUse]];
+    }
+    
+     HAAxiomCell *cell = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPathToUse];
+    [cell setHidden:visible];
+    NSLog(@"returning frame %@", NSStringFromCGRect(cell.frame));
+    
+    //Check and see if the underneath
+    //collection view has item in visibility
+//NSOperation *op1 =
+    
+    return cell.frame;
+}
+
+-(CGRect)handleScrollForAxiomAtIndex:(int)axiomIndex{
+ 
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.hiddenCellIndex
+                                                 inSection:0];
+    HAAxiomCell *cell = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPath];
+    CGRect toReturn = cell.frame;
+    
+    int indexToCompare = 0;
+   indexToCompare = [indexPath indexAtPosition:1];
+    if (indexToCompare != (axiomIndex-1)) {
+//Unhide current invisible cell
+        [self manageVisibilityForCellAtIndex:self.hiddenCellIndex
+                                   isVisible:NO];
+//Hide the new cell
+
+        self.hiddenCellIndex = (axiomIndex-1);
+       toReturn =  [self manageVisibilityForCellAtIndex:self.hiddenCellIndex
+                                              isVisible:YES];
+        toReturn.origin.y -= self.axiomsCollectionView.contentOffset.y;
+    }
+    return toReturn;
 }
 
 #pragma mark -

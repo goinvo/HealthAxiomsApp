@@ -14,20 +14,25 @@
 
 @implementation HABaseCard
 
--(id)initWithFrontImage:(NSString *)fName backImage:(NSString *)bName index:(int)number{
+-(id)initWithFrontImage:(NSString *)fName backImage:(NSString *)bName text:(NSString *)content index:(int)number{
 
     self = [super init];
     if (self) {
         
-        NSLog(@"Init card of index:%d frontImage:%@ BackImage:%@", number, fName, bName);
+//        NSLog(@"Init card of index:%d frontImage:%@ BackImage:%@", number, fName, bName);
         
         _index = number;
+        _isFront = YES;
         
         if(fName && ![fName isEqualToString:@""]) _frontImage = [fName copy];
 //        else NSAssert(!([fName isEqualToString:@""]),@"No front Image Name");
         
         if(bName && ![bName isEqualToString:@""]) _backImage = [bName copy];
 //        else NSAssert(!([bName isEqualToString:@""]),@"No back Image Name");
+        
+        if (content) {
+            _axiomText = [content copy];
+        }
         
     }
     return self;

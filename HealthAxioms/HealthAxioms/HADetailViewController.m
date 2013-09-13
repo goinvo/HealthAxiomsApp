@@ -141,9 +141,10 @@
         UIPanGestureRecognizer *panReco = (UIPanGestureRecognizer *)gestureRecognizer;
         if ([panReco translationInView:self.frontScroll].x < [panReco translationInView:self.frontScroll].y) {
             toReturn = NO;
+           // NSLog(@"detected up down pan");
         }
     }
-    
+    NSLog(@"returning %d",toReturn);
     return toReturn;
 }
 
@@ -178,10 +179,12 @@
 
 #pragma mark ScrollView Delegate Methods
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 
-    NSLog(@"\nLast contentOffset%@ \n New Offset %@", NSStringFromCGPoint(scrollLastOffset),NSStringFromCGPoint(scrollView.contentOffset));
-
+//    NSLog(@"shall begin dragging");
+    [scrollView becomeFirstResponder];
+//    NSLog(@"\nLast contentOffset%@ \n New Offset %@", NSStringFromCGPoint(scrollLastOffset),NSStringFromCGPoint(scrollView.contentOffset));
+    
     CGPoint offsetToUse = scrollView.contentOffset;
     //Checking for left right motion of scrollView
     if(!CGPointEqualToPoint(scrollLastOffset, offsetToUse)){
@@ -189,7 +192,12 @@
         [self manageViewsWithOffSet:offsetToUse movingRight:isMotionRight];
         scrollLastOffset = offsetToUse;
     }
-    
+}
+
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+
+    [scrollView resignFirstResponder];    
 }
 
 #pragma mark -
@@ -199,7 +207,7 @@
     
     int index = (contOffset.x/PAGE_WIDTH +1);
     
-    NSLog(@"Axiom at index:%d is in View ",index);
+//    NSLog(@"Axiom at index:%d is in View ",index);
 //Asking the delegate to handle and update view based on scroll
     if ([self.delegate respondsToSelector:@selector(handleScrollForAxiomAtIndex:)]) {
        self.initRect = [self.delegate handleScrollForAxiomAtIndex:index];

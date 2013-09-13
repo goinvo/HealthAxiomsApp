@@ -180,7 +180,7 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     if (section <=2) {
         insetToReturn = UIEdgeInsetsMake(PADDING*3, PADDING, PADDING, PADDING);
     }
-    NSLog(@"inset To Return is %@", NSStringFromUIEdgeInsets(insetToReturn));
+//    NSLog(@"inset To Return is %@", NSStringFromUIEdgeInsets(insetToReturn));
     return insetToReturn;
 }
 
@@ -215,7 +215,7 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     
      HAAxiomCell *cell = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPathToUse];
     [cell setHidden:visible];
-    NSLog(@"returning frame %@", NSStringFromCGRect(cell.frame));
+//    NSLog(@"returning frame %@", NSStringFromCGRect(cell.frame));
     
     //Check and see if the underneath
     //collection view has item in visibility

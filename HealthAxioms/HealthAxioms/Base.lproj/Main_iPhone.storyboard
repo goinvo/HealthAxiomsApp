@@ -85,11 +85,11 @@
                         <viewControllerLayoutGuide type="bottom" id="7sG-sG-62U"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="d0y-Ld-khq">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="650"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKE-Rg-uzH">
-                                <rect key="frame" x="0.0" y="44" width="300" height="606"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -98,7 +98,7 @@
                                 </connections>
                             </scrollView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zir-xL-00d">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Detail View Controller" id="D2s-Aa-DHD">
@@ -115,7 +115,7 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="zir-xL-00d" firstAttribute="leading" secondItem="iKE-Rg-uzH" secondAttribute="leading" id="1iQ-iH-OL8"/>
-                            <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="top" constant="-44" id="6WS-Nj-cVA"/>
+                            <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="top" id="6WS-Nj-cVA"/>
                             <constraint firstItem="iKE-Rg-uzH" firstAttribute="leading" secondItem="d0y-Ld-khq" secondAttribute="leading" id="Aiw-QP-gPx"/>
                             <constraint firstItem="7sG-sG-62U" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="bottom" id="H0U-GX-7vo"/>
                             <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="d0y-Ld-khq" secondAttribute="top" id="Kmw-nL-q6T"/>
@@ -126,7 +126,6 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="frontScroll" destination="iKE-Rg-uzH" id="Bpc-TL-sDD"/>
                     </connections>

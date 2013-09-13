@@ -122,15 +122,17 @@
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     
-    NSLog(@"touches moving");
+    if (self.isFirstResponder) {
 
-    rotation +=0.009;
-    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-    rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI * rotation, 1.0f, 0.0f, 0.0f);
-
-    self.frontImageView.layer.transform = rotationAndPerspectiveTransform;
-
+        NSLog(@"touches moving");
+        
+        rotation +=0.009;
+        CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+        rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI * rotation, 1.0f, 0.0f, 0.0f);
+        
+        self.frontImageView.layer.transform = rotationAndPerspectiveTransform;
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{

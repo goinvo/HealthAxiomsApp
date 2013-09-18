@@ -68,6 +68,8 @@
                             <constraint firstItem="lOU-Yy-ocH" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="x0c-Rw-sSk"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="axiomsCollectionView" destination="lOU-Yy-ocH" id="OqU-fQ-pLI"/>
                     </connections>
@@ -88,8 +90,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKE-Rg-uzH">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" directionalLockEnabled="YES" bounces="NO" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" canCancelContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKE-Rg-uzH">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="526"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -110,6 +112,44 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" alwaysBounceHorizontal="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zyK-hx-SPp">
+                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="1" id="Rzb-v6-nie">
+                                    <size key="itemSize" width="46" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AxiomCardSmall" id="j5B-vO-twd" customClass="HAAxiomCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="46" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="46" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PB9-Fi-bme">
+                                                    <rect key="frame" x="0.0" y="0.0" width="46" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <size key="customSize" width="46" height="50"/>
+                                        <connections>
+                                            <outlet property="imgView" destination="PB9-Fi-bme" id="Qyj-IM-5PA"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="VGN-Dy-8dV" id="lOP-RX-o4u"/>
+                                    <outlet property="delegate" destination="VGN-Dy-8dV" id="etL-en-9u5"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -117,17 +157,18 @@
                             <constraint firstItem="zir-xL-00d" firstAttribute="leading" secondItem="iKE-Rg-uzH" secondAttribute="leading" id="1iQ-iH-OL8"/>
                             <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="top" id="6WS-Nj-cVA"/>
                             <constraint firstItem="iKE-Rg-uzH" firstAttribute="leading" secondItem="d0y-Ld-khq" secondAttribute="leading" id="Aiw-QP-gPx"/>
-                            <constraint firstItem="7sG-sG-62U" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="bottom" id="H0U-GX-7vo"/>
+                            <constraint firstItem="7sG-sG-62U" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="bottom" constant="42" id="H0U-GX-7vo"/>
                             <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="d0y-Ld-khq" secondAttribute="top" id="Kmw-nL-q6T"/>
-                            <constraint firstAttribute="centerX" secondItem="iKE-Rg-uzH" secondAttribute="centerX" id="Pmv-FI-S1I"/>
                             <constraint firstAttribute="centerX" secondItem="zir-xL-00d" secondAttribute="centerX" id="dFx-4b-jhx"/>
                             <constraint firstAttribute="trailing" secondItem="iKE-Rg-uzH" secondAttribute="trailing" id="rMt-fp-ezl"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="frontScroll" destination="iKE-Rg-uzH" id="Bpc-TL-sDD"/>
+                        <outlet property="miniAxiomPicker" destination="zyK-hx-SPp" id="csK-Tq-Epn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ve-a4-80d" userLabel="First Responder" sceneMemberID="firstResponder"/>

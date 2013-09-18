@@ -10,17 +10,19 @@
 #import "HACardView.h"
 #import "HAModel.h"
 #import "HABaseCard.h"
+#import "HAAxiomCell.h"
 
 #define PAGE_WIDTH   ([[UIScreen mainScreen] bounds].size.width)
 #define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
 
 #define MAX_NUM_PAGES 5
 
-@interface HADetailViewController ()
+@interface HADetailViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
 
 @property (nonatomic, strong)HAModel *axiomsModel;
 @property (nonatomic, strong)NSMutableArray *currIndexes;
 @property (nonatomic, weak) UIPanGestureRecognizer *panReco;
+@property (weak, nonatomic) IBOutlet UICollectionView *miniAxiomPicker;
 
 -(IBAction)actionItemTapped:(id)sender;
 @end
@@ -141,6 +143,8 @@
         UIPanGestureRecognizer *panReco = (UIPanGestureRecognizer *)gestureRecognizer;
         if ([panReco translationInView:self.frontScroll].x < [panReco translationInView:self.frontScroll].y) {
             toReturn = NO;
+            [self.frontScroll resignFirstResponder];
+            [panReco setTranslation:CGPointZero inView:self.view];
            // NSLog(@"detected up down pan");
         }
     }
@@ -179,25 +183,38 @@
 
 #pragma mark ScrollView Delegate Methods
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+//    NSLog(@"scroll view %@ did scroll",scrollView );
+    BOOL case1 = ([[scrollView class] isSubclassOfClass:[UICollectionView class]])?YES : NO;
+    if(!case1){
+        
+        CGPoint offsetToUse = scrollView.contentOffset;
+        //Checking for left right motion of scrollView
+        if(!CGPointEqualToPoint(scrollLastOffset, offsetToUse)){
+            BOOL isMotionRight = (scrollLastOffset.x < offsetToUse.x) ? YES : NO;
+            [self manageViewsWithOffSet:offsetToUse movingRight:isMotionRight];
+            scrollLastOffset = offsetToUse;
+        }
+    }
+}
+
+-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+
+    
+}
+
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 
-//    NSLog(@"shall begin dragging");
     [scrollView becomeFirstResponder];
-//    NSLog(@"\nLast contentOffset%@ \n New Offset %@", NSStringFromCGPoint(scrollLastOffset),NSStringFromCGPoint(scrollView.contentOffset));
     
-    CGPoint offsetToUse = scrollView.contentOffset;
-    //Checking for left right motion of scrollView
-    if(!CGPointEqualToPoint(scrollLastOffset, offsetToUse)){
-        BOOL isMotionRight = (scrollLastOffset.x < offsetToUse.x) ? YES : NO;
-        [self manageViewsWithOffSet:offsetToUse movingRight:isMotionRight];
-        scrollLastOffset = offsetToUse;
-    }
+    //Checking to see if the scrollview belongs to a mini UIcollectionView Picker
 }
 
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 
-    [scrollView resignFirstResponder];    
+    [scrollView resignFirstResponder];
+    NSLog(@"did end decelerating");
 }
 
 #pragma mark -
@@ -263,19 +280,48 @@
         else [self.currIndexes removeLastObject];
         
         if (ObjToRemove) {
-           
-//            NSLog(@"front scroll subViews before removal %@", [self.frontScroll subviews]);
+            
             [ObjToRemove removeFromSuperview];
             ObjToRemove = nil;
-//            NSLog(@"front scroll subViews after removal %@", [self.frontScroll subviews]);
         }
+        
         if(isMovingRight){[self.currIndexes addObject:@(indexToCheck)];}
         else{[self.currIndexes insertObject:@(indexToCheck) atIndex:0];}
     }
     
     return toReturn;
 }
-
-
 #pragma mark -
+
+#pragma mark Managing the Collection View/DataSource/Flow delegate methods
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+
+    return [self.axiomsModel totalAxioms];
+}
+
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    static  NSString *const CELL_IDENTIFIER = @"AxiomCardSmall";
+    HAAxiomCell *axiomCell = (HAAxiomCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER
+                                                                                      forIndexPath:indexPath];
+    HABaseCard *card = self.axiomsModel.axiomCardsList[indexPath.row];
+    [axiomCell setAxiomCard:card];
+    
+    return axiomCell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    NSLog(@"touched item at Index:%d", indexPath.row);
+    float newX = indexPath.row * self.frontScroll.frame.size.width;
+    float newY = self.frontScroll.frame.origin.y;
+    [self.frontScroll scrollRectToVisible:CGRectMake(newX, newY, self.frontScroll.frame.size.width, self.frontScroll.frame.size.height)
+                                 animated:YES];
+}
 @end

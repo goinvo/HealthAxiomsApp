@@ -10,13 +10,19 @@
 
 @implementation HAAxiomCell
 
+-(void)dealloc{
+
+    [self removeObserver:self
+              forKeyPath:@"axiomCard"];
+}
 
 -(void)awakeFromNib{
 
     [super awakeFromNib];
 //    NSLog(@"was Here!");
     [self addObserver:self
-           forKeyPath:@"axiomCard" options:NSKeyValueObservingOptionNew
+           forKeyPath:@"axiomCard"
+              options:NSKeyValueObservingOptionNew
               context:nil];
 }
 
@@ -31,8 +37,9 @@
         
             UIImage *img = [UIImage imageNamed:imgName];
             CGSize imageSize = self.frame.size;
+            float xSize = imageSize.height * (img.size.width/img.size.height);
             UIGraphicsBeginImageContextWithOptions(imageSize,YES,0);
-            [img drawInRect:CGRectMake(0, 0, imageSize.width, imageSize.height)];
+            [img drawInRect:CGRectMake((imageSize.width-xSize)*0.5, 0, xSize, imageSize.height)];
             img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             

@@ -14,5 +14,6 @@
 @property (nonatomic, strong)HABaseCard *modelCard;
 
 - (id)initWithFrame:(CGRect)frame model:(HABaseCard *)card;
-
+-(void)addBackView;
+-(void)removeBackView;
 @end

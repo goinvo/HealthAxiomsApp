@@ -23,6 +23,9 @@
 @implementation HACardView{
 
     float rotation;
+    CALayer *upperLayer;
+    CALayer *lowerLayer;
+    BOOL isFront;
 }
 
 - (id)initWithFrame:(CGRect)frame model:(HABaseCard *)card
@@ -30,6 +33,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        isFront = YES;
         _modelCard = card;
         UIPinchGestureRecognizer *pinchReco = [[UIPinchGestureRecognizer alloc]initWithTarget:self
                                                               action:@selector(handlePinch:)];
@@ -54,23 +58,23 @@
         
         NSString *imgNameToUse = (_modelCard.isFront)? _modelCard.frontImage :
                                                         _modelCard.backImage;
-//        NSLog(@"self frame is %@", NSStringFromCGRect(self.frame));
-        
-        {
-            UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-            [image setImage:[UIImage imageNamed:_modelCard.backImage]];
-            //[self addSubview:image];
-           // self.backImageView = image;
-        }
         
         UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [image setImage:[UIImage imageNamed:imgNameToUse]];
         [self addSubview:image];
         self.frontImageView = image;
-        
+         [self.frontImageView.layer setDoubleSided:NO];
         rotation = 0;
+        
     }
     return self;
+}
+
+#pragma mark handle the change in views visibility
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+
+    NSLog(@"change is %@", change);
 }
 
 #pragma mark handle Pinch for scaling the text
@@ -93,51 +97,100 @@
 
 }
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-/*
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-    
-    CGContextRef ctxRef = UIGraphicsGetCurrentContext();
-    [[UIColor whiteColor]setFill];
-    CGContextFillRect(ctxRef, rect);
-    
-    NSString *imgNameToUse = (_modelCard.isFront)? _modelCard.frontImage :
-                                                   _modelCard.backImage;
-    
-    if (imgNameToUse &&[imgNameToUse length]>1) {
-     
-        UIImage *img = [UIImage imageNamed:_modelCard.frontImage];
-        [img drawInRect:rect];
-    }
-}
- */
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
     NSLog(@"touches began");
+   [self addBackView];
     
-}
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    
-    if (self.isFirstResponder) {
+    upperLayer = [CALayer layer];
+    upperLayer.frame = self.frontImageView.frame;
+    upperLayer.contents = (id)self.frontImageView.image.CGImage;
 
-        NSLog(@"touches moving");
-        
-        rotation +=0.009;
-        CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-        rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
-        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI * rotation, 1.0f, 0.0f, 0.0f);
-        
-        self.frontImageView.layer.transform = rotationAndPerspectiveTransform;
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(self.frontImageView.frame.origin.x, self.frontImageView.frame.origin.y, self.frontImageView.frame.size.width, self.frontImageView.frame.size.height*0.5)];
+    
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.path = maskPath.CGPath;
+    [upperLayer setMask:maskLayer];
+    [self.layer insertSublayer:upperLayer below:self.frontImageView.layer];
+    
+    
+    {
+    lowerLayer = [CALayer layer];
+    lowerLayer.frame = self.backImageView.frame;
+    lowerLayer.contents = (id)self.backImageView.image.CGImage;
+    
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(self.backImageView.frame.origin.x, self.frontImageView.frame.origin.y, self.frontImageView.frame.size.width, self.frontImageView.frame.size.height*0.5)];
+
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.path = maskPath.CGPath;
+    [lowerLayer setMask:maskLayer];
+    [lowerLayer setDoubleSided:NO];
+    [self.layer insertSublayer:lowerLayer below:upperLayer];
+
     }
 }
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    NSLog(@"touches ended");
-    rotation = 0;
+#define RADIANS_TO_DEGREES(radians) ((radians) * (180.0 / M_PI))
+bool toUSE = NO;
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+//    NSLog(@"touches moving");
+    if(RADIANS_TO_DEGREES(M_PI * rotation) <180.0 ){
+        rotation +=0.01;
+        
+        if( RADIANS_TO_DEGREES(M_PI * rotation) <=180.0){
+            CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+            rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI * rotation, 1.0f, 0.0f, 0.0f);
+            self.frontImageView.layer.transform = rotationAndPerspectiveTransform;
+        }
+
+        lowerLayer.transform = CATransform3DMakeRotation( (M_PI*181/180) *(1 +rotation), 1.0f, 0.0f, 0.0f);
+       
+        if (RADIANS_TO_DEGREES(M_PI * rotation) >=90.0 && toUSE == NO) {
+           
+//            NSLog(@"already changed the boolean");
+            toUSE = YES;
+        }
+//        NSLog(@"still in here :%f",RADIANS_TO_DEGREES(M_PI * rotation));
+    }
+    else if(RADIANS_TO_DEGREES(M_PI * rotation) >180.0 && toUSE){
+        [upperLayer setHidden:YES];
+        [lowerLayer setHidden:YES];
+        [self sendSubviewToBack:self.frontImageView];
+        toUSE = NO;
+        isFront = NO;
+    }
+    
 }
 
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    NSLog(@"touches ended");
+    rotation = 0;
+    self.frontImageView.layer.transform = CATransform3DIdentity;
+    toUSE = NO;
+    if (upperLayer) {
+        [upperLayer removeFromSuperlayer];
+        [lowerLayer removeFromSuperlayer];
+    }
+}
+
+-(void)addBackView{
+
+    if (!self.backImageView) {
+      
+        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        [image setImage:[UIImage imageNamed:_modelCard.backImage]];
+        [self insertSubview:image belowSubview:self.frontImageView];
+        self.backImageView = image;
+    
+    }
+}
+
+-(void)removeBackView{
+
+    [self.backImageView removeFromSuperview];
+    self.backImageView = nil;
+}
 @end

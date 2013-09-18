@@ -115,8 +115,8 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     float win_Width =[UIScreen mainScreen].bounds.size.width;
     float win_Height =[UIScreen mainScreen].applicationFrame.size.height;
     
-    float xScale = win_Width / cell.frame.size.width;
-    float yScale = win_Height / cell.frame.size.height;
+//    float xScale = win_Width / cell.frame.size.width;
+//    float yScale = win_Height / cell.frame.size.height;
     
     
     __weak UIView *selfView = viewCtrl.view;
@@ -128,7 +128,6 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
                      animations:^(){
                          [selfView setCenter:CGPointMake(win_Width*0.5, win_Height*0.5)];
                          [viewCtrl.view setFrame:self.view.frame];
-//                         [selfView setTransform:CGAffineTransformScale(CGAffineTransformIdentity, xScale, yScale)];
                      }
                      completion:^(BOOL finished){
                      

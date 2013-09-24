@@ -225,6 +225,8 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
 
 -(CGRect)handleScrollForAxiomAtIndex:(int)axiomIndex{
  
+//    NSLog(@"Need to manage scroll for index :%d",axiomIndex);
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.hiddenCellIndex
                                                  inSection:0];
     HAAxiomCell *cell = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPath];

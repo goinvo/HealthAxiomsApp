@@ -70,6 +70,15 @@
 }
 
 #pragma mark Add Items to ScrollView
+
+-(int)startIndexFromChosenCardIndex:(int)chosen{
+     int totalAxiomNum = [self.axiomsModel totalAxioms];
+    
+    int indexToStart = chosen - MAX_NUM_PAGES / 2;
+    if ((indexToStart + MAX_NUM_PAGES) > totalAxiomNum) indexToStart = totalAxiomNum - MAX_NUM_PAGES;
+    else if ((indexToStart - MAX_NUM_PAGES) < 0) indexToStart = 0;
+    return indexToStart;
+}
 -(void)addItemsToScrollView{
 
 //    If scroll indicatorrs will be visible
@@ -85,24 +94,13 @@
                                           , PAGE_WIDTH
                                           , scrollContentHeight)];
     
-    int totalAxiomNum = [self.axiomsModel totalAxioms];
-// diving by 2 beacuse trying to keep 5 images
-// in memory in total at a time
-    
-    int indexToStart = _startAxiomIndex - MAX_NUM_PAGES / 2;
-    indexToStart = (indexToStart <0)? (totalAxiomNum + indexToStart) :
-                                      indexToStart;
     //Adding cards to scroll View
-    for (int i=0; i<MAX_NUM_PAGES; i++) {
-    
-        int indexForModel = ((indexToStart -1) <0) ? totalAxiomNum-1 : indexToStart-1;
+    int start = [self startIndexFromChosenCardIndex:_startAxiomIndex];
+    for (int i= start; i< start+MAX_NUM_PAGES; i++) {
 
-        [self addAxiomCardToScrollWithIndex:indexForModel];
-        
-        indexToStart = ((indexToStart +1) > totalAxiomNum)? 1 :
-                                            indexToStart+1;
-        
-        [self.currIndexes addObject:@(indexForModel)];
+        [self addAxiomCardToScrollWithIndex:i];
+        [self.currIndexes addObject:@(i)];
+//        NSLog(@"adding %d", i);
     }
     
     // Scrolling to the selected card
@@ -148,7 +146,7 @@
            // NSLog(@"detected up down pan");
         }
     }
-    NSLog(@"returning %d",toReturn);
+//    NSLog(@"returning %d",toReturn);
     return toReturn;
 }
 
@@ -181,7 +179,75 @@
      ];
 }
 
+-(void)sortTheCurrentIndexes{
+    [self.currIndexes sortUsingComparator:^(id obj1, id obj2){
+        return ([obj1 compare:obj2]);
+    }];
+}
+
 #pragma mark ScrollView Delegate Methods
+
+-(void)sanityCheckForViewsWithOffset:(CGPoint)offset{
+    
+    int index = (offset.x/PAGE_WIDTH +1) -1;
+    int upperBound = fmin([self.axiomsModel totalAxioms], index+2);
+    int lowerBound = fmax(0, index-2);
+    //    int length = upperBound - lowerBound;
+
+    NSMutableArray *indexToRem = [NSMutableArray array];
+    for (id obj in self.currIndexes) {
+        NSLog(@"Checking for %d against low:%d high:%d", [obj integerValue],lowerBound,upperBound);
+        if ([obj integerValue] > upperBound || [obj integerValue] < lowerBound) {
+            [indexToRem addObject:obj];
+             NSLog(@"marked %d for removal",[obj integerValue]);
+            __block id ObjToRemove = nil;
+            __weak NSArray *toIter = [self.frontScroll subviews] ;
+            [toIter enumerateObjectsUsingBlock:^(id obj2, NSUInteger idx,BOOL *stop){
+                
+                if ([obj2 isKindOfClass:[HACardView class]]) {
+                    
+                    HACardView  *card = (HACardView *)obj2;
+                    HABaseCard *model = card.modelCard;
+                    int index2 = model.index-1;
+                    //Index for comparison calculated based on the direction of scroll
+                    if (index2 == [obj integerValue]) {
+                        ObjToRemove = card;
+                        *stop = YES;
+                    }
+                }
+                
+            }];
+            if (ObjToRemove) {
+                
+                [ObjToRemove removeFromSuperview];
+                ObjToRemove = nil;
+            }
+        }
+    }
+    if([indexToRem count]){
+        [self.currIndexes removeObjectsInArray:indexToRem];
+    }
+    indexToRem = nil;
+    
+    NSMutableArray *notFoundIndex = [NSMutableArray array];
+    
+    for (int i=lowerBound; i<upperBound; i++) {
+        if (![self.currIndexes containsObject:@(i)]) {
+            [notFoundIndex addObject:@(i)];
+            [self addAxiomCardToScrollWithIndex:i];
+        }
+    }
+   
+    if([notFoundIndex count]){
+    
+        [self.currIndexes addObjectsFromArray:notFoundIndex];
+        notFoundIndex = nil;
+        [self sortTheCurrentIndexes];
+    }
+    
+//    NSLog(@"Not found indexes were %@ \n current indexes %@ \n visible index is %d", notFoundIndex,self.currIndexes, index);
+}
+
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
 //    NSLog(@"scroll view %@ did scroll",scrollView );
@@ -190,6 +256,7 @@
         
         CGPoint offsetToUse = scrollView.contentOffset;
         //Checking for left right motion of scrollView
+//        NSLog(@"called");
         if(!CGPointEqualToPoint(scrollLastOffset, offsetToUse)){
             BOOL isMotionRight = (scrollLastOffset.x < offsetToUse.x) ? YES : NO;
             [self manageViewsWithOffSet:offsetToUse movingRight:isMotionRight];
@@ -200,13 +267,17 @@
 
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
 
-    
+    BOOL case1 = ([[scrollView class] isSubclassOfClass:[UICollectionView class]])?YES : NO;
+    if(!case1){
+        [self sanityCheckForViewsWithOffset:scrollView.contentOffset];
+    }
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 
     [scrollView becomeFirstResponder];
-    
+
+    NSLog(@"scroll next responder is %@", scrollView.nextResponder);
     //Checking to see if the scrollview belongs to a mini UIcollectionView Picker
 }
 
@@ -214,7 +285,13 @@
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 
     [scrollView resignFirstResponder];
+
+//    BOOL case1 = ([[scrollView class] isSubclassOfClass:[UICollectionView class]])?YES : NO;
+//    if(!case1){
+//        [self sanityCheckForViewsWithOffset:scrollView.contentOffset];
+//    }
     NSLog(@"did end decelerating");
+    
 }
 
 #pragma mark -
@@ -239,6 +316,7 @@
         [self addAxiomCardToScrollWithIndex:indexItemToAdd-1];
     }
 }
+
 
 #pragma mark -
 
@@ -276,8 +354,8 @@
 
         }];
 //Removing the object that is not needed from the current set of indexes
-        if (isMovingRight) [self.currIndexes removeObjectAtIndex:0];
-        else [self.currIndexes removeLastObject];
+        if (isMovingRight){[self.currIndexes removeObjectAtIndex:0];}
+        else{[self.currIndexes removeLastObject];}
         
         if (ObjToRemove) {
             
@@ -285,8 +363,8 @@
             ObjToRemove = nil;
         }
         
-        if(isMovingRight){[self.currIndexes addObject:@(indexToCheck)];}
-        else{[self.currIndexes insertObject:@(indexToCheck) atIndex:0];}
+        [self.currIndexes addObject:@(indexToCheck)];
+        [self sortTheCurrentIndexes];
     }
     
     return toReturn;

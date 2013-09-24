@@ -152,7 +152,7 @@
             [txtlayer setForegroundColor:[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f].CGColor];
             [txtlayer setAlignmentMode:kCAAlignmentLeft];
             [txtlayer setWrapped:YES];
-          //  txtlayer.contentsScale = [[UIScreen mainScreen] scale];
+            txtlayer.contentsScale = [[UIScreen mainScreen] scale];
             [lowerLayer addSublayer:txtlayer];
             
             lowerLayer.transform = CATransform3DIdentity;
@@ -168,13 +168,26 @@
     else{
         if (!upperLayer) {
 
-            CGRect upFrame = self.frontImageView.frame;
+            CGRect upFrame = self.backImageView.frame;
             upperLayer = [self layerWithContents:(id)(self.backImageView.image.CGImage)
                                             rect:upFrame
                                         maskRect:CGRectMake(upFrame.origin.x
                                                             , upFrame.origin.y + upFrame.size.height*0.5
                                                             , upFrame.size.width
                                                             , upFrame.size.height*0.5)];
+            
+            
+            CATextLayer *txtlayer = [CATextLayer layer];
+            [txtlayer setFrame:CGRectMake(TEXT_VIEW_PADDING*1.25, TEXT_VIEW_PADDING *6.4, self.frame.size.width - TEXT_VIEW_PADDING *2.5, self.frame.size.height - TEXT_VIEW_PADDING *6.5)];
+            [txtlayer setString:_modelCard.axiomText];
+            [txtlayer setFont:@"GillSans"];
+            [txtlayer setFontSize:16.0f];
+            [txtlayer setForegroundColor:[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f].CGColor];
+            [txtlayer setAlignmentMode:kCAAlignmentLeft];
+            [txtlayer setWrapped:YES];
+            txtlayer.contentsScale = [[UIScreen mainScreen] scale];
+            [upperLayer addSublayer:txtlayer];
+
             [self.layer addSublayer:upperLayer];
         }
         
@@ -374,6 +387,7 @@
         else if ([animKeyValue isEqual:@"finishFrontToBack"] || [animKeyValue isEqual:@"resetbackImage"]){
             
             [self.backImageView.layer removeAllAnimations];
+            self.backImageView.layer.transform = CATransform3DIdentity;
             [self bringSubviewToFront:self.backImageView];
             isFront = NO;
         }
@@ -422,6 +436,10 @@
 }
 
 -(void)removeBackView{
+    
+    [self.axiomTextView removeFromSuperview];
+    self.axiomTextView = nil;
+    
     [self.backImageView.layer removeAllAnimations];
     [self.backImageView removeFromSuperview];
     self.backImageView = nil;

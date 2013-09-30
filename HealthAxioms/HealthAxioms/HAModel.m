@@ -51,7 +51,7 @@ static HAModel *instance = nil;
                 HABaseCard *baseCard = [[HABaseCard alloc]initWithFrontImage:dict[@"front_image"]
                                                                    backImage:dict[@"back_image"]
                                                                         text:dict[@"text"]
-                                                                       index:num];
+                                                                       index:[dict[@"index"] integerValue]];
                 [_axiomCardsList addObject:baseCard];
             }
         }
@@ -59,6 +59,8 @@ static HAModel *instance = nil;
         //Sorting the entries in the array based on Index
         NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES];
         _axiomCardsList = [NSMutableArray arrayWithArray:[_axiomCardsList sortedArrayUsingDescriptors:@[descriptor]] ];
+        
+        NSLog(@"sorted List is %@", _axiomCardsList);
     }
     return self;
 }

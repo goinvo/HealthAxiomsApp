@@ -2,247 +2,699 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>1</key>
+	<key>25</key>
 	<dict>
-		<key>front_image</key>
-		<string>Bring-The-Examine-Room-To-Me-Front</string>
-		<key>back_image</key>
-		<string>Tmp</string>
 		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		<string>Injury is the leading cause of death in the U.S. among people ages 1 to 44.
+
+Know what it takes to protect you, and children in your care, from road accidents, falls, fire, drowning, and violence.
+
+Wear a helmet.
+Buckle up.
+Be the designated driver. 
+Build your core strength and balance.
+Test your home smoke alarms.
+Swim with a buddy.
+Advocate for violence prevention programs, and join in.
+
 		</string>
-	</dict>
-	<key>2</key>
-	<dict>
-		<key>front_image</key>
-		<string>Life-Coach-Front</string>
 		<key>back_image</key>
-		<string>Doctor-As-Life-Coach-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>3</key>
-	<dict>
+		<string>Safe-Than-Sorry-Back</string>
 		<key>front_image</key>
-		<string>Eat-Food-Front</string>
-		<key>back_image</key>
-		<string>Eat-More-Food-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>4</key>
-	<dict>
-		<key>front_image</key>
-		<string>Examine-Yourself-Front</string>
-		<key>back_image</key>
-		<string>Examine-Yourself-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>5</key>
-	<dict>
-		<key>front_image</key>
-		<string>Exercise-Is-Medicine-Front</string>
-		<key>back_image</key>
-		<string>Exercise-Is-Medicine-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>6</key>
-	<dict>
-		<key>front_image</key>
-		<string>Get-More-Sleep-Front</string>
-		<key>back_image</key>
-		<string>Get-More-Sleep-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>7</key>
-	<dict>
-		<key>front_image</key>
-		<string>Give-me-My-Data-Front</string>
-		<key>back_image</key>
-		<string>Give-Me-My-Data-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>8</key>
-	<dict>
-		<key>front_image</key>
-		<string>Have-More-Sex-Front</string>
-		<key>back_image</key>
-		<string>Have-More-Sex-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. 
-		
-		Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. 
-		
-		Bathroom &quot;smart&quot; mirrors are available for the rich. 
-		
-		Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>9</key>
-	<dict>
-		<key>front_image</key>
-		<string>Tmp</string>
-		<key>back_image</key>
-		<string>Increase-Your-Happiness-Quotient-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. 
-		
-Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. 
-		
-Bathroom &quot;smart&quot; mirrors are available for the rich. 
-		
-Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>10</key>
-	<dict>
-		<key>front_image</key>
-		<string>Keep-Good-Records-Front</string>
-		<key>back_image</key>
-		<string>Keep-Good-Records-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>11</key>
-	<dict>
-		<key>front_image</key>
-		<string>Know-The-Cost-Front</string>
-		<key>back_image</key>
-		<string>Know-The-Cost-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>12</key>
-	<dict>
-		<key>front_image</key>
-		<string>Know-Your-Numbers-Front</string>
-		<key>back_image</key>
-		<string>Know-Your-Numbers-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>13</key>
-	<dict>
-		<key>front_image</key>
-		<string>Let-Patients-Help-Front</string>
-		<key>back_image</key>
-		<string>Let-Patients-Help-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>14</key>
-	<dict>
-		<key>front_image</key>
-		<string>Live-Care-Plan-Front</string>
-		<key>back_image</key>
-		<string>Live-Your-CarePlan-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>15</key>
-	<dict>
-		<key>front_image</key>
-		<string>Medicare-For-all-Front</string>
-		<key>back_image</key>
-		<string>Medicare-For-All-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>16</key>
-	<dict>
-		<key>front_image</key>
-		<string>Meditate-And-Propser-Front</string>
-		<key>back_image</key>
-		<string>Meditate-And-Prosper-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
-	</dict>
-	<key>17</key>
-	<dict>
-		<key>front_image</key>
-		<string>Move-More-Front</string>
-		<key>back_image</key>
-		<string>Move-More-Back</string>
-		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
-		</string>
+		<string>Safe-Than-Sorry-Front</string>
+		<key>index</key>
+		<integer>8</integer>
 	</dict>
 	<key>18</key>
 	<dict>
-		<key>front_image</key>
-		<string>Quit-Smoking-Front</string>
+		<key>text</key>
+		<string>The health benefits of quitting smoking 
+begin immediately.
+
+Within 20 minutes, your heart rate and 
+blood pressure drop.
+
+Within 12 hours, the carbon monoxide level in your blood returns to normal.
+
+In only one month, you&apos;ll exercise easier, your clothes and home will smell better, and your sense of taste and smell will return.
+
+In a year, coughing subsides and your risk of coronary heart disease plummets.
+
+The use of smoking cessation products and therapies could double or triple the chance of lasting change: try the patch or a 
+support group.
+
+Today.
+		</string>
 		<key>back_image</key>
 		<string>Quit-Smoking-Back</string>
+		<key>front_image</key>
+		<string>Quit-Smoking-Front</string>
+		<key>index</key>
+		<integer>10</integer>
+	</dict>
+	<key>10</key>
+	<dict>
 		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		<string>A thorough health record is like an extension of your brain: it helps you remember major events and routine procedures and share that information with a new doctor.
+
+Paper files are a good start. 
+
+Electronic files make your health information and medical history more portable.
+
+Legally, your medical records are yours. So ask your doctor, dentist, and child&apos;s pediatrician for a copy.
+
+And if your health network offers you access to your electronic record, sign up.
 		</string>
+		<key>back_image</key>
+		<string>Keep-Good-Records-Back</string>
+		<key>front_image</key>
+		<string>Keep-Good-Records-Front</string>
+		<key>index</key>
+		<integer>21</integer>
+	</dict>
+	<key>26</key>
+	<dict>
+		<key>text</key>
+		<string>To avoid HIV infection and sexually transmitted diseases (STDs), a condom is the first line of defense. It forms a barrier between the penis and anus, vagina, or mouth. Bodily fluids cannot get past it.
+
+For safer oral sex, there are dental dams.
+
+Lower-risk sex play includes kissing and fondling. There’s no-risk sex play too, like masturbation (alone or mutual) and sharing fantasies.
+
+Safe sex can be fun. It prompts exploration, reduces worry, and enhances trust. And no prescription is needed.
+
+		</string>
+		<key>back_image</key>
+		<string>Wrap-Tap-Back</string>
+		<key>front_image</key>
+		<string>Wrap-Tap-Front</string>
+		<key>index</key>
+		<integer>13</integer>
 	</dict>
 	<key>19</key>
 	<dict>
-		<key>front_image</key>
-		<string>Baby-Steps-Front</string>
+		<key>text</key>
+		<string>Health behaviors are interconnected. 
+
+A small change in one area, like cutting down on tv time, triggers change in other areas, like diet.
+
+A combination of small steps leads to big change: improved nutrition, greater activity, more motivation.
+
+Two small behavior changes at a time, jump-started over a few weeks, are optimal.
+
+Do two. Stick with them for six weeks, the amount of time needed to form a habit.  Add two more.
+
+		</string>
 		<key>back_image</key>
 		<string>Take-Baby-Steps-Back</string>
+		<key>front_image</key>
+		<string>Take-Baby-Steps-Front</string>
+		<key>index</key>
+		<integer>14</integer>
+	</dict>
+	<key>11</key>
+	<dict>
 		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		<string> As national health care costs have risen, so have the costs that employers, workers, and even the retired and unemployed must bear.
+
+Co-pays, deductibles, and out-of-pocket expenses are up.
+
+It makes sense to research costs for doctors, hospitals, and treatments before you have to pay them or when you want to dispute a bill.
+
+Health-care pricing is available online from Internet companies and government agencies. Some big health plans also disclose price ranges. 
+
+Ask your doctor or dentist: 
+Can you give me a written estimate?
 		</string>
+		<key>back_image</key>
+		<string>Know-The-Cost-Back</string>
+		<key>front_image</key>
+		<string>Know-The-Cost-Front</string>
+		<key>index</key>
+		<integer>30</integer>
+	</dict>
+	<key>27</key>
+	<dict>
+		<key>text</key>
+		<string>A simple remedy for stress relief is talking with a trusted friend or support group or therapist. 
+
+Reaching out for social support lowers our levels of cortisol, the stress hormone. 
+
+By talking with a sympathetic listener, feelings are vented and burdens shared.
+
+Talking about what&apos;s bothering us also provides clarity and helps combat loneliness.
+
+Open up.
+		</string>
+		<key>back_image</key>
+		<string>Tell-SomeOne-Back</string>
+		<key>front_image</key>
+		<string>Tell-SomeOne-Front</string>
+		<key>index</key>
+		<integer>24</integer>
+	</dict>
+	<key>12</key>
+	<dict>
+		<key>text</key>
+		<string>Tracking your health through data, not just senses, lets you see your health in actionable ways.
+
+Some data come from the lab tests your doctor orders. Make sure you understand what the numbers mean.
+
+Apps and wearable sensors — for tracking sleep, activity, and food intake patterns — 
+give you powerful daily data to monitor effects and make changes.
+
+Data = medicine. 
+
+Your doctor shares some with you. 
+It&apos;s time you collected your own health data and shared some with him.
+		</string>
+		<key>back_image</key>
+		<string>Know-Your-Numbers-Back</string>
+		<key>front_image</key>
+		<string>Know-Your-Numbers-Front</string>
+		<key>index</key>
+		<integer>19</integer>
+	</dict>
+	<key>1</key>
+	<dict>
+		<key>text</key>
+		<string>The incorporation of a touch screen into a bathroom mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time.
+
+Sensors, cameras, and a built-in touch screen can put health data at our fingertips 
+— for example, heart rate or 
+medication instructions —
+help the sick get better and the 
+well stay healthy.
+
+Bathroom &quot;smart&quot; mirrors are already available for the rich. Let’s make them available in all of our homes.
+		</string>
+		<key>back_image</key>
+		<string>Tmp</string>
+		<key>front_image</key>
+		<string>Bring-The-Examine-Room-To-Me-Front</string>
+		<key>index</key>
+		<integer>17</integer>
+	</dict>
+	<key>28</key>
+	<dict>
+		<key>text</key>
+		<string>Humans of all ages deserve a good quality of life and a good quality of death. Bringing the subject into the open is a first  step.
+
+Talk to your loved ones about your specific wishes for your final days. Make a living will, a legal document that formulates your preferences for prolonged medical treatments.
+
+Consider the well-being of your survivors: make a will that legally provides how your property will be distributed after death and, if relevant, names a guardian for your children.
+
+Doctors can have a conversation with patients, no matter their age or health level, about options for their final days that might include long-term care, palliative services, 
+and, in cases of terminal illness, hospice.
+		</string>
+		<key>back_image</key>
+		<string>Talk-Death-Back</string>
+		<key>front_image</key>
+		<string>Talk-Death-Front</string>
+		<key>index</key>
+		<integer>25</integer>
 	</dict>
 	<key>20</key>
 	<dict>
-		<key>front_image</key>
-		<string>Tell-them-it-was-Great-Front</string>
-		<key>back_image</key>
-		<string>Tell-Them-It-Was-Great-Back</string>
 		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		<string>Water is actually a nutrient. Our bodies need water replenished throughout the day to replace the large amount lost 
+to vital functions.
+
+Fluid needs, like energy needs, increase when we&apos;re active or outdoor temperatures are high.
+
+High-fructose and sugared drinks make us gain weight and crave sweets. Water is the best thirst quencher.
+
+An 8-ounce glass of water near your bed at night will remind you to start the day with what you cannot live without. 
+
+Drink up.
 		</string>
+		<key>back_image</key>
+		<string>Drink-Water-Back</string>
+		<key>front_image</key>
+		<string>Drink-Water-Front</string>
+		<key>index</key>
+		<integer>3</integer>
+	</dict>
+	<key>2</key>
+	<dict>
+		<key>text</key>
+		<string>Life issues — employment, housing, food access, and education — can profoundly affect health.
+
+Doctors, nurses, and other health care workers have the potential to be at the nexus of their patients&apos; lives, treating the whole person.
+
+A patient&apos;s trust in the doctor is immense. 
+That relationship can be leveraged to provide advice, real help, access to resources, and encouragement on life&apos;s diverse challenges. 
+
+When your doctor asks you how you are, give a real answer. Share information that will start a conversation about the
+circumstances of your life.
+		</string>
+		<key>back_image</key>
+		<string>Doctor-As-Life-Coach-Back</string>
+		<key>front_image</key>
+		<string>Doctor-As-Life-Coach-Front</string>
+		<key>index</key>
+		<integer>29</integer>
+	</dict>
+	<key>13</key>
+	<dict>
+		<key>text</key>
+		<string>Doctors, nurses, and other clinicians are experts on treatments and outcomes. 
+
+Patients are experts on their own priorities and limits.
+
+When patients are involved in their own care, they manage conditions better, and they need fewer visits to specialists
+and hospitals and fewer tests.
+
+Patients who search online for health and medical information tend to trust their doctors and be better prepared for the visit. 
+
+Good discussions may be prompted by patients&apos; research. Doctors 
+should encourage it.
+		</string>
+		<key>back_image</key>
+		<string>Let-Patients-Help-Back</string>
+		<key>front_image</key>
+		<string>Let-Patients-Help-Front</string>
+		<key>index</key>
+		<integer>27</integer>
+	</dict>
+	<key>3</key>
+	<dict>
+		<key>text</key>
+		<string>Michael Pollan got it right: real food is better for humans.
+
+The outer aisles of the supermarket are where the healthiest foods are: greens, fruits, poultry, nuts, grains, and dairy. Fill up the cart.
+
+Meals at home and a brownbag lunch at work are more nutritious than eating out.
+
+Families who eat the evening meal together eat healthier.
+		</string>
+		<key>back_image</key>
+		<string>Eat-More-Food-Back</string>
+		<key>front_image</key>
+		<string>Eat-Food-Front</string>
+		<key>index</key>
+		<integer>2</integer>
 	</dict>
 	<key>21</key>
 	<dict>
-		<key>front_image</key>
-		<string>Doctor-in-your-Pocket-Front</string>
+		<key>text</key>
+		<string>Wearable gadgets and smartphone apps track data, vital signs, and health habits like sleep or nutrition.
+
+Smartphones also help us search the Web for health info and subscribe to public-health messaging.
+
+In the future, we&apos;ll use personal technologies even more to monitor micro changes in the body and fine tune medication, diet, exercise, and doctor&apos;s visits. Scientists will use patient generated data for population studies on disease and treatment.
+
+Today, a wearable device can help you understand health issues, see patterns, and take action.
+		</string>
 		<key>back_image</key>
 		<string>The-Doctor-Is-In-Your-Pocket-Back</string>
+		<key>front_image</key>
+		<string>The-Doctor-Is-In-your-Pocket-Front</string>
+		<key>index</key>
+		<integer>22</integer>
+	</dict>
+	<key>14</key>
+	<dict>
 		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		<string>Your care plan is an agreement between you and your caregivers. It&apos;s important to establish, write down, and discuss your goals for your health.
+
+Your doctor or care team can suggest self-care resources for nutrition, exercise, rest, and therapy.
+
+Medication may be a key component of your care plan. (Take  your meds!)
+
+A care plan is a living document, to be reviewed and modified periodically. It&apos;s your blueprint for health. 
+
+Live it.
 		</string>
+		<key>back_image</key>
+		<string>Live-Your-CarePlan-Back</string>
+		<key>front_image</key>
+		<string>Live-Care-Plan-Front</string>
+		<key>index</key>
+		<integer>18</integer>
+	</dict>
+	<key>4</key>
+	<dict>
+		<key>text</key>
+		<string>You are the expert on how your body looks and feels. 
+
+A few minutes of daily head-to-toe visual checks helps you notice changes, like a new freckle or unusual hair growth or loss.
+
+Monthly checks 
+— of skin and your male or female parts — 
+give you information to share with your doctor. 
+
+And don’t wait too long to share this information with your doctor. Call her if you notice a lump in the breast or genitals, a larger or asymmetrical mole, persistent skin changes (coloring, rash), or wounds or bruises that do not heal.
+		</string>
+		<key>back_image</key>
+		<string>Examine-Yourself-Back</string>
+		<key>front_image</key>
+		<string>Examine-Yourself-Front</string>
+		<key>index</key>
+		<integer>9</integer>
+	</dict>
+	<key>29</key>
+	<dict>
+		<key>text</key>
+		<string>There are more nurses than doctors. 
+And nurses deliver most of the 
+hands-on care.
+
+Patients look to nurses for comfort, insight, and guidance when they experience fear, pain, or uncertainty related to their health.
+
+New doctors rely on skilled nurses when learning to practice medicine.
+
+Nurses are poised for leadership. 
+Higher education is the key: a bachelor’s degree means better outcome for patients, and a graduate degree prepares hands-on nurses for management and leadership.
+
+Recognize the critical role of nurses in your health care, and seek their knowledge.
+
+		</string>
+		<key>back_image</key>
+		<string>Nurses-Save-Back</string>
+		<key>front_image</key>
+		<string>Nurses-Save-Front</string>
+		<key>index</key>
+		<integer>28</integer>
+	</dict>
+	<key>5</key>
+	<dict>
+		<key>text</key>
+		<string>Exercise habits are as important a vital sign as a person&apos;s pulse, heart rate, and temperature.
+
+Doctors should ask about, and record, their patients&apos; activity levels.
+
+150 minutes per week of moderate activity is recommended for baseline health benefits.
+
+Exercise can also be included in a treatment plan: for injury recovery, weight loss, and even some mood disorders.
+		</string>
+		<key>back_image</key>
+		<string>Exercise-Is-Medicine-Back</string>
+		<key>front_image</key>
+		<string>Exercise-Is-Medicine-Front</string>
+		<key>index</key>
+		<integer>4</integer>
+	</dict>
+	<key>15</key>
+	<dict>
+		<key>text</key>
+		<string>A national health care system, paid for by taxes, would provide free, comprehensive medical care to all.
+
+Single-payer systems, like Canada&apos;s, eliminate administrative overhead. 
+Money is spent on health, not bureaucracy. 
+
+Everyone benefits, no matter their age or health status. The range of care is expanded, and evidence-based practices are shared across the system. 
+
+Single-payer systems devote more resources to preventative medicine, keeping us all healthier.
+		</string>
+		<key>back_image</key>
+		<string>Medicare-For-All-Back</string>
+		<key>front_image</key>
+		<string>Medicare-For-All-Front</string>
+		<key>index</key>
+		<integer>31</integer>
 	</dict>
 	<key>22</key>
 	<dict>
-		<key>front_image</key>
-		<string>Wash-Yours-Hands-Front</string>
+		<key>text</key>
+		<string>Hand-washing reduces the spread of the flu, food poisoning, stomach bug, and other illnesses.
+
+Fun fact: humans touch their hands to eyes, nose, or mouth about 15 times an hour. And hand-to-face contact accounts for about 30% of the risk of flu infection.
+
+Plain old soap and water gets germs off your hands. Use warm water and plenty of suds.
+
+Hand sanitizer with at least 60% alcohol — that&apos;s the magic number — 
+is just as effective. Keep some at home and work, and carry it with you.
+		</string>
 		<key>back_image</key>
 		<string>Wash-Your-Hands-Back</string>
+		<key>front_image</key>
+		<string>Wash-Yours-Hands-Front</string>
+		<key>index</key>
+		<integer>6</integer>
+	</dict>
+	<key>6</key>
+	<dict>
 		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		<string>Everybody has a unique basal sleep need, or the amount needed for optimal performance. Know yours.
+
+A consistent sleep schedule, even on weekends, is critical.
+
+Short naps help you recharge and pay down a sleep deficit. 
+
+Laptops should stay out of the bedroom; beds are for sex and rest.
 		</string>
+		<key>back_image</key>
+		<string>Get-More-Sleep-Back</string>
+		<key>front_image</key>
+		<string>Get-More-Sleep-Front</string>
+		<key>index</key>
+		<integer>5</integer>
 	</dict>
 	<key>23</key>
 	<dict>
-		<key>front_image</key>
-		<string>Take-Meds-on-Time-Front</string>
-		<key>back_image</key>
-		<string>Take-Meds-On-Time-Back</string>
 		<key>text</key>
-		<string>The incorporation of a touch screen into a mirror means we can brush our teeth or look at ourselves naked and get vital information at the same time. Sensors, cameras, and a built-in touch screen can put health data at our fingertips -- for example, heart rate or medication instructions -- and help the sick get better and the well stay healthy. Bathroom &quot;smart&quot; mirrors are available for the rich. Let&apos;s make them available for all of us.
+		<string>Dopamine, the feel-good chemical in our brains, is released when people hear something they like.
+
+Positive messages are more powerful and lasting motivators than criticism.
+If you want it to pack a punch, praise should be specific and timely. 
+
+We can also give ourselves credit and reward new health habits when personal goals are reached. 
+
+And a little boasting about positive results may inspire someone else to tackle a health or life challenge.
 		</string>
+		<key>back_image</key>
+		<string>Bang-The-Drum-Back</string>
+		<key>front_image</key>
+		<string>Bang-The-Drum-Front</string>
+		<key>index</key>
+		<integer>23</integer>
+	</dict>
+	<key>16</key>
+	<dict>
+		<key>text</key>
+		<string>Meditation is the deliberate and continuous focus on one&apos;s breath, bodily sensations, and mental images. 
+
+While from the outside it may look like 
+“just sitting still,” meditation 
+increases well-being. 
+
+People who meditate report feeling control over depression, anxiety, and levels of 
+chronic pain.
+
+Bonus: Because it&apos;s associated with a boost in empathy, meditation may improve the lives of those around us, too.
+		</string>
+		<key>back_image</key>
+		<string>Meditate-And-Prosper-Back</string>
+		<key>front_image</key>
+		<string>Meditate-And-Propser-Front</string>
+		<key>index</key>
+		<integer>15</integer>
+	</dict>
+	<key>7</key>
+	<dict>
+		<key>text</key>
+		<string>Health habits and decisions are partially 
+based on information. 
+
+When doctors, hospitals, and labs give us easy access to our health data, we can act more knowledgeably.
+
+Medical charts must be redesigned, on paper and online, to be fully understood.
+Designers can help.
+
+It&apos;s not enough to open the file cabinet; the health care system must exploit technologies that make getting and using our data more seamless with other tasks, like goal-setting, fitness-tracking, and 
+calorie budgeting.
+		</string>
+		<key>back_image</key>
+		<string>Give-Me-My-Data-Back</string>
+		<key>front_image</key>
+		<string>Give-me-My-Data-Front</string>
+		<key>index</key>
+		<integer>20</integer>
+	</dict>
+	<key>8</key>
+	<dict>
+		<key>text</key>
+		<string>od health bolsters your sex life; your sex life bolsters your health.
+
+Regular sex 
+— once a week or more —
+is associated with greater immunity, 
+less stress, fewer heart attacks, 
+and longer life.
+
+Two reasons to be happy: sex burns about five calories per minute and it unleashes mood-boosting endorphins.
+
+If worries or physical challenges are hindering your enjoyment of sex, talk to your partner and possibly a doctor 
+for reassurance and advice.
+		</string>
+		<key>back_image</key>
+		<string>Have-More-Sex-Back</string>
+		<key>front_image</key>
+		<string>Have-More-Sex-Front</string>
+		<key>index</key>
+		<integer>12</integer>
+	</dict>
+	<key>24</key>
+	<dict>
+		<key>text</key>
+		<string>Oral health is the gateway to total health. 
+
+The teeth, gums, and mouth allow us to eat good food, speak, and express emotion.
+
+It&apos;s elementary: brush twice a day, for two minutes each time, and floss one of those times.
+
+Dentists are doctors, too — visit one annually for a checkup. Twice-a-year cleanings by a dental hygienist keep plaque under control.
+
+It&apos;s foolish to neglect your pearly whites. Evidence has linked inadequate dental care with poor health and conditions like heart disease and diabetes.
+		</string>
+		<key>back_image</key>
+		<string>Dont-Rush-The-Brush-Back</string>
+		<key>front_image</key>
+		<string>Dont-Rush-The-Brush-Front</string>
+		<key>index</key>
+		<integer>7</integer>
+	</dict>
+	<key>17</key>
+	<dict>
+		<key>text</key>
+		<string>Our ancestors walked 10,000 steps a day. People who walk or run 30 minutes at least five times a week live longer.
+
+An increase in light activity increases fitness, so fidget and putter and do housework.
+
+Friends who exercise together stick with it longer. Find an exercise buddy and then...run, bicycle, swim, row, hike, ski, or walk.
+
+Make walking a daily habit — for your commute, errands, stairs, and 
+fitness — and get that step count going up.
+		</string>
+		<key>back_image</key>
+		<string>Move-More-Back</string>
+		<key>front_image</key>
+		<string>Move-More-Front</string>
+		<key>index</key>
+		<integer>1</integer>
+	</dict>
+	<key>9</key>
+	<dict>
+		<key>text</key>
+		<string>Patients who stick to their medications have better outcomes. If you quit early, your health suffers.
+
+All prescriptions have a medical purpose: to maintain or restore your health, reduce pain, or help you heal. 
+
+Part of your job is to follow the plan of care, so find a method that helps you take your meds on time. 
+
+A problem taking or paying for medication is not a sufficient reason to outright quit taking them.  Talk to your doctor, nurse, or clinic staff for help.
+		</string>
+		<key>back_image</key>
+		<string>Meds-On-Time-Back</string>
+		<key>front_image</key>
+		<string>Meds-On-Time-Front</string>
+		<key>index</key>
+		<integer>11</integer>
+	</dict>
+	<key>30</key>
+	<dict>
+		<key>text</key>
+		<string>Patients who stick to their medications have better outcomes. If you quit early, your health suffers.
+
+All prescriptions have a medical purpose: to maintain or restore your health, reduce pain, or help you heal. 
+
+Part of your job is to follow the plan of care, so find a method that helps you take your meds on time. 
+
+A problem taking or paying for medication is not a sufficient reason to outright quit taking them.  Talk to your doctor, nurse, or clinic staff for help.
+		</string>
+		<key>back_image</key>
+		<string>Do-What-Makes-Happy-Back</string>
+		<key>front_image</key>
+		<string>Do-What-Makes-Happy-Front</string>
+		<key>index</key>
+		<integer>16</integer>
+	</dict>
+	<key>31</key>
+	<dict>
+		<key>text</key>
+		<string>If you are hospitalized, undergoing surgery, or seeing a specialist for a serious condition, bring a friend or relative with you.
+
+Your wingman can help you navigate the experience, understand complex instructions, and advocate for your best interests if you are confused or impaired.
+
+And, while you are well, get a health care proxy, a simple legal document that allows you to appoint a trusted person to make medical decisions for you if you are unable — because of serious accident or illness — to make them yourself. 
+		</string>
+		<key>back_image</key>
+		<string>Who-Is-Wingman-Back</string>
+		<key>front_image</key>
+		<string>Who-Is-Wingman-Front</string>
+		<key>index</key>
+		<integer>26</integer>
+	</dict>
+	<key>32</key>
+	<dict>
+		<key>text</key>
+		<string>What is one health action you can do now that you can do again tomorrow? 
+
+Maybe one of these:
+Drink water.
+Take a walk.
+Ignore the vending machine. 
+Eat greens.
+Meet up with your fitness buddy.
+Reach out to a trusted friend.
+
+The mental barrier to getting started is often the toughest one.  Power through it today.
+
+Once you overcome the inertia of getting started, make a plan to reach your health goals.
+
+Go! Go! Go!
+		</string>
+		<key>back_image</key>
+		<string>Start-Now-Back</string>
+		<key>front_image</key>
+		<string>Start-Now-Front</string>
+		<key>index</key>
+		<integer>32</integer>
+	</dict>
+	<key>33</key>
+	<dict>
+		<key>text</key>
+		<string>Move more
+Eat food. Not too much. Mostly plants.
+Drink water
+Exercise is medicine
+Get more sleep
+Wash your hands
+Don’t rush the brush
+Better safe than sorry
+Examine yourself
+Quit smoking
+Take your meds on time
+Have more sex
+Wrap it before you tap it
+Take baby steps
+Meditate and prosper
+Do what makes you happy
+Bring the exam room to me
+Live your care plan
+Know your numbers
+Give me my data!
+Keep good records
+The doctor is in your pocket
+Bang the drum
+Tell someone
+Talk about death
+Who is your wingman?
+Let patients help
+Nurses save
+Doctor as your life coach
+Know the cost
+Medicare for all
+Start now
+
+		</string>
+		<key>back_image</key>
+		<string>Index-Back</string>
+		<key>front_image</key>
+		<string>Index-Front</string>
+		<key>index</key>
+		<integer>33</integer>
 	</dict>
 </dict>
 </plist>

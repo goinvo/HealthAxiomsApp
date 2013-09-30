@@ -20,10 +20,13 @@
 
     [super awakeFromNib];
 //    NSLog(@"was Here!");
+//    [self setBackgroundColor:[UIColor redColor]];
     [self addObserver:self
            forKeyPath:@"axiomCard"
               options:NSKeyValueObservingOptionNew
               context:nil];
+    
+    [self.layer setCornerRadius:6.0f];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
@@ -49,20 +52,13 @@
         });
     }
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
-/*
+
 -(void)prepareForReuse{
 
     [super prepareForReuse];
-    NSLog(@"is Preparing!");
+//    NSLog(@"is Preparing!");
+    self.imgView.image = nil;
 }
-*/
+
 @end

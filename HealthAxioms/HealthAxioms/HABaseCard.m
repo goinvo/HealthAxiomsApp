@@ -25,10 +25,10 @@
         _isFront = YES;
         
         if(fName && ![fName isEqualToString:@""]) _frontImage = [fName copy];
-//        else NSAssert(!([fName isEqualToString:@""]),@"No front Image Name");
+        else NSAssert(!([fName isEqualToString:@""]),@"No front Image Name");
         
         if(bName && ![bName isEqualToString:@""]) _backImage = [bName copy];
-//        else NSAssert(!([bName isEqualToString:@""]),@"No back Image Name");
+        else NSAssert(!([bName isEqualToString:@""]),@"No back Image Name");
         
         if (content) {
             _axiomText = [content copy];
@@ -38,4 +38,8 @@
     return self;
 }
 
+-(NSString *)description{
+
+    return [NSString stringWithFormat:@"Index:%d front:%@", _index, _frontImage];
+}
 @end

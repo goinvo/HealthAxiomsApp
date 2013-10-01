@@ -17,10 +17,10 @@
 #define DEGREES_TO_RADIANS(x) ((x) * (M_PI / 180.0))
 
 @interface HACardView ()
+
 @property (nonatomic, assign) int fontSize;
-//@property (nonatomic, weak) UITextView *axiomTextView;
 @property (nonatomic, weak) UIImageView *frontImageView;
-//@property (nonatomic, weak) UIImageView *backImageView;
+
 @end
 
 @implementation HACardView{
@@ -258,35 +258,31 @@
     //creating the text
     UIGraphicsPushContext(UIGraphicsGetCurrentContext());
 
-    CGMutablePathRef path = CGPathCreateMutable(); //1
-    CGPathAddRect(path, NULL, CGRectMake(TEXT_VIEW_PADDING *1.25, TEXT_VIEW_PADDING , self.frontImageView.bounds.size.width - TEXT_VIEW_PADDING *2.5, self.frontImageView.bounds.size.height - TEXT_VIEW_PADDING *6.5) );
-    
-    NSString *font =@"GillSans";
-    CTFontRef fontRef = CTFontCreateWithName((CFStringRef)font,
-                                             16.0f, NULL);
-    NSDictionary* attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           (id)[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f].CGColor, kCTForegroundColorAttributeName,
-                           (__bridge id)fontRef, kCTFontAttributeName,
-                                                      nil];
-    
-    NSAttributedString* attString = [[NSAttributedString alloc]
-                                      initWithString:_modelCard.axiomText
-                                     attributes:attrs]; //2
+    //draw title
+    [self drawTitleInContext:UIGraphicsGetCurrentContext()
+                      ofSize:self.frontImageView.bounds.size
+                     flipped:isFlipped];
+//    NSString *fontTitle =@"Avenir-Black";
+//    CTFontRef fontRefTitle = CTFontCreateWithName((CFStringRef)fontTitle,
+//                                             20.0f, NULL);
+//    NSDictionary* nameAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+//                           (id)[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f].CGColor, kCTForegroundColorAttributeName,
+//                           (__bridge id)fontRefTitle, kCTFontAttributeName,
+//                           nil];
+//    
+//    NSAttributedString* attStringTitle = [[NSAttributedString alloc]
+//                                     initWithString:[_modelCard.axiomTitle uppercaseString]
+//                                     attributes:nameAttrs]; //2
+//    
+//    CGSize titleSize = [attStringTitle size];
+//    
+//    [attStringTitle drawAtPoint:CGPointMake((imgSize.width - titleSize.width)*0.5, TEXT_VIEW_PADDING)];
 
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString); //3
-    CTFrameRef frame = CTFramesetterCreateFrame(framesetter,
-                             CFRangeMake(0, [attString length]), path, NULL);
     
-    if (!isFlipped) {
-        CGContextTranslateCTM(UIGraphicsGetCurrentContext(), 0, imgSize.height);
-        CGContextScaleCTM(UIGraphicsGetCurrentContext(), 1.0, -1.0);
-    }
-    
-    CTFrameDraw(frame, UIGraphicsGetCurrentContext()); //4
-    
-    CFRelease(frame); //5
-    CFRelease(path);
-    CFRelease(framesetter);
+//draw string
+    [self drawTextInContext:UIGraphicsGetCurrentContext()
+                     ofSize:self.frontImageView.bounds.size
+                    flipped:isFlipped];
     
     UIGraphicsPopContext();
         //creating image from the current context
@@ -298,6 +294,99 @@
     return imgToReturn;
 }
 
+-(void)drawTitleInContext:(CGContextRef)graphicsCtx ofSize:(CGSize)size flipped:(BOOL)isFlip {
+    
+    static  NSString *titleFont =@"Kremlin";
+    
+    CGMutablePathRef path = CGPathCreateMutable(); //1
+    CGPathAddRect(path, NULL, CGRectMake(TEXT_VIEW_PADDING *1.25
+                                         , size.height - 240.0f
+                                         , size.width - TEXT_VIEW_PADDING *2.5
+                                         , size.height - TEXT_VIEW_PADDING *14) );
+    
+    CTFontRef fontRef = CTFontCreateWithName((CFStringRef)titleFont,
+                                             24.0f, NULL);
+    //(id)[NSNumber numberWithFloat:-1.0f], kCTKernAttributeName,
+    NSDictionary* attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                           (id)[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f].CGColor, kCTForegroundColorAttributeName,
+                           (__bridge id)fontRef, kCTFontAttributeName,
+                           nil];
+    
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc]
+                                     initWithString:[_modelCard.axiomTitle uppercaseString]
+                                     attributes:attrs]; //2
+    
+    NSInteger strLength = [attString length];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    [style setAlignment:NSTextAlignmentCenter];
+    [attString addAttribute:NSParagraphStyleAttributeName
+                      value:style
+                      range:NSMakeRange(0, strLength)];
+    
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString); //3
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter,
+                                                CFRangeMake(0, [attString length]), path, NULL);
+    
+    if (!isFlip) {
+        CGContextTranslateCTM(graphicsCtx, 0, size.height);
+        CGContextScaleCTM(graphicsCtx, 1.0, -1.0);
+    }
+    
+    CTFrameDraw(frame, graphicsCtx); //4
+    
+    CFRelease(frame); //5
+    CFRelease(path);
+    CFRelease(framesetter);
+}
+
+
+
+-(void)drawTextInContext:(CGContextRef)graphicsCtx ofSize:(CGSize)size flipped:(BOOL)isFlip {
+
+    static  NSString *font =@"GillSans";
+    
+    CGMutablePathRef path = CGPathCreateMutable(); //1
+    CGPathAddRect(path, NULL, CGRectMake(TEXT_VIEW_PADDING *1.25
+                                         , TEXT_VIEW_PADDING
+                                         , size.width - TEXT_VIEW_PADDING *2.5
+                                         , size.height - TEXT_VIEW_PADDING *6.5) );
+    
+    CTFontRef fontRef = CTFontCreateWithName((CFStringRef)font,
+                                             16.0f, NULL);
+    NSDictionary* attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                           (id)[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f].CGColor, kCTForegroundColorAttributeName,
+                           (__bridge id)fontRef, kCTFontAttributeName,
+                           nil];
+    
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc]
+                                     initWithString:_modelCard.axiomText
+                                     attributes:attrs]; //2
+    
+    
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    [style setAlignment:NSTextAlignmentCenter];
+    [style setMinimumLineHeight:14];
+    [style setMaximumLineHeight:14];
+
+    [attString addAttribute:NSParagraphStyleAttributeName
+                      value:style
+                      range:NSMakeRange(0, [attString length])];
+    
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString); //3
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter,
+                                                CFRangeMake(0, [attString length]), path, NULL);
+    
+//    if (!isFlip) {
+//        CGContextTranslateCTM(graphicsCtx, 0, size.height);
+//        CGContextScaleCTM(graphicsCtx, 1.0, -1.0);
+//    }
+    
+    CTFrameDraw(frame, graphicsCtx); //4
+    
+    CFRelease(frame); //5
+    CFRelease(path);
+    CFRelease(framesetter);
+}
 
 
 #pragma mark handle the change in views visibility

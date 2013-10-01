@@ -51,7 +51,8 @@ static HAModel *instance = nil;
                 HABaseCard *baseCard = [[HABaseCard alloc]initWithFrontImage:dict[@"front_image"]
                                                                    backImage:dict[@"back_image"]
                                                                         text:dict[@"text"]
-                                                                       index:[dict[@"index"] integerValue]];
+                                                                       index:[dict[@"index"] integerValue]
+                                                                       title:dict[@"title"]];
                 [_axiomCardsList addObject:baseCard];
             }
         }

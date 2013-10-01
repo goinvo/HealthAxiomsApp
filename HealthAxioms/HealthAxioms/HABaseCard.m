@@ -14,7 +14,7 @@
 
 @implementation HABaseCard
 
--(id)initWithFrontImage:(NSString *)fName backImage:(NSString *)bName text:(NSString *)content index:(int)number{
+-(id)initWithFrontImage:(NSString *)fName backImage:(NSString *)bName text:(NSString *)content index:(int)number title:(NSString *)cardTitle{
 
     self = [super init];
     if (self) {
@@ -30,16 +30,18 @@
         if(bName && ![bName isEqualToString:@""]) _backImage = [bName copy];
         else NSAssert(!([bName isEqualToString:@""]),@"No back Image Name");
         
+        if(cardTitle && ![cardTitle isEqualToString:@""]) _axiomTitle = [cardTitle copy];
+        else NSAssert(!([cardTitle isEqualToString:@""]),@"No card title");
+        
         if (content) {
             _axiomText = [content copy];
         }
-        
     }
     return self;
 }
 
 -(NSString *)description{
 
-    return [NSString stringWithFormat:@"Index:%d front:%@", _index, _frontImage];
+    return [NSString stringWithFormat:@"Index:%d title:%@", _index, _axiomTitle];
 }
 @end

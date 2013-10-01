@@ -72,11 +72,12 @@
 #pragma mark Add Items to ScrollView
 
 -(int)startIndexFromChosenCardIndex:(int)chosen{
-     int totalAxiomNum = [self.axiomsModel totalAxioms];
+    
+    int totalAxiomNum = [self.axiomsModel totalAxioms];
     
     int indexToStart = chosen - MAX_NUM_PAGES / 2;
     if ((indexToStart + MAX_NUM_PAGES) > totalAxiomNum) indexToStart = totalAxiomNum - MAX_NUM_PAGES;
-    else if ((indexToStart - MAX_NUM_PAGES) < 0) indexToStart = 0;
+    else if ((indexToStart - MAX_NUM_PAGES/2) < 0) indexToStart = 0;
     return indexToStart;
 }
 -(void)addItemsToScrollView{

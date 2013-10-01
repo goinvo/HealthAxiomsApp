@@ -59,8 +59,7 @@ static HAModel *instance = nil;
         //Sorting the entries in the array based on Index
         NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES];
         _axiomCardsList = [NSMutableArray arrayWithArray:[_axiomCardsList sortedArrayUsingDescriptors:@[descriptor]] ];
-        
-        NSLog(@"sorted List is %@", _axiomCardsList);
+
     }
     return self;
 }

@@ -209,7 +209,7 @@
             if (case1 &&case2 && !needToChange) {
                 NSLog(@"called");
 
-                [self.frontImageView setImage:[self imageForBakcView:@"Card-Back" flipped:YES]];
+                [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:YES]];
                 needToChange = YES;
             }
             if (!case1 && case2) {
@@ -224,23 +224,51 @@
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     
     //    NSLog(@"touches ended");
+    float angleRot = [self persPectiveRotation];
+    NSLog(@"angle Rot is %f", angleRot);
+    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+
+    if(isFront && angleRot >0){
     
-    if (isFront && RADIANS_TO_DEGREES(M_PI * rotation)) {
+        rotationAndPerspectiveTransform = self.frontImageView.layer.transform;
+        //rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
+                                                              , (M_PI/180)*(179.0 - angleRot)
+                                                              , 1.0f
+                                                              , 0.0f
+                                                              , 0.0f);
+        [self addAnimationWithTransform:rotationAndPerspectiveTransform
+                                options:@{@"TransformAnimation": @"frontToBack"}];
         
-        
-        CABasicAnimation *animation = [self animationForKeyPath:@"transform"
-                                                        options:@{@"TransformAnimation": @"resetFrontImage"}
-                                                      transform:CATransform3DIdentity];
-        animation.delegate = self;
-        [self.frontImageView.layer addAnimation:animation forKey:@"transform"];
+    }else if (!isFront && angleRot <0){
+    
+        rotationAndPerspectiveTransform = self.frontImageView.layer.transform;
+        //rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
+                                                              , M_PI/180 * -(359.9f -angleRot)
+                                                              , 1.0f
+                                                              , 0.0f
+                                                              , 0.0f);
+        [self addAnimationWithTransform:rotationAndPerspectiveTransform
+                                options:@{@"TransformAnimation": @"backToFront"}];
     }
+    
+//    if (isFront && RADIANS_TO_DEGREES(M_PI * rotation)) {
+//        
+//        
+//        CABasicAnimation *animation = [self animationForKeyPath:@"transform"
+//                                                        options:@{@"TransformAnimation": @"resetFrontImage"}
+//                                                      transform:CATransform3DIdentity];
+//        animation.delegate = self;
+//        [self.frontImageView.layer addAnimation:animation forKey:@"transform"];
+//    }
     
     needToChange = NO;
 }
 
 #pragma mark Creating the back image with text
 //Creating the back image with text
--(UIImage *)imageForBakcView:(NSString *)imgName flipped:(BOOL)isFlipped{
+-(UIImage *)imageForBackView:(NSString *)imgName flipped:(BOOL)isFlipped{
     
     UIImage *imgToReturn = nil;
     UIImage *image = (isFlipped)?[UIImage imageWithCGImage:[UIImage imageNamed:imgName].CGImage
@@ -262,22 +290,6 @@
     [self drawTitleInContext:UIGraphicsGetCurrentContext()
                       ofSize:self.frontImageView.bounds.size
                      flipped:isFlipped];
-//    NSString *fontTitle =@"Avenir-Black";
-//    CTFontRef fontRefTitle = CTFontCreateWithName((CFStringRef)fontTitle,
-//                                             20.0f, NULL);
-//    NSDictionary* nameAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-//                           (id)[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f].CGColor, kCTForegroundColorAttributeName,
-//                           (__bridge id)fontRefTitle, kCTFontAttributeName,
-//                           nil];
-//    
-//    NSAttributedString* attStringTitle = [[NSAttributedString alloc]
-//                                     initWithString:[_modelCard.axiomTitle uppercaseString]
-//                                     attributes:nameAttrs]; //2
-//    
-//    CGSize titleSize = [attStringTitle size];
-//    
-//    [attStringTitle drawAtPoint:CGPointMake((imgSize.width - titleSize.width)*0.5, TEXT_VIEW_PADDING)];
-
     
 //draw string
     [self drawTextInContext:UIGraphicsGetCurrentContext()
@@ -388,23 +400,30 @@
     CFRelease(framesetter);
 }
 
+-(float)persPectiveRotation{
+
+    CALayer* layer = [self.frontImageView.layer presentationLayer];
+    
+    CATransform3D rotationTransform = [(CALayer *)[layer presentationLayer] transform];
+    
+    float deg = RADIANS_TO_DEGREES(atan2(rotationTransform.m23, rotationTransform.m22));
+    
+    NSLog(@"rad To Degree is %f", deg);
+    return deg;
+}
 
 #pragma mark handle the change in views visibility
 
 -(void)checkAnimations:(id)sender{
     
-    CALayer* layer = [self.frontImageView.layer presentationLayer];
-    
-    CATransform3D rotationTransform = [(CALayer *)[layer presentationLayer] transform];
-    
-    float radToDeg = RADIANS_TO_DEGREES(atan2(rotationTransform.m23, rotationTransform.m22));
+    float radToDeg = [self persPectiveRotation];
     
     NSLog(@"rad To Degree is %f", radToDeg);
     
     if (radToDeg >=30.0 && isFront) {
         self.frontImageView.image = nil;
 
-        [self.frontImageView setImage:[self imageForBakcView:@"Card-Back" flipped:YES]];
+        [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:YES]];
         [animTimer invalidate];
         NSLog(@"changing contents");
     }
@@ -459,7 +478,7 @@
     if (flag) {
 
         rotation = 0;
-//        self.frontImageView.layer.transform = CATransform3DIdentity;
+        self.frontImageView.layer.transform = CATransform3DIdentity;
         [self.frontImageView.layer removeAllAnimations];
         
         NSString *animKeyValue = [anim valueForKey:@"TransformAnimation"];
@@ -472,7 +491,7 @@
         else if ([animKeyValue isEqual:@"frontToBack"]){
             
             isFront = NO;
-            [self.frontImageView setImage:[self imageForBakcView:@"Card-Back" flipped:NO]];
+            [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:NO]];
         }
     }
     

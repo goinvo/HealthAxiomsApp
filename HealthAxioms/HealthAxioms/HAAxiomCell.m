@@ -48,6 +48,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^(){
                 [self.imgView setImage:img];
+                [self.imgView setNeedsDisplay];
             });
         });
     }

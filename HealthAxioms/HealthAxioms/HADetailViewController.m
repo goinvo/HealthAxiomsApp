@@ -18,6 +18,7 @@
 #define MAX_NUM_PAGES 5
 
 @interface HADetailViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 
 @property (nonatomic, strong)HAModel *axiomsModel;
 @property (nonatomic, strong)NSMutableArray *currIndexes;
@@ -153,6 +154,9 @@
 
 -(IBAction)handleTap:(id)sender{
     
+    [self.navBar setHidden:YES];
+    [self.miniAxiomPicker setHidden:YES];
+    [self.view setBackgroundColor:[UIColor clearColor]];
     __weak UIView *selfView = self.view;
     [UIView animateWithDuration:0.5
                           delay:0.0
@@ -164,6 +168,7 @@
                          float shrinkScaleX = self.initRect.size.width/[UIScreen mainScreen].bounds.size.width;
                          [selfView setCenter:CGPointMake(_initRect.origin.x+ _initRect.size.width*0.5,_initRect.origin.y+_initRect.size.height*0.5)];
                          [selfView setTransform:CGAffineTransformScale(CGAffineTransformIdentity,shrinkScaleX, shrinkScaleY )];
+                        
                      }
                      completion:^(BOOL finished){
                          

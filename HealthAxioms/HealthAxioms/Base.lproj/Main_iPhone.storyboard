@@ -171,6 +171,7 @@
                     <connections>
                         <outlet property="frontScroll" destination="iKE-Rg-uzH" id="Bpc-TL-sDD"/>
                         <outlet property="miniAxiomPicker" destination="zyK-hx-SPp" id="csK-Tq-Epn"/>
+                        <outlet property="navBar" destination="zir-xL-00d" id="Nzl-sM-Xpo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ve-a4-80d" userLabel="First Responder" sceneMemberID="firstResponder"/>

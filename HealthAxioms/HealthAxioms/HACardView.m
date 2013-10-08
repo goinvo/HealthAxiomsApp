@@ -382,6 +382,7 @@ int titleLines = 1;
     CFRelease(framesetter);
 
     CGSize strSize = [attString size];
+    attString = nil;
     return strSize;
     
 }

@@ -297,7 +297,7 @@
 
     [scrollView becomeFirstResponder];
 
-    NSLog(@"scroll next responder is %@", scrollView.nextResponder);
+//    NSLog(@"scroll next responder is %@", scrollView.nextResponder);
     //Checking to see if the scrollview belongs to a mini UIcollectionView Picker
 }
 
@@ -451,13 +451,35 @@
         UIImage *frontImage = [UIImage imageNamed:cardToAttach.frontImage];
         [mailVC addAttachmentData:[NSData dataWithData:UIImageJPEGRepresentation(frontImage, 1.0)]
                          mimeType:@"jpg"
-                         fileName:cardToAttach.frontImage];
+                         fileName:[NSString stringWithFormat:@"%@.jpg",cardToAttach.frontImage]];
         
-        UIImage *backImage = [UIImage imageNamed:@"Tmp"];
-        [mailVC addAttachmentData:[NSData dataWithData:UIImageJPEGRepresentation(backImage, 1.0)]
-                         mimeType:@"jpg"
-                         fileName:cardToAttach.frontImage];
+//        NSPredicate *pred = [NSPredicate predicateWithFormat:@"modelCard.index = %f",cardToAttach.index];
+//        NSArray *arr = [self.frontScroll.subviews filteredArrayUsingPredicate:pred];
+        
+        __weak  NSArray *views = self.frontScroll.subviews;
+        __block  UIImage *backImage = nil;
+        [views enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+        
+            if ([obj isKindOfClass:[HACardView class]]) {
+                
+                HACardView  *card = (HACardView *)obj;
+                HABaseCard *model = card.modelCard;
+                int index2 = model.index;
+                //Index for comparison calculated based on the direction of scroll
+                if (index2 == cardToAttach.index) {
+                    *stop = YES;
+                    backImage = [card imageForBackView:@"Card-Back"
+                                               flipped:NO];
+                }
+            }
 
+        }];
+        
+        if(backImage){
+            [mailVC addAttachmentData:[NSData dataWithData:UIImageJPEGRepresentation(backImage, 1.0)]
+                             mimeType:@"jpg"
+                             fileName:[NSString stringWithFormat:@"%@.jpg",cardToAttach.backImage]];
+        }
         if (cardToAttach) {
 
             [mailVC setMessageBody:cardToAttach.axiomText isHTML:YES];
@@ -487,6 +509,7 @@
                              completion:nil];
 }
 
+#pragma mark manage the card state while placing it back in deck
 
 -(void)makeCardHandlePlacingInDeck{
 
@@ -508,7 +531,6 @@
         }
         
     }];
-
 }
 #pragma mark -
 @end

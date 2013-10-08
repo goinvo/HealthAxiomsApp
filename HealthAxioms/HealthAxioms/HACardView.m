@@ -20,6 +20,8 @@
 
 @property (nonatomic, assign) int fontSize;
 @property (nonatomic, weak) UIImageView *frontImageView;
+@property (nonatomic, weak) UISwipeGestureRecognizer *upSwipe;
+@property (nonatomic, weak) UISwipeGestureRecognizer *downSwipe;
 
 @end
 
@@ -33,13 +35,14 @@
     CGPoint preTouchLocation;
     BOOL needToChange;
     NSTimer *animTimer;
+
 }
 
 - (id)initWithFrame:(CGRect)frame model:(HABaseCard *)card
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        
 //Initializing Local Variables
         isFront = YES;
         _modelCard = card;
@@ -54,7 +57,7 @@
 //Setting the Image based on the state
         NSString *imgNameToUse = (_modelCard.isFront)? _modelCard.frontImage :
                                                         _modelCard.backImage;
-        
+
         UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [image setImage:[UIImage imageNamed:imgNameToUse]];
         [self addSubview:image];
@@ -62,8 +65,8 @@
         
 //Setting backGround Color
 #warning Comment this to remove image background color
-        [self.frontImageView setBackgroundColor:[UIColor blackColor]];
-     
+        //[self.frontImageView setBackgroundColor:[UIColor blackColor]];
+
     }
     return self;
 }
@@ -77,7 +80,7 @@
     upReco.delegate = self;
     upReco.numberOfTouchesRequired = 1;
     [self addGestureRecognizer:upReco];
-    
+    self.upSwipe = upReco;
     
     UISwipeGestureRecognizer *downReco = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(handleSwipe:)];
@@ -85,6 +88,7 @@
     downReco.delegate = self;
     downReco.numberOfTouchesRequired = 1;
     [self addGestureRecognizer:downReco];
+    self.downSwipe = downReco;
 
 }
 
@@ -156,11 +160,16 @@
     
     NSLog(@"started");
     preTouchLocation = [[touches anyObject] locationInView:self];
+    
+    [self.upSwipe setEnabled:NO];
+    [self.downSwipe setEnabled:NO];
 }
 
 -(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
 
     [super touchesCancelled:touches withEvent:event];
+    [self.upSwipe setEnabled:YES];
+    [self.downSwipe setEnabled:YES];
 }
 
 -(float)rotationFromNewPoint:(CGPoint)newPoint{
@@ -184,7 +193,7 @@
     if([self.nextResponder isKindOfClass:[UIScrollView class]] ){
         
         UIScrollView *scrollParent = (UIScrollView *)self.nextResponder;
-//CHecking to see if the scrollview is not dragging
+//Checking to see if the scrollview is not dragging
         if(!scrollParent.isDragging){
             
             CGPoint currPoint  = [[touches anyObject]locationInView:self];
@@ -197,14 +206,22 @@
                                                                   , 0.0f
                                                                   , 0.0f);
 //Setting the image transform to the new one
+//TODO: Check for current state and based on that allow the rotation to be applied
+/*
+    1) isFront and +rotation - allow
+               and -rotation - allow to certain and then snap back 
+ 
+    2) !isFront and -rotation - allow
+                and +rotation - allow to certain and then snap back
+*/
             self.frontImageView.layer.transform = rotationAndPerspectiveTransform;
           
 //Finding the angle of rotation (tan∆ = y/x)
             float angleRot = RADIANS_TO_DEGREES(atan2(rotationAndPerspectiveTransform.m23, rotationAndPerspectiveTransform.m22));
- // NSLog(@"rotation is %f", rotation);
+            NSLog(@"angleRot is %f", angleRot);
             
-            BOOL case1 =(angleRot >=90)?YES : NO;
-            BOOL case2 = (angleRot >0.0)?YES :NO;
+            BOOL case1 = (angleRot >=90)?YES : NO;
+            BOOL case2 = (angleRot >0.0)?YES : NO;
             
             if (case1 &&case2 && !needToChange) {
                 NSLog(@"called");
@@ -212,9 +229,19 @@
                 [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:YES]];
                 needToChange = YES;
             }
-            if (!case1 && case2) {
+            else if (!case2 && angleRot < -89.0f) {
+//drawing the image upsideDown
+                UIImage *image = [UIImage imageWithCGImage:[UIImage imageNamed:_modelCard.frontImage].CGImage
+                                                     scale:2.0
+                                               orientation:UIImageOrientationDownMirrored];
+                CGSize imgSize = self.frontImageView.bounds.size;
                 
-                [self.frontImageView setImage:[UIImage imageNamed:_modelCard.frontImage]];
+                UIGraphicsBeginImageContextWithOptions(imgSize, NO, 2.0);
+                [image drawAtPoint:CGPointMake(0, 0)];
+                image = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+
+                [self.frontImageView setImage:image];
             }
             preTouchLocation = currPoint;
         }
@@ -243,7 +270,7 @@
     }else if (!isFront && angleRot <0){
     
         rotationAndPerspectiveTransform = self.frontImageView.layer.transform;
-        //rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
+//        rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
         rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
                                                               , M_PI/180 * -(359.9f -angleRot)
                                                               , 1.0f
@@ -253,21 +280,14 @@
                                 options:@{@"TransformAnimation": @"backToFront"}];
     }
     
-//    if (isFront && RADIANS_TO_DEGREES(M_PI * rotation)) {
-//        
-//        
-//        CABasicAnimation *animation = [self animationForKeyPath:@"transform"
-//                                                        options:@{@"TransformAnimation": @"resetFrontImage"}
-//                                                      transform:CATransform3DIdentity];
-//        animation.delegate = self;
-//        [self.frontImageView.layer addAnimation:animation forKey:@"transform"];
-//    }
-    
     needToChange = NO;
+    [self.upSwipe setEnabled:YES];
+    [self.downSwipe setEnabled:YES];
 }
 
 #pragma mark Creating the back image with text
 //Creating the back image with text
+
 -(UIImage *)imageForBackView:(NSString *)imgName flipped:(BOOL)isFlipped{
     
     UIImage *imgToReturn = nil;
@@ -279,25 +299,27 @@
     CGSize imgSize = self.frontImageView.bounds.size;
     
     UIGraphicsBeginImageContextWithOptions(imgSize, NO, 2.0);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
     //drawing the image
     [image drawInRect:self.frontImageView.bounds];
-    //[image drawAtPoint:CGPointMake(0, 0)];
-    
-    //creating the text
-    UIGraphicsPushContext(UIGraphicsGetCurrentContext());
 
+    UIGraphicsPushContext(ctx);
+    
     //draw title
-    [self drawTitleInContext:UIGraphicsGetCurrentContext()
-                      ofSize:self.frontImageView.bounds.size
-                     flipped:isFlipped];
+    CGSize titleSize =   [self drawTitleInContext:ctx
+                                           ofSize:self.frontImageView.bounds.size
+                                          flipped:isFlipped];
     
 //draw string
-    [self drawTextInContext:UIGraphicsGetCurrentContext()
-                     ofSize:self.frontImageView.bounds.size
+    //CGSizeMake(self.frontImageView.bounds.size.width, self.frontImageView.bounds.size.height - titleSize.height)
+    [self drawTextInContext:ctx
+                     ofSize:titleSize
                     flipped:isFlipped];
     
     UIGraphicsPopContext();
-        //creating image from the current context
+    
     imgToReturn = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
@@ -306,7 +328,10 @@
     return imgToReturn;
 }
 
--(void)drawTitleInContext:(CGContextRef)graphicsCtx ofSize:(CGSize)size flipped:(BOOL)isFlip {
+//num of lines in the title
+int titleLines = 1;
+
+-(CGSize)drawTitleInContext:(CGContextRef)graphicsCtx ofSize:(CGSize)size flipped:(BOOL)isFlip {
     
     static  NSString *titleFont =@"Kremlin";
     
@@ -327,7 +352,7 @@
     NSMutableAttributedString* attString = [[NSMutableAttributedString alloc]
                                      initWithString:[_modelCard.axiomTitle uppercaseString]
                                      attributes:attrs]; //2
-    
+
     NSInteger strLength = [attString length];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     [style setAlignment:NSTextAlignmentCenter];
@@ -344,24 +369,33 @@
         CGContextScaleCTM(graphicsCtx, 1.0, -1.0);
     }
     
-    CTFrameDraw(frame, graphicsCtx); //4
+//Calculating number of lines in the title
+    CFArrayRef array = CTFrameGetLines(frame);
+    CFIndex index = CFArrayGetCount(array);
+    titleLines = index;
+    NSLog(@"num of lines is %ld", index);
     
+    CTFrameDraw(frame, graphicsCtx); //4
     CFRelease(frame); //5
     CFRelease(path);
     CFRelease(framesetter);
+
+    CGSize strSize = [attString size];
+    return strSize;
+    
 }
 
 
 
 -(void)drawTextInContext:(CGContextRef)graphicsCtx ofSize:(CGSize)size flipped:(BOOL)isFlip {
 
-    static  NSString *font =@"GillSans";
+    static  NSString *font = @"GillSans";
     
     CGMutablePathRef path = CGPathCreateMutable(); //1
     CGPathAddRect(path, NULL, CGRectMake(TEXT_VIEW_PADDING *1.25
-                                         , TEXT_VIEW_PADDING
-                                         , size.width - TEXT_VIEW_PADDING *2.5
-                                         , size.height - TEXT_VIEW_PADDING *6.5) );
+                                         ,( self.frame.origin.y -size.height*titleLines)
+                                         , self.frame.size.width - TEXT_VIEW_PADDING *2.5
+                                         , self.frame.size.height - TEXT_VIEW_PADDING *6.5) );
     
     CTFontRef fontRef = CTFontCreateWithName((CFStringRef)font,
                                              16.0f, NULL);
@@ -388,13 +422,12 @@
     CTFrameRef frame = CTFramesetterCreateFrame(framesetter,
                                                 CFRangeMake(0, [attString length]), path, NULL);
     
-//    if (!isFlip) {
-//        CGContextTranslateCTM(graphicsCtx, 0, size.height);
-//        CGContextScaleCTM(graphicsCtx, 1.0, -1.0);
-//    }
+    /*
+     did not flip the coordinate system since, it was already flipped while drawing the title.
+     And we are still using the same context to draw text
+     */
     
     CTFrameDraw(frame, graphicsCtx); //4
-    
     CFRelease(frame); //5
     CFRelease(path);
     CFRelease(framesetter);
@@ -425,7 +458,7 @@
 
         [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:YES]];
         [animTimer invalidate];
-        NSLog(@"changing contents");
+        NSLog(@"changing contents +radToDeg");
     }
     else if (radToDeg <0.0 && !isFront) {
         self.frontImageView.image = nil;
@@ -443,10 +476,10 @@
         [self.frontImageView setImage:image];
         
         [animTimer invalidate];
-        NSLog(@"changing contents");
+        NSLog(@"changing contents -radToDeg");
     }
     
-    NSLog(@"front view bounds are %@", NSStringFromCGRect(self.frontImageView.bounds));
+//    NSLog(@"front view bounds are %@", NSStringFromCGRect(self.frontImageView.bounds));
     
 //    NSLog(@"angle is %f",RADIANS_TO_DEGREES(atan2(rotationTransform.m23, rotationTransform.m22)));
 
@@ -473,8 +506,8 @@
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
 
-    NSLog(@"called for animation %@",[anim description]);
-  if([animTimer isValid])    [animTimer invalidate];
+    NSLog(@"Handling End of animation %@",[anim description]);
+    if([animTimer isValid])    [animTimer invalidate];
     if (flag) {
 
         rotation = 0;
@@ -495,7 +528,7 @@
         }
     }
     
-    NSLog(@"front view bounds  at end are %@", NSStringFromCGRect(self.frontImageView.bounds));
+//    NSLog(@"front view bounds  at end are %@", NSStringFromCGRect(self.frontImageView.bounds));
 }
 
 @end

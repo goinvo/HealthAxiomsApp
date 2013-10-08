@@ -207,7 +207,7 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     if (![visibleIndexes containsObject:indexPathToUse]) {
         //means the item is not visible right now
         [self.axiomsCollectionView scrollToItemAtIndexPath:indexPathToUse
-                                          atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                          atScrollPosition:UICollectionViewScrollPositionBottom
                                                   animated:NO];
         [self.axiomsCollectionView reloadItemsAtIndexPaths:@[indexPathToUse]];
     }

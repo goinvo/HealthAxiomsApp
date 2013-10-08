@@ -44,6 +44,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    //TODO: Hide the Navigation Bar with Animation
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -166,7 +168,7 @@
                      animations:^(){
                          float shrinkScaleY = self.initRect.size.height/470.0;
                          float shrinkScaleX = self.initRect.size.width/[UIScreen mainScreen].bounds.size.width;
-                         [selfView setCenter:CGPointMake(_initRect.origin.x+ _initRect.size.width*0.5,_initRect.origin.y+_initRect.size.height*0.5)];
+                         [selfView setCenter:CGPointMake(self.initRect.origin.x+ self.initRect.size.width*0.5,self.initRect.origin.y+self.initRect.size.height*0.5)];
                          [selfView setTransform:CGAffineTransformScale(CGAffineTransformIdentity,shrinkScaleX, shrinkScaleY )];
                         
                      }

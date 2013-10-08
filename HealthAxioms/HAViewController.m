@@ -104,29 +104,31 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     CGRect newFrame = CGRectMake(cell.frame.origin.x, yOffset, cell.frame.size.width, cell.frame.size.height);
     
     HADetailViewController *viewCtrl = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
-    [viewCtrl.view setFrame:newFrame];
+    
     viewCtrl.startAxiomIndex = indexPath.row +1;
     viewCtrl.initRect = newFrame;
-    [viewCtrl addItemsToScrollView];
+    CGPoint newCenter = CGPointMake(cell.center.x, cell.center.y - collectionView.contentOffset.y);
+    [viewCtrl.view setCenter:newCenter];
     [self.view addSubview:viewCtrl.view];
-
+    
     
     float win_Width =[UIScreen mainScreen].bounds.size.width;
     float win_Height =[UIScreen mainScreen].applicationFrame.size.height;
     
-//    float xScale = win_Width / cell.frame.size.width;
-//    float yScale = win_Height / cell.frame.size.height;
-    
+    float xScale = win_Width / cell.frame.size.width;
+    float yScale = win_Height / cell.frame.size.height;
+    [viewCtrl.view setTransform:CGAffineTransformMakeScale(1/xScale, 1/yScale) ];
     
     __weak UIView *selfView = viewCtrl.view;
     [UIView animateWithDuration:0.5
                           delay:0.0
-         usingSpringWithDamping:0.9
-          initialSpringVelocity:0.5
-                        options: UIViewAnimationOptionAllowAnimatedContent| UIViewAnimationOptionBeginFromCurrentState
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.2
+                        options: UIViewAnimationOptionCurveEaseOut
                      animations:^(){
                          [selfView setCenter:CGPointMake(win_Width*0.5, win_Height*0.5)];
-                         [viewCtrl.view setFrame:self.view.frame];
+                          [viewCtrl.view setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
+
                      }
                      completion:^(BOOL finished){
                      
@@ -139,7 +141,7 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
                                        context:nil];
 
                              viewCtrl.delegate = self;
-                             [viewCtrl.view setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
+                            
                              [viewCtrl.view setFrame:self.view.frame];
                              [viewCtrl didMoveToParentViewController:self];
                              

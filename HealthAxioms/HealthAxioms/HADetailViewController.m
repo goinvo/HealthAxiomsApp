@@ -35,12 +35,14 @@
 
 #pragma mark view related methods
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     //TODO: Hide the Navigation Bar with Animation
-    
+        [self addItemsToScrollView];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,14 +137,26 @@
 
     BOOL toReturn = YES;
     
-    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+//    NSLog(@"gesture is Kind Of Class %@", [gestureRecognizer class]);
+    
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] || [gestureRecognizer.view isKindOfClass:[UIScrollView class] ]) {
         
-        UIPanGestureRecognizer *panReco = (UIPanGestureRecognizer *)gestureRecognizer;
-        if (([panReco translationInView:self.frontScroll].x - 30.0) < [panReco translationInView:self.frontScroll].y) {
-            toReturn = NO;
-            [self.frontScroll resignFirstResponder];
-            [panReco setTranslation:CGPointZero inView:self.view];
-           // NSLog(@"detected up down pan");
+        
+        if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]){
+            UIPanGestureRecognizer *panReco = (UIPanGestureRecognizer *)gestureRecognizer;
+            
+//            NSLog(@"translation in x:%f y:%f",[panReco translationInView:self.frontScroll].x,[panReco translationInView:self.frontScroll].y );
+            
+            if ([panReco translationInView:self.frontScroll].x < [panReco translationInView:self.frontScroll].y ) {
+
+                toReturn = NO;
+                [self.frontScroll resignFirstResponder];
+                [panReco setTranslation:CGPointZero inView:self.view];
+                // NSLog(@"detected up down pan");
+            }
+        }
+        else if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]){
+
         }
     }
 //    NSLog(@"returning %d",toReturn);

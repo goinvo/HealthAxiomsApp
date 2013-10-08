@@ -64,7 +64,6 @@
         self.frontImageView = image;
         
 //Setting backGround Color
-#warning Comment this to remove image background color
         [self.frontImageView setBackgroundColor:[UIColor blackColor]];
 //        [self.layer setCornerRadius:6.0f];
 
@@ -104,7 +103,7 @@
         rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
 //        CABasicAnimation *animation;
         if (isUp) {
-            NSLog(@"swipe Up Ended");
+//            NSLog(@"swipe Up Ended");
             if (isFront) {
                 //Animate from front to back
                 rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
@@ -120,7 +119,7 @@
             }
         }
         else{
-            NSLog(@"swipe Down Ended");
+//            NSLog(@"swipe Down Ended");
             if (!isFront) {
                 //Animate from back to Front
                 rotationAndPerspectiveTransform = self.frontImageView.layer.transform;
@@ -375,7 +374,7 @@ int titleLines = 1;
     CFArrayRef array = CTFrameGetLines(frame);
     CFIndex index = CFArrayGetCount(array);
     titleLines = index;
-    NSLog(@"num of lines is %ld", index);
+//    NSLog(@"num of lines is %ld", index);
     
     CTFrameDraw(frame, graphicsCtx); //4
     CFRelease(frame); //5
@@ -443,7 +442,7 @@ int titleLines = 1;
     
     float deg = RADIANS_TO_DEGREES(atan2(rotationTransform.m23, rotationTransform.m22));
     
-    NSLog(@"rad To Degree is %f", deg);
+//    NSLog(@"rad To Degree is %f", deg);
     return deg;
 }
 
@@ -453,14 +452,14 @@ int titleLines = 1;
     
     float radToDeg = [self persPectiveRotation];
     
-    NSLog(@"rad To Degree is %f", radToDeg);
+//    NSLog(@"rad To Degree is %f", radToDeg);
     
     if (radToDeg >=30.0 && isFront) {
         self.frontImageView.image = nil;
 
         [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:YES]];
         [animTimer invalidate];
-        NSLog(@"changing contents +radToDeg");
+//        NSLog(@"changing contents +radToDeg");
     }
     else if (radToDeg <-30.0 && !isFront) {
         self.frontImageView.image = nil;
@@ -478,7 +477,7 @@ int titleLines = 1;
         [self.frontImageView setImage:image];
         
         [animTimer invalidate];
-        NSLog(@"changing contents -radToDeg");
+//        NSLog(@"changing contents -radToDeg");
     }
     
 //    NSLog(@"front view bounds are %@", NSStringFromCGRect(self.frontImageView.bounds));
@@ -508,7 +507,7 @@ int titleLines = 1;
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
 
-    NSLog(@"Handling End of animation %@",[anim description]);
+//    NSLog(@"Handling End of animation %@",[anim description]);
     if([animTimer isValid])    [animTimer invalidate];
     if (flag) {
 

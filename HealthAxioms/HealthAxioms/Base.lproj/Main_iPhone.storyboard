@@ -84,7 +84,7 @@
         <!--Detail View Controller-->
         <scene sceneID="XFL-5K-Xpa">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" autoresizesArchivedViewToFullSize="NO" providesPresentationContextTransitionStyle="YES" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VGN-Dy-8dV" customClass="HADetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VGN-Dy-8dV" customClass="HADetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XH8-DG-4Zz"/>
                         <viewControllerLayoutGuide type="bottom" id="7sG-sG-62U"/>
@@ -93,7 +93,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" directionalLockEnabled="YES" bounces="NO" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" canCancelContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKE-Rg-uzH">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" canCancelContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKE-Rg-uzH">
                                 <rect key="frame" x="0.0" y="-3" width="320" height="526"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <gestureRecognizers/>
@@ -160,7 +160,9 @@
                             <constraint firstItem="zir-xL-00d" firstAttribute="leading" secondItem="iKE-Rg-uzH" secondAttribute="leading" id="1iQ-iH-OL8"/>
                             <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="top" constant="3" id="6WS-Nj-cVA"/>
                             <constraint firstItem="iKE-Rg-uzH" firstAttribute="leading" secondItem="d0y-Ld-khq" secondAttribute="leading" id="Aiw-QP-gPx"/>
+                            <constraint firstAttribute="centerY" secondItem="iKE-Rg-uzH" secondAttribute="centerY" constant="24" id="Exd-yI-Vuf"/>
                             <constraint firstItem="7sG-sG-62U" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="bottom" constant="45" id="H0U-GX-7vo"/>
+                            <constraint firstAttribute="centerX" secondItem="iKE-Rg-uzH" secondAttribute="centerX" id="ItO-Md-Ns5"/>
                             <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="d0y-Ld-khq" secondAttribute="top" id="Kmw-nL-q6T"/>
                             <constraint firstAttribute="centerX" secondItem="zir-xL-00d" secondAttribute="centerX" id="dFx-4b-jhx"/>
                             <constraint firstAttribute="trailing" secondItem="iKE-Rg-uzH" secondAttribute="trailing" id="rMt-fp-ezl"/>

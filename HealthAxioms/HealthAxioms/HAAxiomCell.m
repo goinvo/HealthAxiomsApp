@@ -35,8 +35,8 @@
     NSString *imgName = self.axiomCard.frontImage;
     self.imgView.image = nil;
     if (imgName && [imgName length]>1) {
-        
-        NSString *encodedStr = [[imgName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+        NSString *name =[imgName stringByAppendingString:[NSString stringWithFormat:@"%f",self.frame.size.height]] ;
+        NSString *encodedStr = [[name dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
         
             dispatch_queue_t myQue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
             dispatch_async(myQue, ^(){
@@ -55,7 +55,8 @@
                     UIGraphicsEndImageContext();
 //Storing small image to userDefaults                    
                     NSData *imageDta = [NSKeyedArchiver archivedDataWithRootObject:imge];
-                    [[NSUserDefaults standardUserDefaults] setObject:imageDta forKey:[[imgName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
+                    NSString *name =[imgName stringByAppendingString:[NSString stringWithFormat:@"%f",self.frame.size.height]] ;
+                    [[NSUserDefaults standardUserDefaults] setObject:imageDta forKey:[[name dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^(){

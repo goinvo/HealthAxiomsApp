@@ -35,11 +35,6 @@
 
 #pragma mark view related methods
 
--(IBAction)actionItemTapped:(id)sender{
-
-    NSLog(@"I was tapped");
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -143,7 +138,7 @@
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         
         UIPanGestureRecognizer *panReco = (UIPanGestureRecognizer *)gestureRecognizer;
-        if ([panReco translationInView:self.frontScroll].x < [panReco translationInView:self.frontScroll].y) {
+        if (([panReco translationInView:self.frontScroll].x - 30.0) < [panReco translationInView:self.frontScroll].y) {
             toReturn = NO;
             [self.frontScroll resignFirstResponder];
             [panReco setTranslation:CGPointZero inView:self.view];
@@ -159,6 +154,8 @@
     [self.navBar setHidden:YES];
     [self.miniAxiomPicker setHidden:YES];
     [self.view setBackgroundColor:[UIColor clearColor]];
+    [self makeCardHandlePlacingInDeck];
+    //TODO: Make the back go to front
     __weak UIView *selfView = self.view;
     [UIView animateWithDuration:0.5
                           delay:0.0
@@ -410,4 +407,86 @@
     [self.frontScroll scrollRectToVisible:CGRectMake(newX, newY, self.frontScroll.frame.size.width, self.frontScroll.frame.size.height)
                                  animated:YES];
 }
+
+#pragma mark Handle navBar item tap and Mail composer
+
+-(IBAction)actionItemTapped:(id)sender{
+    
+    NSLog(@"I was tapped");
+    
+    if (![MFMailComposeViewController canSendMail]) {
+        //        TODO:Handle Alret
+        NSLog(@"Create an Alert");
+    }
+    else{
+        
+        MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc]init];
+        mailVC.mailComposeDelegate = self;
+
+        HABaseCard *cardToAttach = [self cardFromScrollOffset:scrollLastOffset];
+        [mailVC setSubject:[NSString stringWithFormat:@"Health Axiom: %@", cardToAttach.axiomTitle]];
+        
+        UIImage *frontImage = [UIImage imageNamed:cardToAttach.frontImage];
+        [mailVC addAttachmentData:[NSData dataWithData:UIImageJPEGRepresentation(frontImage, 1.0)]
+                         mimeType:@"jpg"
+                         fileName:cardToAttach.frontImage];
+        
+        UIImage *backImage = [UIImage imageNamed:@"Tmp"];
+        [mailVC addAttachmentData:[NSData dataWithData:UIImageJPEGRepresentation(backImage, 1.0)]
+                         mimeType:@"jpg"
+                         fileName:cardToAttach.frontImage];
+
+        if (cardToAttach) {
+
+            [mailVC setMessageBody:cardToAttach.axiomText isHTML:YES];
+        }
+        
+
+        [self presentViewController:mailVC
+                           animated:YES
+                         completion:nil];
+    }
+}
+
+
+-(HABaseCard *)cardFromScrollOffset:(CGPoint)offset{
+
+    int cardNum = offset.x / self.frontScroll.frame.size.width;
+    
+    HABaseCard *card = [self.axiomsModel cardForIndex:cardNum];
+
+    return card;
+    
+}
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
+
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+}
+
+
+-(void)makeCardHandlePlacingInDeck{
+
+    int cardNum = scrollLastOffset.x / self.frontScroll.frame.size.width;
+    __weak NSArray *toIter = [self.frontScroll subviews] ;
+    
+    [toIter enumerateObjectsUsingBlock:^(id obj2, NSUInteger idx,BOOL *stop){
+        
+        if ([obj2 isKindOfClass:[HACardView class]]) {
+            
+            HACardView  *card = (HACardView *)obj2;
+            HABaseCard *model = card.modelCard;
+            int index2 = model.index-1;
+            //Index for comparison calculated based on the direction of scroll
+            if (index2 == cardNum) {
+                [card manageBackToDeck];
+                *stop = YES;
+            }
+        }
+        
+    }];
+
+}
+#pragma mark -
 @end

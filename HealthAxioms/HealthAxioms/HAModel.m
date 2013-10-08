@@ -68,6 +68,9 @@ static HAModel *instance = nil;
 
 -(HABaseCard *)cardForIndex:(int)indexOfCard{
     
+    if (indexOfCard >=0 && indexOfCard <= self.axiomCardsList.count) {
+        return self.axiomCardsList[indexOfCard];
+    }
     return nil;
 }
 

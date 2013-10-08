@@ -66,6 +66,7 @@
 //Setting backGround Color
 #warning Comment this to remove image background color
         //[self.frontImageView setBackgroundColor:[UIColor blackColor]];
+        [self.layer setCornerRadius:6.0f];
 
     }
     return self;
@@ -156,6 +157,7 @@
 
 #pragma mark manage touches
 
+/*
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
     NSLog(@"started");
@@ -207,13 +209,13 @@
                                                                   , 0.0f);
 //Setting the image transform to the new one
 //TODO: Check for current state and based on that allow the rotation to be applied
-/*
-    1) isFront and +rotation - allow
-               and -rotation - allow to certain and then snap back 
- 
-    2) !isFront and -rotation - allow
-                and +rotation - allow to certain and then snap back
-*/
+
+//    1) isFront and +rotation - allow
+//               and -rotation - allow to certain and then snap back 
+// 
+//    2) !isFront and -rotation - allow
+//                and +rotation - allow to certain and then snap back
+
             self.frontImageView.layer.transform = rotationAndPerspectiveTransform;
           
 //Finding the angle of rotation (tan∆ = y/x)
@@ -284,7 +286,7 @@
     [self.upSwipe setEnabled:YES];
     [self.downSwipe setEnabled:YES];
 }
-
+*/
 #pragma mark Creating the back image with text
 //Creating the back image with text
 
@@ -292,7 +294,7 @@
     
     UIImage *imgToReturn = nil;
     UIImage *image = (isFlipped)?[UIImage imageWithCGImage:[UIImage imageNamed:imgName].CGImage
-                                         scale:2.0
+                                                     scale:2.0
                                                orientation:UIImageOrientationDownMirrored] :
                                  [UIImage imageNamed:imgName];
     
@@ -529,6 +531,23 @@ int titleLines = 1;
     }
     
 //    NSLog(@"front view bounds  at end are %@", NSStringFromCGRect(self.frontImageView.bounds));
+}
+
+-(void)manageBackToDeck{
+
+   
+    if (!isFront) {
+        CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+        rotationAndPerspectiveTransform = self.frontImageView.layer.transform;
+        //rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
+        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
+                                                              , M_PI/180 * -179.9f
+                                                              , 1.0f
+                                                              , 0.0f
+                                                              , 0.0f);
+        [self addAnimationWithTransform:rotationAndPerspectiveTransform
+                                options:@{@"TransformAnimation": @"backToFront"}];
+    }
 }
 
 @end

@@ -26,7 +26,6 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
 @interface HAViewController () <HADetailViewCtrlDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *axiomsCollectionView;
-//@property (strong, nonatomic)  NSIndexPath *hiddenCellIndex;
 @property (nonatomic, assign) int hiddenCellIndex;
 @end
 

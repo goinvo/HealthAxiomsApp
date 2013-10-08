@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		761037C417FB62AF009C7250 /* fonts101.txt in Resources */ = {isa = PBXBuildFile; fileRef = 761037C217FB62AF009C7250 /* fonts101.txt */; };
 		761037C517FB62AF009C7250 /* kremlin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 761037C317FB62AF009C7250 /* kremlin.ttf */; };
+		761A71FB1804734900606851 /* HACacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A71FA1804734900606851 /* HACacheManager.m */; };
 		763B071717D0E3B60078F049 /* UITextView+HAAxiomStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */; };
 		76717FB417BD71C2009C5A05 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB317BD71C2009C5A05 /* Foundation.framework */; };
 		76717FB617BD71C2009C5A05 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB517BD71C2009C5A05 /* CoreGraphics.framework */; };
@@ -46,6 +47,8 @@
 /* Begin PBXFileReference section */
 		761037C217FB62AF009C7250 /* fonts101.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fonts101.txt; sourceTree = "<group>"; };
 		761037C317FB62AF009C7250 /* kremlin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kremlin.ttf; sourceTree = "<group>"; };
+		761A71F91804734900606851 /* HACacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACacheManager.h; sourceTree = "<group>"; };
+		761A71FA1804734900606851 /* HACacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACacheManager.m; sourceTree = "<group>"; };
 		763B071517D0E3B60078F049 /* UITextView+HAAxiomStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextView+HAAxiomStyle.h"; path = "Categories/UITextView+HAAxiomStyle.h"; sourceTree = "<group>"; };
 		763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextView+HAAxiomStyle.m"; path = "Categories/UITextView+HAAxiomStyle.m"; sourceTree = "<group>"; };
 		76717FB017BD71C2009C5A05 /* HealthAxioms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthAxioms.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +158,8 @@
 				76717FC317BD71C2009C5A05 /* HAAppDelegate.m */,
 				76717FCE17BD71C2009C5A05 /* Images.xcassets */,
 				76717FBA17BD71C2009C5A05 /* Supporting Files */,
+				761A71F91804734900606851 /* HACacheManager.h */,
+				761A71FA1804734900606851 /* HACacheManager.m */,
 			);
 			path = HealthAxioms;
 			sourceTree = "<group>";
@@ -332,6 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76ED656217C274A100316BDC /* HABaseCard.m in Sources */,
+				761A71FB1804734900606851 /* HACacheManager.m in Sources */,
 				76DFE7C617C2973200A3EBC4 /* HAAxiomCell.m in Sources */,
 				763B071717D0E3B60078F049 /* UITextView+HAAxiomStyle.m in Sources */,
 				76717FC017BD71C2009C5A05 /* main.m in Sources */,

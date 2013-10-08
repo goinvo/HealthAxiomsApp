@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
 @protocol HADetailViewCtrlDelegate <NSObject>
 
@@ -14,7 +15,7 @@
 
 @end
 
-@interface HADetailViewController : UIViewController <UIScrollViewDelegate , UIGestureRecognizerDelegate>
+@interface HADetailViewController : UIViewController <UIScrollViewDelegate , UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, assign) CGRect initRect;
 @property (nonatomic, weak)IBOutlet UIScrollView *frontScroll;

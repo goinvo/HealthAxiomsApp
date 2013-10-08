@@ -65,8 +65,8 @@
         
 //Setting backGround Color
 #warning Comment this to remove image background color
-        //[self.frontImageView setBackgroundColor:[UIColor blackColor]];
-        [self.layer setCornerRadius:6.0f];
+        [self.frontImageView setBackgroundColor:[UIColor blackColor]];
+//        [self.layer setCornerRadius:6.0f];
 
     }
     return self;
@@ -462,7 +462,7 @@ int titleLines = 1;
         [animTimer invalidate];
         NSLog(@"changing contents +radToDeg");
     }
-    else if (radToDeg <0.0 && !isFront) {
+    else if (radToDeg <-30.0 && !isFront) {
         self.frontImageView.image = nil;
         
         UIImage *image = [UIImage imageWithCGImage:[UIImage imageNamed:_modelCard.frontImage].CGImage

@@ -20,14 +20,13 @@
 -(void)awakeFromNib{
 
     [super awakeFromNib];
-//    NSLog(@"was Here!");
-//    [self setBackgroundColor:[UIColor redColor]];
+//Observing the value for model
     [self addObserver:self
            forKeyPath:@"axiomCard"
               options:NSKeyValueObservingOptionNew
               context:nil];
 //Rounding the Corner
-    [self.layer setCornerRadius:6.0f];
+    [self.imgView.layer setCornerRadius:6.0f];
     
 }
 
@@ -65,7 +64,6 @@
                     
                 });
             });
-
     }
 }
 

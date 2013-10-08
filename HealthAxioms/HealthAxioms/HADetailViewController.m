@@ -154,8 +154,9 @@
     [self.navBar setHidden:YES];
     [self.miniAxiomPicker setHidden:YES];
     [self.view setBackgroundColor:[UIColor clearColor]];
+// Making the card handle its state while being put back into decl
     [self makeCardHandlePlacingInDeck];
-    //TODO: Make the back go to front
+   
     __weak UIView *selfView = self.view;
     [UIView animateWithDuration:0.5
                           delay:0.0
@@ -417,6 +418,13 @@
     if (![MFMailComposeViewController canSendMail]) {
         //        TODO:Handle Alret
         NSLog(@"Create an Alert");
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Cannot send email"
+                                                       message:@"Please check email configuration"
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles: nil] ;
+        [alert show];
     }
     else{
         

@@ -155,9 +155,9 @@
                 // NSLog(@"detected up down pan");
             }
         }
-        else if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]){
-
-        }
+//        else if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]){
+//
+//        }
     }
 //    NSLog(@"returning %d",toReturn);
     return toReturn;
@@ -427,12 +427,9 @@
 
 -(IBAction)actionItemTapped:(id)sender{
     
-    NSLog(@"I was tapped");
     
     if (![MFMailComposeViewController canSendMail]) {
-        //        TODO:Handle Alret
-        NSLog(@"Create an Alert");
-        
+       
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Cannot send email"
                                                        message:@"Please check email configuration"
                                                       delegate:self
@@ -453,9 +450,8 @@
                          mimeType:@"jpg"
                          fileName:[NSString stringWithFormat:@"%@.jpg",cardToAttach.frontImage]];
         
-//        NSPredicate *pred = [NSPredicate predicateWithFormat:@"modelCard.index = %f",cardToAttach.index];
-//        NSArray *arr = [self.frontScroll.subviews filteredArrayUsingPredicate:pred];
-        
+//Iterating through the subViews to find the one in view and create
+//a back image to be added to the mail composer
         __weak  NSArray *views = self.frontScroll.subviews;
         __block  UIImage *backImage = nil;
         [views enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){

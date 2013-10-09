@@ -7,14 +7,18 @@
 //
 
 #import "HAAppDelegate.h"
+#import "TestFlight.h"
 
 @implementation HAAppDelegate
+
+static NSString *TestFLightToken = @"ba57b860-0af9-42b1-9a19-7de104340ca0";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     
 //    [application setStatusBarHidden:YES];
+//    [TestFlight takeOff:TestFLightToken];
     return YES;
 }
 							

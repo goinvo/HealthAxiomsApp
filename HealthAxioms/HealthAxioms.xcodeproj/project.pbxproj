@@ -10,6 +10,11 @@
 		761037C417FB62AF009C7250 /* fonts101.txt in Resources */ = {isa = PBXBuildFile; fileRef = 761037C217FB62AF009C7250 /* fonts101.txt */; };
 		761037C517FB62AF009C7250 /* kremlin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 761037C317FB62AF009C7250 /* kremlin.ttf */; };
 		761A71FB1804734900606851 /* HACacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A71FA1804734900606851 /* HACacheManager.m */; };
+		761A72031804AD6500606851 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 761A71FD1804AD6500606851 /* libTestFlight.a */; };
+		761A72041804AD6500606851 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 761A71FE1804AD6500606851 /* README.md */; };
+		761A72051804AD6500606851 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 761A71FF1804AD6500606851 /* release_notes.md */; };
+		761A72081804AE1000606851 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 761A72061804AE1000606851 /* libz.1.1.3.dylib */; };
+		761A72091804AE1000606851 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 761A72071804AE1000606851 /* libz.dylib */; };
 		763B071717D0E3B60078F049 /* UITextView+HAAxiomStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */; };
 		76717FB417BD71C2009C5A05 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB317BD71C2009C5A05 /* Foundation.framework */; };
 		76717FB617BD71C2009C5A05 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB517BD71C2009C5A05 /* CoreGraphics.framework */; };
@@ -49,6 +54,14 @@
 		761037C317FB62AF009C7250 /* kremlin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kremlin.ttf; sourceTree = "<group>"; };
 		761A71F91804734900606851 /* HACacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACacheManager.h; sourceTree = "<group>"; };
 		761A71FA1804734900606851 /* HACacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACacheManager.m; sourceTree = "<group>"; };
+		761A71FD1804AD6500606851 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		761A71FE1804AD6500606851 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		761A71FF1804AD6500606851 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		761A72001804AD6500606851 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		761A72011804AD6500606851 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		761A72021804AD6500606851 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		761A72061804AE1000606851 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		761A72071804AE1000606851 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		763B071517D0E3B60078F049 /* UITextView+HAAxiomStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextView+HAAxiomStyle.h"; path = "Categories/UITextView+HAAxiomStyle.h"; sourceTree = "<group>"; };
 		763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextView+HAAxiomStyle.m"; path = "Categories/UITextView+HAAxiomStyle.m"; sourceTree = "<group>"; };
 		76717FB017BD71C2009C5A05 /* HealthAxioms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthAxioms.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,9 +102,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761A72081804AE1000606851 /* libz.1.1.3.dylib in Frameworks */,
+				761A72091804AE1000606851 /* libz.dylib in Frameworks */,
 				76717FB617BD71C2009C5A05 /* CoreGraphics.framework in Frameworks */,
 				76717FB817BD71C2009C5A05 /* UIKit.framework in Frameworks */,
 				76717FB417BD71C2009C5A05 /* Foundation.framework in Frameworks */,
+				761A72031804AD6500606851 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +124,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		761A71FC1804AD4900606851 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				761A71FD1804AD6500606851 /* libTestFlight.a */,
+				761A71FE1804AD6500606851 /* README.md */,
+				761A71FF1804AD6500606851 /* release_notes.md */,
+				761A72001804AD6500606851 /* TestFlight.h */,
+				761A72011804AD6500606851 /* TestFlight+AsyncLogging.h */,
+				761A72021804AD6500606851 /* TestFlight+ManualSessions.h */,
+			);
+			name = TestFlight;
+			sourceTree = "<group>";
+		};
 		763B071817D0E4140078F049 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +149,7 @@
 		76717FA717BD71C2009C5A05 = {
 			isa = PBXGroup;
 			children = (
+				761A71FC1804AD4900606851 /* TestFlight */,
 				76717FB917BD71C2009C5A05 /* HealthAxioms */,
 				76717FDB17BD71C3009C5A05 /* HealthAxiomsTests */,
 				76717FB217BD71C2009C5A05 /* Frameworks */,
@@ -139,6 +169,8 @@
 		76717FB217BD71C2009C5A05 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				761A72061804AE1000606851 /* libz.1.1.3.dylib */,
+				761A72071804AE1000606851 /* libz.dylib */,
 				76717FB317BD71C2009C5A05 /* Foundation.framework */,
 				76717FB517BD71C2009C5A05 /* CoreGraphics.framework */,
 				76717FB717BD71C2009C5A05 /* UIKit.framework */,
@@ -311,12 +343,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761A72051804AD6500606851 /* release_notes.md in Resources */,
 				761037C417FB62AF009C7250 /* fonts101.txt in Resources */,
 				76717FCA17BD71C2009C5A05 /* Main_iPad.storyboard in Resources */,
 				761037C517FB62AF009C7250 /* kremlin.ttf in Resources */,
 				7673020417BEA40300B8F2F3 /* HAAxiomsList.plist in Resources */,
 				76717FCF17BD71C2009C5A05 /* Images.xcassets in Resources */,
 				76717FC717BD71C2009C5A05 /* Main_iPhone.storyboard in Resources */,
+				761A72041804AD6500606851 /* README.md in Resources */,
 				76717FBE17BD71C2009C5A05 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +453,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -437,7 +472,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -468,7 +503,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -478,11 +513,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HealthAxioms/HealthAxioms-Prefix.pch";
 				INFOPLIST_FILE = "HealthAxioms/HealthAxioms-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/DDKarwa/Desktop/Health-Axioms/HealthAxioms",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -494,11 +533,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HealthAxioms/HealthAxioms-Prefix.pch";
 				INFOPLIST_FILE = "HealthAxioms/HealthAxioms-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/DDKarwa/Desktop/Health-Axioms/HealthAxioms",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

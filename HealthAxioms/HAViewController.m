@@ -103,13 +103,13 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     float yOffset = cell.frame.origin.y - collectionView.contentOffset.y;
     CGRect newFrame = CGRectMake(cell.frame.origin.x, yOffset, cell.frame.size.width, cell.frame.size.height);
     
-    HADetailViewController *viewCtrl = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
+    HADetailViewController *detailVC = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
     
-    viewCtrl.startAxiomIndex = indexPath.row +1;
-    viewCtrl.initRect = newFrame;
+    detailVC.startAxiomIndex = indexPath.row +1;
+    detailVC.initRect = newFrame;
     CGPoint newCenter = CGPointMake(cell.center.x, cell.center.y - collectionView.contentOffset.y);
-    [viewCtrl.view setCenter:newCenter];
-    [self.view addSubview:viewCtrl.view];
+    [detailVC.view setCenter:newCenter];
+    [self.view addSubview:detailVC.view];
     
     
     float win_Width =[UIScreen mainScreen].bounds.size.width;
@@ -117,34 +117,32 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     
     float xScale = win_Width / cell.frame.size.width;
     float yScale = win_Height / cell.frame.size.height;
-    [viewCtrl.view setTransform:CGAffineTransformMakeScale(1/xScale, 1/yScale) ];
+    [detailVC.view setTransform:CGAffineTransformMakeScale(1/xScale, 1/yScale) ];
     
-    __weak UIView *selfView = viewCtrl.view;
+    __weak UIView *detailVCView = detailVC.view;
     [UIView animateWithDuration:0.5
                           delay:0.0
          usingSpringWithDamping:0.7
           initialSpringVelocity:0.2
                         options: UIViewAnimationOptionCurveEaseOut
                      animations:^(){
-                         [selfView setCenter:CGPointMake(win_Width*0.5, win_Height*0.5)];
-                          [viewCtrl.view setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
-
+                        [detailVCView setCenter:CGPointMake(win_Width*0.5, win_Height*0.5)];
+                        [detailVC.view setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
                      }
                      completion:^(BOOL finished){
                      
                          if (finished) {
-                             [self addChildViewController:viewCtrl];
-
-                             [viewCtrl addObserver:self
-                                    forKeyPath:@"willDealloc"
-                                       options:NSKeyValueObservingOptionNew
-                                       context:nil];
-
-                             viewCtrl.delegate = self;
-                            
-                             [viewCtrl.view setFrame:self.view.frame];
-                             [viewCtrl didMoveToParentViewController:self];
+                             [self addChildViewController:detailVC];
                              
+                             [detailVC addObserver:self
+                                        forKeyPath:@"willDealloc"
+                                           options:NSKeyValueObservingOptionNew
+                                           context:nil];
+                             
+                             detailVC.delegate = self;
+                             
+                             [detailVC.view setFrame:self.view.frame];
+                             [detailVC didMoveToParentViewController:self];
                              
                              [cell setHidden:YES];
                              self.hiddenCellIndex = [indexPath indexAtPosition:1];
@@ -216,10 +214,6 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
      HAAxiomCell *cell = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPathToUse];
     [cell setHidden:visible];
 //    NSLog(@"returning frame %@", NSStringFromCGRect(cell.frame));
-    
-    //Check and see if the underneath
-    //collection view has item in visibility
-//NSOperation *op1 =
     
     return cell.frame;
 }

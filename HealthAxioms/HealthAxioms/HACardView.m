@@ -18,7 +18,7 @@
 
 static NSString * const ANIMATIONKEY = @"TransformAnimation";
 static NSString * const ANIM_B2F = @"backToFront";
-static NSString * const ANIM_F2B = @"backToFront";
+static NSString * const ANIM_F2B = @"frontToBack";
 
 
 
@@ -109,7 +109,7 @@ static NSString * const ANIM_F2B = @"backToFront";
         CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
         rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
         
-        float rotationAngle = (isUp)? 179.0f : -179.0f;
+        float rotationAngle = (isUp)? 170.0f : -179.0f;
         NSString *animationValue = (isFront)? ANIM_F2B : ANIM_B2F;
         
         rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
@@ -438,7 +438,7 @@ int titleLines = 1;
     
     if (isFront) {
     
-        if ((radToDeg >0 && radToDeg >=80.0f) || (radToDeg <0 && radToDeg < -40.0f)) {
+        if ((radToDeg >0 && radToDeg >=40.0f) || (radToDeg <0 && radToDeg < -40.0f)) {
             self.frontImageView.image = nil;
             
             [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:YES]];

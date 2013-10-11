@@ -10,11 +10,8 @@
 #import "HAModel.h"
 #import "HABaseCard.h"
 #import "HAAxiomCell.h"
-
 #import "HADetailViewController.h"
 
-NSString *const FRONT_KEY = @"front_image";
-NSString *const CELL_IDENTIFIER = @"AxiomCard";
 
 #define WINDOW_WIDTH ([[UIScreen mainScreen] applicationFrame].size.width)
 #define WINDOW_HEIGHT ([[UIScreen mainScreen] applicationFrame].size.height)
@@ -34,6 +31,7 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     HAModel *axiomsModel;
     CGSize cellSizeToUse;
 }
+
 
 - (BOOL)prefersStatusBarHidden
 {
@@ -84,13 +82,62 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
+    static NSString *const CELL_IDENTIFIER = @"AxiomCard";
+    
     HAAxiomCell *axiomCell = (HAAxiomCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER
                                                                        forIndexPath:indexPath];
+    [axiomCell.imgView.layer setCornerRadius:6.0f];
+
+//Getting the card from Model
     HABaseCard *card = axiomsModel.axiomCardsList[indexPath.row];
-    [axiomCell setAxiomCard:card];
     
+    CGSize frameSize = cellSizeToUse;
+    NSString *imgName = [card.frontImage copy];
+    NSString *keyName = nil;
+    if (imgName && [imgName length]>1) {
+        
+        NSString *name =[imgName stringByAppendingString:[NSString stringWithFormat:@"%f",frameSize.height]] ;
+        keyName = [[name dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+        
+        dispatch_queue_t myQue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+        dispatch_async(myQue, ^(){
+//Fetching the stored small image from userDefaults
+            UIImage *imge = nil;
+//checking if the key exists or not
+            if([[NSUserDefaults standardUserDefaults] objectForKey:keyName]){
+                NSData *imageData = [[NSUserDefaults standardUserDefaults] dataForKey:keyName];
+                imge = [NSKeyedUnarchiver unarchiveObjectWithData: imageData];
+            }
+//Drawing the smaller image
+            else if(!imge) {
+                
+                imge = [UIImage imageNamed:imgName];
+                CGSize imageSize = cellSizeToUse;
+                float xSize = imageSize.height * (imge.size.width/imge.size.height);
+                UIGraphicsBeginImageContextWithOptions(imageSize,YES,0);
+                [imge drawInRect:CGRectMake((imageSize.width-xSize)*0.5, 0, xSize, imageSize.height)];
+                imge = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+//Storing small image to userDefaults
+                NSData *imageDta = [NSKeyedArchiver archivedDataWithRootObject:imge];
+                [[NSUserDefaults standardUserDefaults] setObject:imageDta forKey:keyName];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^(){
+//Updating the cell
+                HAAxiomCell *axiomCellToUpdate = (HAAxiomCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                if(axiomCellToUpdate){
+                    axiomCellToUpdate.imgView.image = nil;
+                    [axiomCellToUpdate.imgView setImage:imge];
+                    [axiomCellToUpdate setNeedsDisplay];
+                }
+            });
+        });
+    }
+
     return axiomCell;
 }
+
 #pragma mark -
 
 
@@ -120,6 +167,7 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
     [detailVC.view setTransform:CGAffineTransformMakeScale(1/xScale, 1/yScale) ];
     
     __weak UIView *detailVCView = detailVC.view;
+    __weak HAViewController *weakCopySelf = self;
     [UIView animateWithDuration:0.5
                           delay:0.0
          usingSpringWithDamping:0.7
@@ -139,7 +187,7 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
                                            options:NSKeyValueObservingOptionNew
                                            context:nil];
                              
-                             detailVC.delegate = self;
+                             detailVC.delegate = weakCopySelf;
                              
                              [detailVC.view setFrame:self.view.frame];
                              [detailVC didMoveToParentViewController:self];
@@ -238,6 +286,7 @@ NSString *const CELL_IDENTIFIER = @"AxiomCard";
         self.hiddenCellIndex = (axiomIndex-1);
        toReturn =  [self manageVisibilityForCellAtIndex:self.hiddenCellIndex
                                               isVisible:YES];
+        [cell setNeedsDisplay];
         toReturn.origin.y -= self.axiomsCollectionView.contentOffset.y;
     }
     return toReturn;

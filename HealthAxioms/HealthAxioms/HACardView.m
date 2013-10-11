@@ -109,7 +109,7 @@ static NSString * const ANIM_F2B = @"frontToBack";
         CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
         rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
         
-        float rotationAngle = (isUp)? 170.0f : -179.0f;
+        float rotationAngle = (isUp)? 179.9f : -179.0f;
         NSString *animationValue = (isFront)? ANIM_F2B : ANIM_B2F;
         
         rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
@@ -434,7 +434,7 @@ int titleLines = 1;
     
     float radToDeg = [self persPectiveRotation];
     
-    NSLog(@"rad To Degree is %f", radToDeg);
+//    NSLog(@"rad To Degree is %f", radToDeg);
     
     if (isFront) {
     
@@ -443,7 +443,7 @@ int titleLines = 1;
             
             [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:YES]];
             [animTimer invalidate];
-            NSLog(@"changing contents +radToDeg");
+//            NSLog(@"changing contents +radToDeg");
         }
     }
     else{
@@ -462,7 +462,7 @@ int titleLines = 1;
             image = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             [self.frontImageView setImage:image];
-            NSLog(@"changing contents -radToDeg");
+//            NSLog(@"changing contents -radToDeg");
             [animTimer invalidate];
 
         }

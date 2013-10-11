@@ -12,6 +12,7 @@
 @interface HAAxiomCell : UICollectionViewCell
 
 @property (nonatomic, weak)IBOutlet UIImageView *imgView;
-@property (nonatomic, strong)HABaseCard *axiomCard;
+//@property (nonatomic, copy)NSString *imgName;
+//@property (nonatomic, strong)HABaseCard *axiomCard;
 
 @end

@@ -9,12 +9,18 @@
 #import "HAAxiomCell.h"
 #import "HACacheManager.h"
 
-@implementation HAAxiomCell
 
+@interface HAAxiomCell ()
+
+//@property (nonatomic, copy)NSString *keyName;
+@end
+
+@implementation HAAxiomCell
+/*
 -(void)dealloc{
 
     [self removeObserver:self
-              forKeyPath:@"axiomCard"];
+              forKeyPath:@"imgName"];
 }
 
 -(void)awakeFromNib{
@@ -22,7 +28,7 @@
     [super awakeFromNib];
 //Observing the value for model
     [self addObserver:self
-           forKeyPath:@"axiomCard"
+           forKeyPath:@"imgName"
               options:NSKeyValueObservingOptionNew
               context:nil];
 //Rounding the Corner
@@ -30,23 +36,32 @@
     
 }
 
+
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
 
-    NSString *imgName = self.axiomCard.frontImage;
-    self.imgView.image = nil;
-    if (imgName && [imgName length]>1) {
-        NSString *name =[imgName stringByAppendingString:[NSString stringWithFormat:@"%f",self.frame.size.height]] ;
-        NSString *encodedStr = [[name dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+
+    _imgView.image = nil;
+    __weak UIImageView *weakCopy = _imgView ;
+    CGSize frameSize = self.frame.size;
+    _keyName = nil;
+    
+    if (_imgName && [_imgName length]>1) {
+        
+        NSString *name =[_imgName stringByAppendingString:[NSString stringWithFormat:@"%f",frameSize.height]] ;
+        _keyName = [[name dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
         
             dispatch_queue_t myQue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
             dispatch_async(myQue, ^(){
 //Fetching the stored small image from userDefaults
                 UIImage *imge = nil;
-                NSData *imageData = [[NSUserDefaults standardUserDefaults] dataForKey:encodedStr];
-                imge = [NSKeyedUnarchiver unarchiveObjectWithData: imageData];
-                if (!imge) {
+//checking if the key exists or not
+                if([[NSUserDefaults standardUserDefaults] objectForKey:_keyName]){
+                    NSData *imageData = [[NSUserDefaults standardUserDefaults] dataForKey:_keyName];
+                    imge = [NSKeyedUnarchiver unarchiveObjectWithData: imageData];
+                }
+                else if(!imge) {
                 
-                    imge = [UIImage imageNamed:imgName];
+                    imge = [UIImage imageNamed:_imgName];
                     CGSize imageSize = self.frame.size;
                     float xSize = imageSize.height * (imge.size.width/imge.size.height);
                     UIGraphicsBeginImageContextWithOptions(imageSize,YES,0);
@@ -55,25 +70,17 @@
                     UIGraphicsEndImageContext();
 //Storing small image to userDefaults                    
                     NSData *imageDta = [NSKeyedArchiver archivedDataWithRootObject:imge];
-                    NSString *name =[imgName stringByAppendingString:[NSString stringWithFormat:@"%f",self.frame.size.height]] ;
-                    [[NSUserDefaults standardUserDefaults] setObject:imageDta forKey:[[name dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
+                   [[NSUserDefaults standardUserDefaults] setObject:imageDta forKey:_keyName];
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^(){
-                    [self.imgView setImage:imge];
-                    [self.imgView setNeedsDisplay];
+                    [weakCopy setImage:imge];
+                    [weakCopy setNeedsDisplay];
+                   // NSLog(@"setting image %@",_imgName);
                     
                 });
             });
     }
 }
-
-
--(void)prepareForReuse{
-
-    [super prepareForReuse];
-//    NSLog(@"is Preparing!");
-    self.imgView.image = nil;
-}
-
+*/
 @end

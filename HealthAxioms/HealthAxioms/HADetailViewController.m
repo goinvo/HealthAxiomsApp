@@ -22,7 +22,6 @@
 
 @property (nonatomic, strong)HAModel *axiomsModel;
 @property (nonatomic, strong)NSMutableArray *currIndexes;
-@property (nonatomic, weak) UIPanGestureRecognizer *panReco;
 @property (weak, nonatomic) IBOutlet UICollectionView *miniAxiomPicker;
 
 -(IBAction)actionItemTapped:(id)sender;
@@ -35,13 +34,20 @@
 
 #pragma mark view related methods
 
+-(void)dealloc{
+
+    self.delegate = nil;
+    self.axiomsModel = nil;
+    self.miniAxiomPicker = nil;
+    self.navBar = nil;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     //TODO: Hide the Navigation Bar with Animation
-        [self addItemsToScrollView];
+    [self addItemsToScrollView];
 
 }
 
@@ -292,10 +298,10 @@
         [self sanityCheckForViewsWithOffset:scrollView.contentOffset];
     }
 }
-
+/*
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 
-    [scrollView becomeFirstResponder];
+//    [scrollView becomeFirstResponder];
 
 //    NSLog(@"scroll next responder is %@", scrollView.nextResponder);
     //Checking to see if the scrollview belongs to a mini UIcollectionView Picker
@@ -304,16 +310,16 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 
-    [scrollView resignFirstResponder];
+//    [scrollView resignFirstResponder];
 
 //    BOOL case1 = ([[scrollView class] isSubclassOfClass:[UICollectionView class]])?YES : NO;
 //    if(!case1){
 //        [self sanityCheckForViewsWithOffset:scrollView.contentOffset];
 //    }
-    NSLog(@"did end decelerating");
+//    NSLog(@"did end decelerating");
     
 }
-
+*/
 #pragma mark -
 
 #pragma mark manage images in memory
@@ -408,9 +414,56 @@
     static  NSString *const CELL_IDENTIFIER = @"AxiomCardSmall";
     HAAxiomCell *axiomCell = (HAAxiomCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER
                                                                                       forIndexPath:indexPath];
-    HABaseCard *card = self.axiomsModel.axiomCardsList[indexPath.row];
-    [axiomCell setAxiomCard:card];
+    [axiomCell.imgView.layer setCornerRadius:6.0f];
     
+    //Getting the card from Model
+    HABaseCard *card = self.axiomsModel.axiomCardsList[indexPath.row];
+
+    
+    CGSize frameSize = axiomCell.frame.size;
+    NSString *imgName = [card.frontImage copy];
+    NSString *keyName = nil;
+    if (imgName && [imgName length]>1) {
+        
+        NSString *name =[imgName stringByAppendingString:[NSString stringWithFormat:@"%f",frameSize.height]] ;
+        keyName = [[name dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+        
+        dispatch_queue_t myQue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+        dispatch_async(myQue, ^(){
+    //Fetching the stored small image from userDefaults
+            UIImage *imge = nil;
+    //checking if the key exists or not
+            if([[NSUserDefaults standardUserDefaults] objectForKey:keyName]){
+                NSData *imageData = [[NSUserDefaults standardUserDefaults] dataForKey:keyName];
+                imge = [NSKeyedUnarchiver unarchiveObjectWithData: imageData];
+            }
+    //Drawing the smaller image
+            else if(!imge) {
+                
+                imge = [UIImage imageNamed:imgName];
+                CGSize imageSize = frameSize;
+                float xSize = imageSize.height * (imge.size.width/imge.size.height);
+                UIGraphicsBeginImageContextWithOptions(imageSize,YES,0);
+                [imge drawInRect:CGRectMake((imageSize.width-xSize)*0.5, 0, xSize, imageSize.height)];
+                imge = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+        //Storing small image to userDefaults
+                NSData *imageDta = [NSKeyedArchiver archivedDataWithRootObject:imge];
+                [[NSUserDefaults standardUserDefaults] setObject:imageDta forKey:keyName];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^(){
+        //Updating the cell
+                HAAxiomCell *axiomCellToUpdate = (HAAxiomCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                if(axiomCellToUpdate){
+                    axiomCellToUpdate.imgView.image = nil;
+                    [axiomCellToUpdate.imgView setImage:imge];
+                    [axiomCellToUpdate setNeedsDisplay];
+                }
+            });
+        });
+    }
+
     return axiomCell;
 }
 

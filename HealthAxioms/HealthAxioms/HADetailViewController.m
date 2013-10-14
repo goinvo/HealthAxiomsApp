@@ -35,12 +35,15 @@
 
 #pragma mark view related methods
 
+
 -(void)dealloc{
 
     self.delegate = nil;
-    self.axiomsModel = nil;
-    self.miniAxiomPicker = nil;
-    self.navBar = nil;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:animated];
 }
 
 -(void)setStartRect:(CGRect)rect{
@@ -110,8 +113,12 @@
     int start = [self startIndexFromChosenCardIndex:_startAxiomIndex];
     for (int i= start; i< start+MAX_NUM_PAGES; i++) {
 
-        [self addAxiomCardToScrollWithIndex:i];
-        [self.currIndexes addObject:@(i)];
+        @autoreleasepool {
+
+            [self addAxiomCardToScrollWithIndex:i];
+            [self.currIndexes addObject:@(i)];
+        }
+
 //        NSLog(@"adding %d", i);
     }
     
@@ -136,7 +143,7 @@
                                  ,scrollContentHeight);
     
     HACardView *cardToAddToScroll = [[HACardView alloc]initWithFrame:cardRect
-                                                               model:cardToUse];
+                                                               model:[cardToUse copy]];
     [self.frontScroll addSubview:cardToAddToScroll];
 }
 

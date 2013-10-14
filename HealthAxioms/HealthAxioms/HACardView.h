@@ -16,6 +16,5 @@
 - (id)initWithFrame:(CGRect)frame model:(HABaseCard *)card;
 -(void)manageBackToDeck;
 -(UIImage *)imageForBackView:(NSString *)imgName flipped:(BOOL)isFlipped;
-//-(void)addBackView;
-//-(void)removeBackView;
+
 @end

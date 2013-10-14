@@ -45,4 +45,23 @@
     return [NSString stringWithFormat:@"Index:%d title:%@", _index, _axiomTitle];
 }
 
+
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    HABaseCard *copy = [[[self class] alloc] init];
+    
+    if (copy) {
+        // Copy NSObject subclasses
+        copy-> _frontImage = [self.frontImage copy];
+        copy-> _backImage = [self.backImage copy];
+        copy-> _axiomText = [self.axiomText copy];
+        copy-> _axiomTitle = [self.axiomTitle copy];
+        copy->_index = self.index;
+        copy->_isFront = self.isFront;
+    }
+    
+    return copy;
+}
+
 @end

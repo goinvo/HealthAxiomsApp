@@ -15,7 +15,6 @@
 
     [super prepareForReuse];
     self.imgView.image = nil;
-    [self.imgView setNeedsDisplay];
 }
 
 @end

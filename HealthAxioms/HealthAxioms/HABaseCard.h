@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class HABaseCard;
 
-@interface HABaseCard : NSObject
+@interface HABaseCard : NSObject <NSCopying>
 
 @property (nonatomic, copy, readonly) NSString *frontImage;
 @property (nonatomic, copy, readonly) NSString *backImage;

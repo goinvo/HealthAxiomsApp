@@ -60,12 +60,13 @@ static NSString * const ANIM_F2B = @"frontToBack";
                                                         _modelCard.backImage;
 
         UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        [image setImage:[UIImage imageNamed:imgNameToUse]];
+        UIImage *cardImage = [UIImage imageNamed:imgNameToUse];
+        [image setImage:cardImage];
         [self addSubview:image];
         self.frontImageView = image;
         
-//Setting backGround Color
-        [self.frontImageView setBackgroundColor:[UIColor blackColor]];
+        image = nil;
+        imgNameToUse = nil;
 
     }
     return self;

@@ -22,7 +22,7 @@
 
 @interface HAViewController () <HADetailViewCtrlDelegate>
 
-@property (weak, nonatomic) IBOutlet UICollectionView *axiomsCollectionView;
+@property (nonatomic, weak) IBOutlet UICollectionView *axiomsCollectionView;
 @property (nonatomic, assign) int hiddenCellIndex;
 @end
 
@@ -100,18 +100,24 @@
         NSString *name =[imgName stringByAppendingString:[NSString stringWithFormat:@"%f",frameSize.height]] ;
         keyName = [[name dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
         
-        dispatch_queue_t myQue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-        dispatch_async(myQue, ^(){
-//Fetching the stored small image from userDefaults
-            UIImage *imge = nil;
-//checking if the key exists or not
-            if([[NSUserDefaults standardUserDefaults] objectForKey:keyName]){
+        //checking if the key exists or not
+        if([[NSUserDefaults standardUserDefaults] objectForKey:keyName]){
+            @autoreleasepool {
+
+                UIImage *imge = nil;
                 NSData *imageData = [[NSUserDefaults standardUserDefaults] dataForKey:keyName];
                 imge = [NSKeyedUnarchiver unarchiveObjectWithData: imageData];
+                [self setImage:imge forCellAtIndex:[indexPath copy]];
             }
-//Drawing the smaller image
-            else if(!imge) {
+        }
+        else{
+            dispatch_queue_t myQue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+            dispatch_async(myQue, ^(){
+                //Fetching the stored small image from userDefaults
+                UIImage *imge = nil;
+                __weak NSIndexPath *indexPathCopy = indexPath;
                 
+                //Drawing the smaller image
                 imge = [UIImage imageNamed:imgName];
                 CGSize imageSize = cellSizeToUse;
                 float xSize = imageSize.height * (imge.size.width/imge.size.height);
@@ -119,24 +125,30 @@
                 [imge drawInRect:CGRectMake((imageSize.width-xSize)*0.5, 0, xSize, imageSize.height)];
                 imge = UIGraphicsGetImageFromCurrentImageContext();
                 UIGraphicsEndImageContext();
-//Storing small image to userDefaults
+                //Storing small image to userDefaults
                 NSData *imageDta = [NSKeyedArchiver archivedDataWithRootObject:imge];
                 [[NSUserDefaults standardUserDefaults] setObject:imageDta forKey:keyName];
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^(){
-//Updating the cell
-                HAAxiomCell *axiomCellToUpdate = (HAAxiomCell *)[collectionView cellForItemAtIndexPath:indexPath];
-                if(axiomCellToUpdate){
-                    axiomCellToUpdate.imgView.image = nil;
-                    [axiomCellToUpdate.imgView setImage:imge];
-                    [axiomCellToUpdate setNeedsDisplay];
-                }
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                [self setImage:imge forCellAtIndex:indexPathCopy];
             });
-        });
+        }
     }
 
     return axiomCell;
+}
+
+-(void)setImage:(UIImage *)axiomImage forCellAtIndex:(NSIndexPath *)axiomIndexPath{
+
+    dispatch_async(dispatch_get_main_queue(), ^(){
+//Updating the cell
+        HAAxiomCell *axiomCellToUpdate = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:axiomIndexPath];
+        if(axiomCellToUpdate){
+            axiomCellToUpdate.imgView.image = nil;
+            [axiomCellToUpdate.imgView setImage:axiomImage];
+            [axiomCellToUpdate setNeedsDisplay];
+        }
+    });
+    
 }
 
 #pragma mark -
@@ -159,47 +171,50 @@
     float yOffset = cell.frame.origin.y - collectionView.contentOffset.y;
     CGRect newFrame = CGRectMake(cell.frame.origin.x, yOffset, cell.frame.size.width, cell.frame.size.height);
     
-    HADetailViewController *detailVC = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
-    detailVC.delegate = self;
-    detailVC.startAxiomIndex = indexPath.row +1;
-    [detailVC setStartRect:newFrame];
-    
-    //detailVC.initRect = newFrame;
-    CGPoint newCenter = CGPointMake(cell.center.x, cell.center.y - collectionView.contentOffset.y);
-    [self.view addSubview:detailVC.view];
-    [detailVC.view setCenter:newCenter];
-    
-    float win_Width =[UIScreen mainScreen].bounds.size.width;
-    float win_Height =[UIScreen mainScreen].applicationFrame.size.height;
-    
-    float xScale = win_Width / cell.frame.size.width;
-    float yScale = win_Height / cell.frame.size.height;
-    [detailVC.view setTransform:CGAffineTransformMakeScale(1/xScale, 1/yScale) ];
-    
-    __weak UIView *detailVCView = detailVC.view;
-    
-    [UIView animateWithDuration:0.5
-                          delay:0.0
-         usingSpringWithDamping:0.7
-          initialSpringVelocity:0.2
-                        options: UIViewAnimationOptionCurveEaseOut
-                     animations:^(){
-                        [detailVCView setCenter:CGPointMake(win_Width*0.5, win_Height*0.5)];
-                        [detailVC.view setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
-                     }
-                     completion:^(BOOL finished){
-                     
-                         if (finished) {
-                             [self addChildViewController:detailVC];
-                             
-                             [detailVC didMoveToParentViewController:self];
-                             [detailVC setStartRect:newFrame];
-                             [cell setHidden:YES];
-                             self.hiddenCellIndex = [indexPath indexAtPosition:1];
-                             NSLog(@"selected index :%d",self.hiddenCellIndex);
+    @autoreleasepool {
+
+        HADetailViewController *detailVC = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
+        detailVC.startAxiomIndex = indexPath.row +1;
+        [detailVC setStartRect:newFrame];
+        
+        //detailVC.initRect = newFrame;
+        CGPoint newCenter = CGPointMake(cell.center.x, cell.center.y - collectionView.contentOffset.y);
+        [self.view addSubview:detailVC.view];
+        [detailVC.view setCenter:newCenter];
+        
+        float win_Width =[UIScreen mainScreen].bounds.size.width;
+        float win_Height =[UIScreen mainScreen].applicationFrame.size.height;
+        
+        float xScale = win_Width / cell.frame.size.width;
+        float yScale = win_Height / cell.frame.size.height;
+        [detailVC.view setTransform:CGAffineTransformMakeScale(1/xScale, 1/yScale) ];
+        
+        __weak UIView *detailVCView = detailVC.view;
+        
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+             usingSpringWithDamping:0.7
+              initialSpringVelocity:0.2
+                            options: UIViewAnimationOptionCurveEaseOut
+                         animations:^(){
+                             [detailVCView setCenter:CGPointMake(win_Width*0.5, win_Height*0.5)];
+                             [detailVC.view setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
                          }
-                     }
-     ];
+                         completion:^(BOOL finished){
+                             
+                             if (finished) {
+                                 [self addChildViewController:detailVC];
+                                 
+                                 detailVC.delegate = self;
+                                 [detailVC didMoveToParentViewController:self];
+                                 [detailVC setStartRect:newFrame];
+                                 [cell setHidden:YES];
+                                 self.hiddenCellIndex = [indexPath indexAtPosition:1];
+                                 NSLog(@"selected index :%d",self.hiddenCellIndex);
+                             }
+                         }
+         ];
+    }
 }
 
 #pragma mark -
@@ -242,6 +257,17 @@
                                                       inSection:0];
     HAAxiomCell *cellToUnhide = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPathToUse];
     [cellToUnhide setHidden:NO];
+    [self.axiomsCollectionView reloadItemsAtIndexPaths:@[[indexPathToUse copy]]];
+    
+//Removing child controllers
+    NSArray *childCtrl = [self childViewControllers];
+
+    if (childCtrl) {
+        [[self.childViewControllers lastObject] willMoveToParentViewController:nil];
+        [[[self.childViewControllers lastObject] view] removeFromSuperview];
+        [[self.childViewControllers lastObject] removeFromParentViewController];
+        
+    }
 }
 
 -(CGRect)manageVisibilityForCellAtIndex:(int)index isVisible:(BOOL)visible{
@@ -261,6 +287,7 @@
     
      HAAxiomCell *cell = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPathToUse];
     [cell setHidden:visible];
+    [cell setNeedsDisplay];
 //    NSLog(@"returning frame %@", NSStringFromCGRect(cell.frame));
     
     return cell.frame;

@@ -293,14 +293,13 @@
     return cell.frame;
 }
 
--(CGRect)handleScrollForAxiomAtIndex:(int)axiomIndex{
+-(void)handleScrollForAxiomAtIndex:(int)axiomIndex{
  
 //    NSLog(@"Need to manage scroll for index :%d",axiomIndex);
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.hiddenCellIndex
                                                  inSection:0];
     HAAxiomCell *cell = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPath];
-    CGRect toReturn = cell.frame;
     
     int indexToCompare = 0;
    indexToCompare = [indexPath indexAtPosition:1];
@@ -310,16 +309,20 @@
                                    isVisible:NO];
 //Hide the new cell
 
-        self.hiddenCellIndex = MAX(0, (axiomIndex-1));
-       toReturn =  [self manageVisibilityForCellAtIndex:self.hiddenCellIndex
+        self.hiddenCellIndex = MAX(0, axiomIndex);
+        [self manageVisibilityForCellAtIndex:self.hiddenCellIndex
                                               isVisible:YES];
         [cell setNeedsDisplay];
-        toReturn.origin.y = toReturn.origin.y - self.axiomsCollectionView.contentOffset.y;
-        NSLog(@"returning rect %@", NSStringFromCGRect(toReturn));
     }
-    return toReturn;
 }
 
+-(CGRect)rectForDismissAnimation{
+
+    HAAxiomCell *cell = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.hiddenCellIndex inSection:0]];
+    CGRect cellRect = cell.frame;
+    cellRect.origin.y = cellRect.origin.y - [self.axiomsCollectionView contentOffset].y ;
+    return cellRect;
+}
 #pragma mark -
 
 @end

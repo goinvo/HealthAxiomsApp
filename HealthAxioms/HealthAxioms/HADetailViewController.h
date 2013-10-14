@@ -11,9 +11,9 @@
 
 @protocol HADetailViewCtrlDelegate <NSObject>
 
--(CGRect)handleScrollForAxiomAtIndex:(int)axiomIndex;
+-(void)handleScrollForAxiomAtIndex:(int)axiomIndex;
 -(void)handleRemoval;
-
+-(CGRect)rectForDismissAnimation;
 @end
 
 @interface HADetailViewController : UIViewController <UIScrollViewDelegate , UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>

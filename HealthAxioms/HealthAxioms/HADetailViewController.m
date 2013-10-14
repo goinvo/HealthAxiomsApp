@@ -189,8 +189,16 @@
 // Making the card handle its state while being put back into decl
     [self makeCardHandlePlacingInDeck];
     
+    if([self.delegate respondsToSelector:@selector(rectForDismissAnimation)]){
+        self.initRect = [self.delegate rectForDismissAnimation];
+    }
+
     CGPoint centerPt = CGPointMake(self.initRect.origin.x+ self.initRect.size.width*0.5,
                                   self.initRect.origin.y+self.initRect.size.height*0.5);
+
+    if (self.initRect.origin.y < 0 || self.initRect.origin.y > 500.0) {
+        NSLog(@"Rect used to create Center Point %@", NSStringFromCGRect(self.initRect));
+    }
     
     __weak UIView *selfView = self.view;
     [UIView animateWithDuration:0.5
@@ -208,14 +216,10 @@
                      completion:^(BOOL finished){
                          
                          if (finished) {
+                             
                              if ([self.delegate respondsToSelector:@selector(handleRemoval)]) {
                                  [self.delegate handleRemoval];
                              }
-                             self.delegate = nil;
-                             [self.view removeFromSuperview];
-                             [self didMoveToParentViewController:nil];
-                             [self removeFromParentViewController];
-                             
                          }
                      }
      ];
@@ -346,16 +350,16 @@
 //    NSLog(@"Axiom at index:%d is in View ",index);
 //Asking the delegate to handle and update view based on scroll
     if ([self.delegate respondsToSelector:@selector(handleScrollForAxiomAtIndex:)]) {
-       self.initRect = [self.delegate handleScrollForAxiomAtIndex:index];
+        [self.delegate handleScrollForAxiomAtIndex:index];
     }
 //TODO: Use direction to calcutate the
 //      required Image at index to Add and Remove
-    int indexItemToAdd = (isMovingRight)? fmin([self.axiomsModel.axiomCardsList count], (index + MAX_NUM_PAGES/2)) :
-                                          fmax(1, (index - MAX_NUM_PAGES/2))      ;
+    int indexItemToAdd = (isMovingRight)? fmin(([self.axiomsModel.axiomCardsList count] -1), (index + MAX_NUM_PAGES/2)) :
+                                          fmax(0, (index - MAX_NUM_PAGES/2))      ;
 //check if the indexItem needs to be added
-    if(![self isItemIndexInCurrentItems:indexItemToAdd-1 movingRight:isMovingRight]){
-        NSLog(@"Need to add axiom with Index %d", indexItemToAdd-1);
-        [self addAxiomCardToScrollWithIndex:indexItemToAdd-1];
+    if(![self isItemIndexInCurrentItems:indexItemToAdd movingRight:isMovingRight]){
+        NSLog(@"Need to add axiom with Index %d", indexItemToAdd);
+        [self addAxiomCardToScrollWithIndex:indexItemToAdd];
     }
 }
 

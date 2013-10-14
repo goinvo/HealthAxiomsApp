@@ -10,9 +10,6 @@
 #import "HABaseCard.h"
 
 @interface HAAxiomCell : UICollectionViewCell
-
-@property (nonatomic, weak)IBOutlet UIImageView *imgView;
-//@property (nonatomic, copy)NSString *imgName;
-//@property (nonatomic, strong)HABaseCard *axiomCard;
+@property (weak)IBOutlet UIImageView *imgView;
 
 @end

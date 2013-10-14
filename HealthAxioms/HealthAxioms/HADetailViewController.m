@@ -18,11 +18,12 @@
 #define MAX_NUM_PAGES 5
 
 @interface HADetailViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
-@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, strong)HAModel *axiomsModel;
 @property (nonatomic, strong)NSMutableArray *currIndexes;
 @property (weak, nonatomic) IBOutlet UICollectionView *miniAxiomPicker;
+@property (atomic, assign) CGRect initRect;
 
 -(IBAction)actionItemTapped:(id)sender;
 @end
@@ -42,13 +43,17 @@
     self.navBar = nil;
 }
 
+-(void)setStartRect:(CGRect)rect{
+
+    self.initRect = rect;
+    NSLog(@"Setting initRect to %@", NSStringFromCGRect(rect));
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     //TODO: Hide the Navigation Bar with Animation
     [self addItemsToScrollView];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,9 +146,8 @@
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
 
-    BOOL toReturn = YES;
-    
-//    NSLog(@"gesture is Kind Of Class %@", [gestureRecognizer class]);
+    BOOL toReturn = NO;
+    [self.frontScroll resignFirstResponder];
     
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] || [gestureRecognizer.view isKindOfClass:[UIScrollView class] ]) {
         
@@ -153,17 +157,18 @@
             
 //            NSLog(@"translation in x:%f y:%f",[panReco translationInView:self.frontScroll].x,[panReco translationInView:self.frontScroll].y );
             
-            if ([panReco translationInView:self.frontScroll].x < [panReco translationInView:self.frontScroll].y ) {
+            if ([panReco translationInView:self.frontScroll].x > [panReco translationInView:self.frontScroll].y ) {
 
-                toReturn = NO;
-                [self.frontScroll resignFirstResponder];
+                toReturn = YES;
+                [self.frontScroll becomeFirstResponder];
                 [panReco setTranslation:CGPointZero inView:self.view];
                 // NSLog(@"detected up down pan");
             }
         }
-//        else if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]){
-//
-//        }
+        else if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]){
+            toReturn = YES;
+            [self.frontScroll becomeFirstResponder];
+        }
     }
 //    NSLog(@"returning %d",toReturn);
     return toReturn;
@@ -176,7 +181,10 @@
     [self.view setBackgroundColor:[UIColor clearColor]];
 // Making the card handle its state while being put back into decl
     [self makeCardHandlePlacingInDeck];
-   
+    
+    CGPoint centerPt = CGPointMake(self.initRect.origin.x+ self.initRect.size.width*0.5,
+                                  self.initRect.origin.y+self.initRect.size.height*0.5);
+    
     __weak UIView *selfView = self.view;
     [UIView animateWithDuration:0.5
                           delay:0.0
@@ -186,15 +194,16 @@
                      animations:^(){
                          float shrinkScaleY = self.initRect.size.height/470.0;
                          float shrinkScaleX = self.initRect.size.width/[UIScreen mainScreen].bounds.size.width;
-                         [selfView setCenter:CGPointMake(self.initRect.origin.x+ self.initRect.size.width*0.5,self.initRect.origin.y+self.initRect.size.height*0.5)];
                          [selfView setTransform:CGAffineTransformScale(CGAffineTransformIdentity,shrinkScaleX, shrinkScaleY )];
-                        
+//                         NSLog(@"setting center point to %@", NSStringFromCGPoint(centerPt));
+                         [selfView setCenter:centerPt];
                      }
                      completion:^(BOOL finished){
                          
                          if (finished) {
-                             self.willDealloc = YES;
-                             [self removeObserver:self.parentViewController forKeyPath:@"willDealloc"];
+                             if ([self.delegate respondsToSelector:@selector(handleRemoval)]) {
+                                 [self.delegate handleRemoval];
+                             }
                              self.delegate = nil;
                              [self.view removeFromSuperview];
                              [self didMoveToParentViewController:nil];

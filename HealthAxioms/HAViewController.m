@@ -86,6 +86,7 @@
     
     HAAxiomCell *axiomCell = (HAAxiomCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER
                                                                        forIndexPath:indexPath];
+    axiomCell.imgView.image = nil;
     [axiomCell.imgView.layer setCornerRadius:6.0f];
 
 //Getting the card from Model
@@ -143,6 +144,14 @@
 
 #pragma mark Collection View Delegate Methods
 
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    HAAxiomCell *axiomCell = (HAAxiomCell *)cell;
+    if (axiomCell) {
+        axiomCell.imgView.image = nil;
+    }
+}
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 
     HAAxiomCell *cell = (HAAxiomCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -151,13 +160,14 @@
     CGRect newFrame = CGRectMake(cell.frame.origin.x, yOffset, cell.frame.size.width, cell.frame.size.height);
     
     HADetailViewController *detailVC = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
-    
+    detailVC.delegate = self;
     detailVC.startAxiomIndex = indexPath.row +1;
-    detailVC.initRect = newFrame;
-    CGPoint newCenter = CGPointMake(cell.center.x, cell.center.y - collectionView.contentOffset.y);
-    [detailVC.view setCenter:newCenter];
-    [self.view addSubview:detailVC.view];
+    [detailVC setStartRect:newFrame];
     
+    //detailVC.initRect = newFrame;
+    CGPoint newCenter = CGPointMake(cell.center.x, cell.center.y - collectionView.contentOffset.y);
+    [self.view addSubview:detailVC.view];
+    [detailVC.view setCenter:newCenter];
     
     float win_Width =[UIScreen mainScreen].bounds.size.width;
     float win_Height =[UIScreen mainScreen].applicationFrame.size.height;
@@ -167,7 +177,7 @@
     [detailVC.view setTransform:CGAffineTransformMakeScale(1/xScale, 1/yScale) ];
     
     __weak UIView *detailVCView = detailVC.view;
-    __weak HAViewController *weakCopySelf = self;
+    
     [UIView animateWithDuration:0.5
                           delay:0.0
          usingSpringWithDamping:0.7
@@ -182,16 +192,8 @@
                          if (finished) {
                              [self addChildViewController:detailVC];
                              
-                             [detailVC addObserver:self
-                                        forKeyPath:@"willDealloc"
-                                           options:NSKeyValueObservingOptionNew
-                                           context:nil];
-                             
-                             detailVC.delegate = weakCopySelf;
-                             
-                             [detailVC.view setFrame:self.view.frame];
                              [detailVC didMoveToParentViewController:self];
-                             
+                             [detailVC setStartRect:newFrame];
                              [cell setHidden:YES];
                              self.hiddenCellIndex = [indexPath indexAtPosition:1];
                              NSLog(@"selected index :%d",self.hiddenCellIndex);
@@ -232,17 +234,15 @@
 
 #pragma mark -
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-
-    if ([keyPath isEqualToString:@"willDealloc"]) {
-        NSIndexPath *indexPathToUse = [NSIndexPath indexPathForItem:self.hiddenCellIndex
-                                                          inSection:0];
-        HAAxiomCell *cellToUnhide = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPathToUse];
-        [cellToUnhide setHidden:NO];
-    }
-}
-
 #pragma mark Handle Detailed Axioms Scroll Delegate methods
+
+-(void)handleRemoval{
+
+    NSIndexPath *indexPathToUse = [NSIndexPath indexPathForItem:self.hiddenCellIndex
+                                                      inSection:0];
+    HAAxiomCell *cellToUnhide = (HAAxiomCell *)[self.axiomsCollectionView cellForItemAtIndexPath:indexPathToUse];
+    [cellToUnhide setHidden:NO];
+}
 
 -(CGRect)manageVisibilityForCellAtIndex:(int)index isVisible:(BOOL)visible{
     
@@ -283,11 +283,12 @@
                                    isVisible:NO];
 //Hide the new cell
 
-        self.hiddenCellIndex = (axiomIndex-1);
+        self.hiddenCellIndex = MAX(0, (axiomIndex-1));
        toReturn =  [self manageVisibilityForCellAtIndex:self.hiddenCellIndex
                                               isVisible:YES];
         [cell setNeedsDisplay];
-        toReturn.origin.y -= self.axiomsCollectionView.contentOffset.y;
+        toReturn.origin.y = toReturn.origin.y - self.axiomsCollectionView.contentOffset.y;
+        NSLog(@"returning rect %@", NSStringFromCGRect(toReturn));
     }
     return toReturn;
 }

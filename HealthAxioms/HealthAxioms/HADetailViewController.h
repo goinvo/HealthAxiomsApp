@@ -12,17 +12,18 @@
 @protocol HADetailViewCtrlDelegate <NSObject>
 
 -(CGRect)handleScrollForAxiomAtIndex:(int)axiomIndex;
+-(void)handleRemoval;
 
 @end
 
 @interface HADetailViewController : UIViewController <UIScrollViewDelegate , UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
-@property (nonatomic, assign) CGRect initRect;
 @property (nonatomic, weak)IBOutlet UIScrollView *frontScroll;
 @property (nonatomic, assign) int startAxiomIndex;
 @property (nonatomic, readwrite) BOOL willDealloc;
-@property (nonatomic, assign)id <HADetailViewCtrlDelegate>delegate;
+@property (nonatomic, weak)id <HADetailViewCtrlDelegate>delegate;
 
 -(void)addItemsToScrollView;
 -(IBAction)handleTap:(id)sender;
+-(void)setStartRect:(CGRect)rect;
 @end

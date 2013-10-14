@@ -26,8 +26,6 @@ static NSString * const ANIM_F2B = @"frontToBack";
 
 @property (nonatomic, assign) int fontSize;
 @property (nonatomic, weak) UIImageView *frontImageView;
-@property (nonatomic, weak) UISwipeGestureRecognizer *upSwipe;
-@property (nonatomic, weak) UISwipeGestureRecognizer *downSwipe;
 
 @end
 
@@ -40,8 +38,6 @@ static NSString * const ANIM_F2B = @"frontToBack";
     NSTimer *animTimer;
 
 }
-
-
 
 - (id)initWithFrame:(CGRect)frame model:(HABaseCard *)card
 {
@@ -70,7 +66,6 @@ static NSString * const ANIM_F2B = @"frontToBack";
         
 //Setting backGround Color
         [self.frontImageView setBackgroundColor:[UIColor blackColor]];
-//        [self.layer setCornerRadius:6.0f];
 
     }
     return self;
@@ -79,13 +74,13 @@ static NSString * const ANIM_F2B = @"frontToBack";
 #pragma mark add the SwipeGestures
 
 -(void)addSwipeGestures{
-    UISwipeGestureRecognizer *upReco = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+    UISwipeGestureRecognizer *swipeReco = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(handleSwipe:)];
-    [upReco setDirection:UISwipeGestureRecognizerDirectionUp];
-    upReco.delegate = self;
-    upReco.numberOfTouchesRequired = 1;
-    [self addGestureRecognizer:upReco];
-    self.upSwipe = upReco;
+    [swipeReco setDirection:UISwipeGestureRecognizerDirectionUp];
+    swipeReco.delegate = self;
+    swipeReco.numberOfTouchesRequired = 1;
+    [self addGestureRecognizer:swipeReco];
+    
     
     UISwipeGestureRecognizer *downReco = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(handleSwipe:)];
@@ -93,14 +88,11 @@ static NSString * const ANIM_F2B = @"frontToBack";
     downReco.delegate = self;
     downReco.numberOfTouchesRequired = 1;
     [self addGestureRecognizer:downReco];
-    self.downSwipe = downReco;
-
+    
 }
 
 -(void)handleSwipe:(UIGestureRecognizer *)reco{
 
-   
-    
     UISwipeGestureRecognizer *swipeReco = (UISwipeGestureRecognizer *)reco;
     BOOL isUp = (swipeReco.direction == UISwipeGestureRecognizerDirectionUp)? YES :NO;
     
@@ -137,138 +129,7 @@ static NSString * const ANIM_F2B = @"frontToBack";
 
 #pragma mark -
 
-#pragma mark manage touches
 
-/*
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    
-    NSLog(@"started");
-    preTouchLocation = [[touches anyObject] locationInView:self];
-    
-    [self.upSwipe setEnabled:NO];
-    [self.downSwipe setEnabled:NO];
-}
-
--(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
-
-    [super touchesCancelled:touches withEvent:event];
-    [self.upSwipe setEnabled:YES];
-    [self.downSwipe setEnabled:YES];
-}
-
--(float)rotationFromNewPoint:(CGPoint)newPoint{
-
-    //CGPoint currPoint  = [[touches anyObject]locationInView:self];
-    CGFloat displacementInX = newPoint.x - preTouchLocation.x;
-    CGFloat displacementInY = preTouchLocation.y - newPoint.y;
-    
-    CGFloat totalRotation = sqrt(displacementInX * displacementInX + displacementInY * displacementInY);
-    rotation = (newPoint.y < preTouchLocation.y)?  (rotation +totalRotation) :
-                                                    (rotation -totalRotation);
-    rotation = fmodf(rotation, 360.0);
-    return rotation;
-}
-
-
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    
-//    NSLog(@"moving");
-    
-    if([self.nextResponder isKindOfClass:[UIScrollView class]] ){
-        
-        UIScrollView *scrollParent = (UIScrollView *)self.nextResponder;
-//Checking to see if the scrollview is not dragging
-        if(!scrollParent.isDragging){
-            
-            CGPoint currPoint  = [[touches anyObject]locationInView:self];
-//creating the new transform to be applied
-            CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-            rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
-            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
-                                                                  , M_PI/180 * [self rotationFromNewPoint:currPoint]
-                                                                  , 1.0f
-                                                                  , 0.0f
-                                                                  , 0.0f);
-//Setting the image transform to the new one
-//TODO: Check for current state and based on that allow the rotation to be applied
-
-//    1) isFront and +rotation - allow
-//               and -rotation - allow to certain and then snap back 
-// 
-//    2) !isFront and -rotation - allow
-//                and +rotation - allow to certain and then snap back
-
-            self.frontImageView.layer.transform = rotationAndPerspectiveTransform;
-          
-//Finding the angle of rotation (tan∆ = y/x)
-            float angleRot = RADIANS_TO_DEGREES(atan2(rotationAndPerspectiveTransform.m23, rotationAndPerspectiveTransform.m22));
-            NSLog(@"angleRot is %f", angleRot);
-            
-            BOOL case1 = (angleRot >=90)?YES : NO;
-            BOOL case2 = (angleRot >0.0)?YES : NO;
-            
-            if (case1 &&case2 && !needToChange) {
-                NSLog(@"called");
-
-                [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:YES]];
-                needToChange = YES;
-            }
-            else if (!case2 && angleRot < -89.0f) {
-//drawing the image upsideDown
-                UIImage *image = [UIImage imageWithCGImage:[UIImage imageNamed:_modelCard.frontImage].CGImage
-                                                     scale:2.0
-                                               orientation:UIImageOrientationDownMirrored];
-                CGSize imgSize = self.frontImageView.bounds.size;
-                
-                UIGraphicsBeginImageContextWithOptions(imgSize, NO, 2.0);
-                [image drawAtPoint:CGPointMake(0, 0)];
-                image = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-
-                [self.frontImageView setImage:image];
-            }
-            preTouchLocation = currPoint;
-        }
-    }
-}
-
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    
-    //    NSLog(@"touches ended");
-    float angleRot = [self persPectiveRotation];
-    NSLog(@"angle Rot is %f", angleRot);
-    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-
-    if(isFront && angleRot >0){
-    
-        rotationAndPerspectiveTransform = self.frontImageView.layer.transform;
-        //rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
-        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
-                                                              , (M_PI/180)*(179.0 - angleRot)
-                                                              , 1.0f
-                                                              , 0.0f
-                                                              , 0.0f);
-        [self addAnimationWithTransform:rotationAndPerspectiveTransform
-                                options:@{@"TransformAnimation": @"frontToBack"}];
-        
-    }else if (!isFront && angleRot <0){
-    
-        rotationAndPerspectiveTransform = self.frontImageView.layer.transform;
-//        rotationAndPerspectiveTransform.m34 = 1.0 / -500.0;
-        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
-                                                              , M_PI/180 * -(359.9f -angleRot)
-                                                              , 1.0f
-                                                              , 0.0f
-                                                              , 0.0f);
-        [self addAnimationWithTransform:rotationAndPerspectiveTransform
-                                options:@{@"TransformAnimation": @"backToFront"}];
-    }
-    
-    needToChange = NO;
-    [self.upSwipe setEnabled:YES];
-    [self.downSwipe setEnabled:YES];
-}
-*/
 #pragma mark Creating the back image with text
 //Creating the back image with text
 

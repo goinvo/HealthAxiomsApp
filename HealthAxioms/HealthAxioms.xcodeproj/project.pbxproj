@@ -9,13 +9,11 @@
 /* Begin PBXBuildFile section */
 		761037C417FB62AF009C7250 /* fonts101.txt in Resources */ = {isa = PBXBuildFile; fileRef = 761037C217FB62AF009C7250 /* fonts101.txt */; };
 		761037C517FB62AF009C7250 /* kremlin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 761037C317FB62AF009C7250 /* kremlin.ttf */; };
-		761A71FB1804734900606851 /* HACacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A71FA1804734900606851 /* HACacheManager.m */; };
 		761A72031804AD6500606851 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 761A71FD1804AD6500606851 /* libTestFlight.a */; };
 		761A72041804AD6500606851 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 761A71FE1804AD6500606851 /* README.md */; };
 		761A72051804AD6500606851 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 761A71FF1804AD6500606851 /* release_notes.md */; };
 		761A72081804AE1000606851 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 761A72061804AE1000606851 /* libz.1.1.3.dylib */; };
 		761A72091804AE1000606851 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 761A72071804AE1000606851 /* libz.dylib */; };
-		763B071717D0E3B60078F049 /* UITextView+HAAxiomStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */; };
 		76717FB417BD71C2009C5A05 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB317BD71C2009C5A05 /* Foundation.framework */; };
 		76717FB617BD71C2009C5A05 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB517BD71C2009C5A05 /* CoreGraphics.framework */; };
 		76717FB817BD71C2009C5A05 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76717FB717BD71C2009C5A05 /* UIKit.framework */; };
@@ -52,8 +50,6 @@
 /* Begin PBXFileReference section */
 		761037C217FB62AF009C7250 /* fonts101.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fonts101.txt; sourceTree = "<group>"; };
 		761037C317FB62AF009C7250 /* kremlin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kremlin.ttf; sourceTree = "<group>"; };
-		761A71F91804734900606851 /* HACacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACacheManager.h; sourceTree = "<group>"; };
-		761A71FA1804734900606851 /* HACacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACacheManager.m; sourceTree = "<group>"; };
 		761A71FD1804AD6500606851 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		761A71FE1804AD6500606851 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		761A71FF1804AD6500606851 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
@@ -62,8 +58,6 @@
 		761A72021804AD6500606851 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		761A72061804AE1000606851 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		761A72071804AE1000606851 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		763B071517D0E3B60078F049 /* UITextView+HAAxiomStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextView+HAAxiomStyle.h"; path = "Categories/UITextView+HAAxiomStyle.h"; sourceTree = "<group>"; };
-		763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextView+HAAxiomStyle.m"; path = "Categories/UITextView+HAAxiomStyle.m"; sourceTree = "<group>"; };
 		76717FB017BD71C2009C5A05 /* HealthAxioms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthAxioms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76717FB317BD71C2009C5A05 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		76717FB517BD71C2009C5A05 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -137,15 +131,6 @@
 			name = TestFlight;
 			sourceTree = "<group>";
 		};
-		763B071817D0E4140078F049 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				763B071517D0E3B60078F049 /* UITextView+HAAxiomStyle.h */,
-				763B071617D0E3B60078F049 /* UITextView+HAAxiomStyle.m */,
-			);
-			name = Categories;
-			sourceTree = "<group>";
-		};
 		76717FA717BD71C2009C5A05 = {
 			isa = PBXGroup;
 			children = (
@@ -182,7 +167,6 @@
 		76717FB917BD71C2009C5A05 /* HealthAxioms */ = {
 			isa = PBXGroup;
 			children = (
-				763B071817D0E4140078F049 /* Categories */,
 				76DFE7CB17C2A60400A3EBC4 /* Controllers */,
 				76ED655C17C2725800316BDC /* Views */,
 				76ED655B17C2725200316BDC /* Models */,
@@ -190,8 +174,6 @@
 				76717FC317BD71C2009C5A05 /* HAAppDelegate.m */,
 				76717FCE17BD71C2009C5A05 /* Images.xcassets */,
 				76717FBA17BD71C2009C5A05 /* Supporting Files */,
-				761A71F91804734900606851 /* HACacheManager.h */,
-				761A71FA1804734900606851 /* HACacheManager.m */,
 			);
 			path = HealthAxioms;
 			sourceTree = "<group>";
@@ -371,9 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76ED656217C274A100316BDC /* HABaseCard.m in Sources */,
-				761A71FB1804734900606851 /* HACacheManager.m in Sources */,
 				76DFE7C617C2973200A3EBC4 /* HAAxiomCell.m in Sources */,
-				763B071717D0E3B60078F049 /* UITextView+HAAxiomStyle.m in Sources */,
 				76717FC017BD71C2009C5A05 /* main.m in Sources */,
 				76DFE7CE17C2A64700A3EBC4 /* HADetailViewController.m in Sources */,
 				76DFE7CA17C2A5FE00A3EBC4 /* HAViewController.m in Sources */,

@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lOU-Yy-ocH">
+                            <collectionView clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lOU-Yy-ocH">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -27,7 +27,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" contentMode="center" placeholderIntrinsicWidth="50" placeholderIntrinsicHeight="50" reuseIdentifier="AxiomCard" id="igB-ew-QFJ" customClass="HAAxiomCell">
+                                    <collectionViewCell clipsSubviews="YES" contentMode="center" placeholderIntrinsicWidth="50" placeholderIntrinsicHeight="50" reuseIdentifier="AxiomCard" id="igB-ew-QFJ" customClass="HAAxiomCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -38,12 +38,14 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" none="YES" image="YES" updatesFrequently="YES"/>
+                                                    </accessibility>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="centerY" secondItem="V2B-48-gWr" secondAttribute="centerY" id="PrX-K0-l8Q"/>
                                             <constraint firstItem="V2B-48-gWr" firstAttribute="leading" secondItem="igB-ew-QFJ" secondAttribute="leading" id="R3p-GO-T8B"/>
@@ -84,7 +86,7 @@
         <!--Detail View Controller-->
         <scene sceneID="XFL-5K-Xpa">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VGN-Dy-8dV" customClass="HADetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VGN-Dy-8dV" customClass="HADetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XH8-DG-4Zz"/>
                         <viewControllerLayoutGuide type="bottom" id="7sG-sG-62U"/>
@@ -107,7 +109,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Health Axioms" id="D2s-Aa-DHD">
-                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="compose" id="mQf-Np-Dhg">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="mQf-Np-Dhg">
                                             <connections>
                                                 <action selector="actionItemTapped:" destination="VGN-Dy-8dV" id="74u-mO-YwE"/>
                                             </connections>
@@ -115,10 +117,14 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zyK-hx-SPp">
-                                <rect key="frame" x="0.0" y="519" width="320" height="50"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zyK-hx-SPp">
+                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="9Nu-E7-dNh"/>
+                                    <constraint firstAttribute="height" constant="50" id="Q5X-QD-Xvz"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="1" id="Rzb-v6-nie">
                                     <size key="itemSize" width="40" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -159,18 +165,18 @@
                         <constraints>
                             <constraint firstItem="zir-xL-00d" firstAttribute="leading" secondItem="iKE-Rg-uzH" secondAttribute="leading" id="1iQ-iH-OL8"/>
                             <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="top" constant="3" id="6WS-Nj-cVA"/>
+                            <constraint firstAttribute="centerX" secondItem="zyK-hx-SPp" secondAttribute="centerX" id="AEe-Z0-R5r"/>
                             <constraint firstItem="iKE-Rg-uzH" firstAttribute="leading" secondItem="d0y-Ld-khq" secondAttribute="leading" id="Aiw-QP-gPx"/>
-                            <constraint firstAttribute="centerY" secondItem="iKE-Rg-uzH" secondAttribute="centerY" constant="24" id="Exd-yI-Vuf"/>
-                            <constraint firstItem="7sG-sG-62U" firstAttribute="top" secondItem="iKE-Rg-uzH" secondAttribute="bottom" constant="45" id="H0U-GX-7vo"/>
                             <constraint firstAttribute="centerX" secondItem="iKE-Rg-uzH" secondAttribute="centerX" id="ItO-Md-Ns5"/>
                             <constraint firstItem="zir-xL-00d" firstAttribute="top" secondItem="d0y-Ld-khq" secondAttribute="top" id="Kmw-nL-q6T"/>
+                            <constraint firstItem="zyK-hx-SPp" firstAttribute="bottom" secondItem="iKE-Rg-uzH" secondAttribute="bottom" constant="45" id="Xnb-kr-MBk"/>
                             <constraint firstAttribute="centerX" secondItem="zir-xL-00d" secondAttribute="centerX" id="dFx-4b-jhx"/>
+                            <constraint firstAttribute="bottom" secondItem="zyK-hx-SPp" secondAttribute="bottom" id="jeZ-Xs-NZE"/>
                             <constraint firstAttribute="trailing" secondItem="iKE-Rg-uzH" secondAttribute="trailing" id="rMt-fp-ezl"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="frontScroll" destination="iKE-Rg-uzH" id="Bpc-TL-sDD"/>
                         <outlet property="miniAxiomPicker" destination="zyK-hx-SPp" id="csK-Tq-Epn"/>

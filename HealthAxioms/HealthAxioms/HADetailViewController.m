@@ -35,28 +35,21 @@
 
 #pragma mark view related methods
 
-
--(void)dealloc{
-
-    self.delegate = nil;
-}
-
--(void)viewWillAppear:(BOOL)animated{
-
-    [super viewWillAppear:animated];
-}
-
 -(void)setStartRect:(CGRect)rect{
 
     self.initRect = rect;
-    NSLog(@"Setting initRect to %@", NSStringFromCGRect(rect));
+//    NSLog(@"Setting initRect to %@", NSStringFromCGRect(rect));
 }
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    //TODO: Hide the Navigation Bar with Animation
     [self addItemsToScrollView];
+    
+    UICollectionViewFlowLayout *layout = (id)self.miniAxiomPicker.collectionViewLayout;
+    layout.itemSize = CGSizeMake(40.0f, 46.0f);
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,7 +93,7 @@
 //Then scroll view will have two children uiimageViews
     
     float scrollContentWidth = PAGE_WIDTH * ([self.axiomsModel.axiomCardsList count]);
-    float scrollContentHeight = PAGE_WIDTH/(self.axiomsModel.cardAspectRatio);
+    float scrollContentHeight = PAGE_WIDTH/(self.axiomsModel.cardAspectRatio) - 50.0;
     
     //Prepare the container ScrollView
     [self.frontScroll setContentSize:CGSizeMake(scrollContentWidth, scrollContentHeight)];
@@ -186,6 +179,7 @@
     [self.navBar setHidden:YES];
     [self.miniAxiomPicker setHidden:YES];
     [self.view setBackgroundColor:[UIColor clearColor]];
+    
 // Making the card handle its state while being put back into decl
     [self makeCardHandlePlacingInDeck];
     
@@ -200,18 +194,18 @@
         NSLog(@"Rect used to create Center Point %@", NSStringFromCGRect(self.initRect));
     }
     
-    __weak UIView *selfView = self.view;
+    float shrinkScaleY = self.initRect.size.height/470.0;
+    float shrinkScaleX = self.initRect.size.width/[UIScreen mainScreen].bounds.size.width;
+  
     [UIView animateWithDuration:0.5
-                          delay:0.0
+                          delay:0.1
          usingSpringWithDamping:0.9
           initialSpringVelocity:0.5
                         options: UIViewAnimationOptionAllowAnimatedContent| UIViewAnimationOptionBeginFromCurrentState
                      animations:^(){
-                         float shrinkScaleY = self.initRect.size.height/470.0;
-                         float shrinkScaleX = self.initRect.size.width/[UIScreen mainScreen].bounds.size.width;
-                         [selfView setTransform:CGAffineTransformScale(CGAffineTransformIdentity,shrinkScaleX, shrinkScaleY )];
+                         [self.view setTransform:CGAffineTransformScale(CGAffineTransformIdentity,shrinkScaleX, shrinkScaleY )];
 //                         NSLog(@"setting center point to %@", NSStringFromCGPoint(centerPt));
-                         [selfView setCenter:centerPt];
+                         [self.view setCenter:centerPt];
                      }
                      completion:^(BOOL finished){
                          
@@ -219,6 +213,11 @@
                              
                              if ([self.delegate respondsToSelector:@selector(handleRemoval)]) {
                                  [self.delegate handleRemoval];
+                                 self.delegate = nil;
+
+                                 [self willMoveToParentViewController:nil];
+                                 [self.view removeFromSuperview];
+                                 [self removeFromParentViewController];
                              }
                          }
                      }
@@ -245,9 +244,9 @@
         NSLog(@"Checking for %d against low:%d high:%d", [obj integerValue],lowerBound,upperBound);
         if ([obj integerValue] > upperBound || [obj integerValue] < lowerBound) {
             [indexToRem addObject:obj];
-             NSLog(@"marked %d for removal",[obj integerValue]);
+//             NSLog(@"marked %d for removal",[obj integerValue]);
             __block id ObjToRemove = nil;
-            __weak NSArray *toIter = [self.frontScroll subviews] ;
+             NSArray *toIter = [self.frontScroll subviews] ;
             [toIter enumerateObjectsUsingBlock:^(id obj2, NSUInteger idx,BOOL *stop){
                 
                 if ([obj2 isKindOfClass:[HACardView class]]) {
@@ -255,7 +254,7 @@
                     HACardView  *card = (HACardView *)obj2;
                     HABaseCard *model = card.modelCard;
                     int index2 = model.index-1;
-                    //Index for comparison calculated based on the direction of scroll
+//Index for comparison calculated based on the direction of scroll
                     if (index2 == [obj integerValue]) {
                         ObjToRemove = card;
                         *stop = YES;
@@ -302,9 +301,11 @@
         
         CGPoint offsetToUse = scrollView.contentOffset;
         //Checking for left right motion of scrollView
-//        NSLog(@"called");
-        if(!CGPointEqualToPoint(scrollLastOffset, offsetToUse)){
-            BOOL isMotionRight = (scrollLastOffset.x < offsetToUse.x) ? YES : NO;
+        float diff = scrollLastOffset.x - offsetToUse.x;
+        float diffAbs = fabsf(diff);
+
+        if(!CGPointEqualToPoint(scrollLastOffset, offsetToUse) && diffAbs > 1.0){
+            BOOL isMotionRight = (diff < 0) ? YES : NO;
             [self manageViewsWithOffSet:offsetToUse movingRight:isMotionRight];
             scrollLastOffset = offsetToUse;
         }
@@ -318,34 +319,15 @@
         [self sanityCheckForViewsWithOffset:scrollView.contentOffset];
     }
 }
-/*
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 
-//    [scrollView becomeFirstResponder];
-
-//    NSLog(@"scroll next responder is %@", scrollView.nextResponder);
-    //Checking to see if the scrollview belongs to a mini UIcollectionView Picker
-}
-
-
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-
-//    [scrollView resignFirstResponder];
-
-//    BOOL case1 = ([[scrollView class] isSubclassOfClass:[UICollectionView class]])?YES : NO;
-//    if(!case1){
-//        [self sanityCheckForViewsWithOffset:scrollView.contentOffset];
-//    }
-//    NSLog(@"did end decelerating");
-    
-}
-*/
 #pragma mark -
 
 #pragma mark manage images in memory
 -(void)manageViewsWithOffSet:(CGPoint)contOffset movingRight:(BOOL)isMovingRight{
     
-    int index = (contOffset.x/PAGE_WIDTH +1);
+    int axiomCount = [self.axiomsModel.axiomCardsList count];
+    int calcIndex = (contOffset.x/PAGE_WIDTH +1);
+    int index = MIN(axiomCount - 1,calcIndex);
     
 //    NSLog(@"Axiom at index:%d is in View ",index);
 //Asking the delegate to handle and update view based on scroll
@@ -354,11 +336,11 @@
     }
 //TODO: Use direction to calcutate the
 //      required Image at index to Add and Remove
-    int indexItemToAdd = (isMovingRight)? fmin(([self.axiomsModel.axiomCardsList count] -1), (index + MAX_NUM_PAGES/2)) :
+    int indexItemToAdd = (isMovingRight)? fmin(( axiomCount-1), (index + MAX_NUM_PAGES/2)) :
                                           fmax(0, (index - MAX_NUM_PAGES/2))      ;
 //check if the indexItem needs to be added
     if(![self isItemIndexInCurrentItems:indexItemToAdd movingRight:isMovingRight]){
-        NSLog(@"Need to add axiom with Index %d", indexItemToAdd);
+//        NSLog(@"Need to add axiom with Index %d", indexItemToAdd);
         [self addAxiomCardToScrollWithIndex:indexItemToAdd];
     }
 }
@@ -381,7 +363,7 @@
     if (!toReturn) {
         
         __block id ObjToRemove = nil;
-         __weak NSArray *toIter = [self.frontScroll subviews] ;
+        NSArray *toIter = [self.frontScroll subviews] ;
         [toIter enumerateObjectsUsingBlock:^(id obj, NSUInteger idx,BOOL *stop){
         
             if ([obj isKindOfClass:[HACardView class]]) {
@@ -437,7 +419,7 @@
     [axiomCell.imgView.layer setCornerRadius:6.0f];
     
     //Getting the card from Model
-    HABaseCard *card = self.axiomsModel.axiomCardsList[indexPath.row];
+    HABaseCard *card = self.axiomsModel.axiomCardsList[indexPath.item];
 
     
     CGSize frameSize = axiomCell.frame.size;
@@ -489,11 +471,12 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    NSLog(@"touched item at Index:%d", indexPath.row);
-    float newX = indexPath.row * self.frontScroll.frame.size.width;
+    NSLog(@"touched item at Index:%d", indexPath.item);
+    float newX = indexPath.item * self.frontScroll.frame.size.width;
     float newY = self.frontScroll.frame.origin.y;
     [self.frontScroll scrollRectToVisible:CGRectMake(newX, newY, self.frontScroll.frame.size.width, self.frontScroll.frame.size.height)
                                  animated:YES];
+
 }
 
 #pragma mark Handle navBar item tap and Mail composer
@@ -525,7 +508,7 @@
         
 //Iterating through the subViews to find the one in view and create
 //a back image to be added to the mail composer
-        __weak  NSArray *views = self.frontScroll.subviews;
+        NSArray *views = self.frontScroll.subviews;
         __block  UIImage *backImage = nil;
         [views enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
         
@@ -583,7 +566,7 @@
 -(void)makeCardHandlePlacingInDeck{
 
     int cardNum = scrollLastOffset.x / self.frontScroll.frame.size.width;
-    __weak NSArray *toIter = [self.frontScroll subviews] ;
+    NSArray *toIter = [self.frontScroll subviews] ;
     
     [toIter enumerateObjectsUsingBlock:^(id obj2, NSUInteger idx,BOOL *stop){
         
@@ -602,4 +585,5 @@
     }];
 }
 #pragma mark -
+
 @end

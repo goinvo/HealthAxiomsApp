@@ -53,7 +53,7 @@ static HAModel *instance = nil;
                                                                         text:dict[@"text"]
                                                                        index:[dict[@"index"] integerValue]
                                                                        title:dict[@"title"]];
-                [_axiomCardsList addObject:baseCard];
+                [_axiomCardsList addObject:[baseCard copy]];
             }
         }
         

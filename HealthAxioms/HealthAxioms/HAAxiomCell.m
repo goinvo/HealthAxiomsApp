@@ -7,14 +7,7 @@
 //
 
 #import "HAAxiomCell.h"
-#import "HACacheManager.h"
 
 @implementation HAAxiomCell
-
--(void)prepareForReuse{
-
-    [super prepareForReuse];
-    self.imgView.image = nil;
-}
 
 @end

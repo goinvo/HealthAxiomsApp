@@ -8,7 +8,6 @@
 
 #import "HACardView.h"
 #import "HABaseCard.h"
-#import "UITextView+HAAxiomStyle.h"
 #import <CoreText/CoreText.h>
 
 #define DEFAULT_FONT_SIZE 16.0f
@@ -52,21 +51,21 @@ static NSString * const ANIM_F2B = @"frontToBack";
         preTouchLocation = CGPointZero;
         _fontSize = DEFAULT_FONT_SIZE;
         
-//Adding the swipe Gestures
-        [self addSwipeGestures];
-        
-//Setting the Image based on the state
-        NSString *imgNameToUse = (_modelCard.isFront)? _modelCard.frontImage :
-                                                        _modelCard.backImage;
+        @autoreleasepool {
 
-        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        UIImage *cardImage = [UIImage imageNamed:imgNameToUse];
-        [image setImage:cardImage];
-        [self addSubview:image];
-        self.frontImageView = image;
-        
-        image = nil;
-        imgNameToUse = nil;
+            //Adding the swipe Gestures
+            [self addSwipeGestures];
+            
+            //Setting the Image based on the state
+            NSString *imgNameToUse = (_modelCard.isFront)? _modelCard.frontImage :
+            _modelCard.backImage;
+            
+            UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+            UIImage *cardImage = [UIImage imageNamed:imgNameToUse];
+            [image setImage:cardImage];
+            [self addSubview:image];
+            self.frontImageView = image;
+        }
 
     }
     return self;
@@ -218,15 +217,14 @@ int titleLines = 1;
     CFArrayRef array = CTFrameGetLines(frame);
     CFIndex index = CFArrayGetCount(array);
     titleLines = index;
+    CGSize strSize = [attString size];
 //    NSLog(@"num of lines is %ld", index);
     
     CTFrameDraw(frame, graphicsCtx); //4
     CFRelease(frame); //5
-    CFRelease(path);
     CFRelease(framesetter);
-
-    CGSize strSize = [attString size];
-    attString = nil;
+    CFRelease(path);
+    CFRelease(fontRef);
     return strSize;
     
 }
@@ -274,8 +272,9 @@ int titleLines = 1;
     
     CTFrameDraw(frame, graphicsCtx); //4
     CFRelease(frame); //5
-    CFRelease(path);
     CFRelease(framesetter);
+    CFRelease(path);
+    CFRelease(fontRef);
 }
 
 -(float)persPectiveRotation{

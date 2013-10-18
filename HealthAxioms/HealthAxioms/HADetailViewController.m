@@ -241,7 +241,7 @@
 
     NSMutableArray *indexToRem = [NSMutableArray array];
     for (id obj in self.currIndexes) {
-        NSLog(@"Checking for %d against low:%d high:%d", [obj integerValue],lowerBound,upperBound);
+//        NSLog(@"Checking for %d against low:%d high:%d", [obj integerValue],lowerBound,upperBound);
         if ([obj integerValue] > upperBound || [obj integerValue] < lowerBound) {
             [indexToRem addObject:obj];
 //             NSLog(@"marked %d for removal",[obj integerValue]);
@@ -471,7 +471,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    NSLog(@"touched item at Index:%d", indexPath.item);
+//    NSLog(@"touched item at Index:%d", indexPath.item);
     float newX = indexPath.item * self.frontScroll.frame.size.width;
     float newY = self.frontScroll.frame.origin.y;
     [self.frontScroll scrollRectToVisible:CGRectMake(newX, newY, self.frontScroll.frame.size.width, self.frontScroll.frame.size.height)

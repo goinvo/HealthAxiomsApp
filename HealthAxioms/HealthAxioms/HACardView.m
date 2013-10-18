@@ -9,6 +9,7 @@
 #import "HACardView.h"
 #import "HABaseCard.h"
 #import <CoreText/CoreText.h>
+#import <MessageUI/MessageUI.h>
 
 #define DEFAULT_FONT_SIZE 16.0f
 #define TEXT_VIEW_PADDING 20.0f
@@ -21,10 +22,11 @@ static NSString * const ANIM_F2B = @"frontToBack";
 
 
 
-@interface HACardView ()
+@interface HACardView () <MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, assign) int fontSize;
 @property (nonatomic, weak) UIImageView *frontImageView;
+@property (nonatomic, weak) UIButton *feedbackBtn;
 
 @end
 
@@ -35,6 +37,7 @@ static NSString * const ANIM_F2B = @"frontToBack";
     CGPoint preTouchLocation;
     BOOL needToChange;
     NSTimer *animTimer;
+    int index;
 
 }
 
@@ -50,7 +53,7 @@ static NSString * const ANIM_F2B = @"frontToBack";
         needToChange = NO;
         preTouchLocation = CGPointZero;
         _fontSize = DEFAULT_FONT_SIZE;
-        
+        index = card.index;
         @autoreleasepool {
 
             //Adding the swipe Gestures
@@ -65,6 +68,7 @@ static NSString * const ANIM_F2B = @"frontToBack";
             [image setImage:cardImage];
             [self addSubview:image];
             self.frontImageView = image;
+            if(index == 33)[self addFeedbackButton];
         }
 
     }
@@ -103,7 +107,8 @@ static NSString * const ANIM_F2B = @"frontToBack";
         
         float rotationAngle = (isUp)? 179.9f : -179.0f;
         NSString *animationValue = (isFront)? ANIM_F2B : ANIM_B2F;
-        
+//Hide the feedback Button
+        [self manageFeedBackVIsibility:YES];
         rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform
                                                               , M_PI/180 * (rotationAngle)
                                                               , 1.0f
@@ -215,8 +220,8 @@ int titleLines = 1;
     
 //Calculating number of lines in the title
     CFArrayRef array = CTFrameGetLines(frame);
-    CFIndex index = CFArrayGetCount(array);
-    titleLines = index;
+    CFIndex indexLines = CFArrayGetCount(array);
+    titleLines = indexLines;
     CGSize strSize = [attString size];
 //    NSLog(@"num of lines is %ld", index);
     
@@ -233,6 +238,7 @@ int titleLines = 1;
 -(void)drawTextInContext:(CGContextRef)graphicsCtx ofSize:(CGSize)size flipped:(BOOL)isFlip {
 
     static  NSString *font = @"GillSans";
+    float textSize = (index !=33)? 16.0 : 12.0f;
     
     CGMutablePathRef path = CGPathCreateMutable(); //1
     CGPathAddRect(path, NULL, CGRectMake(TEXT_VIEW_PADDING *1.25
@@ -241,7 +247,7 @@ int titleLines = 1;
                                          , self.frame.size.height - TEXT_VIEW_PADDING *6.5) );
     
     CTFontRef fontRef = CTFontCreateWithName((CFStringRef)font,
-                                             16.0f, NULL);
+                                             textSize, NULL);
     NSDictionary* attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                            (id)[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f].CGColor, kCTForegroundColorAttributeName,
                            (__bridge id)fontRef, kCTFontAttributeName,
@@ -254,8 +260,8 @@ int titleLines = 1;
     
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     [style setAlignment:NSTextAlignmentCenter];
-    [style setMinimumLineHeight:14];
-    [style setMaximumLineHeight:14];
+    [style setMinimumLineHeight:textSize-2];
+    [style setMaximumLineHeight:textSize-2];
 
     [attString addAttribute:NSParagraphStyleAttributeName
                       value:style
@@ -368,11 +374,13 @@ int titleLines = 1;
         
             isFront = YES;
             [self.frontImageView setImage:[UIImage imageNamed:_modelCard.frontImage]];
+            [self manageFeedBackVIsibility:NO];
         }
         else if ([animKeyValue isEqual:ANIM_F2B]){
             
             isFront = NO;
             [self.frontImageView setImage:[self imageForBackView:@"Card-Back" flipped:NO]];
+            [self manageFeedBackVIsibility:YES];
         }
     }
 }
@@ -391,6 +399,74 @@ int titleLines = 1;
         [self addAnimationWithTransform:rotationAndPerspectiveTransform
                                 options:@{ANIMATIONKEY: ANIM_B2F}];
     }
+}
+
+
+-(void)addFeedbackButton{
+
+    static  NSString *titleStr = @"FEEDBACK";
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [button setTitle:titleStr forState:UIControlStateNormal];
+    [[button titleLabel] setTextAlignment:NSTextAlignmentCenter];
+    [button setTitleColor:[UIColor colorWithRed:0.16f green:0.14f blue:0.40f alpha:1.00f] forState:UIControlStateNormal];
+    
+    [[button titleLabel] setFont:[UIFont fontWithName:@"Kremlin" size:14.0f]];
+
+    CGSize textSIze = [titleStr sizeWithAttributes:nil];
+    textSIze.width += 30;
+    
+    [button setFrame:CGRectMake((self.frame.size.width -textSIze.width)*0.5 ,
+                                (self.frame.size.height - 110),
+                                textSIze.width,
+                                textSIze.height+10)];
+    
+    [button addTarget:self
+               action:@selector(feedBackTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self addSubview:button];
+    
+    self.feedbackBtn = button;
+}
+
+-(void)manageFeedBackVIsibility:(BOOL)isHidden{
+
+    [self.feedbackBtn setHidden:isHidden];
+    [self.feedbackBtn setEnabled:(!isHidden)];
+}
+
+-(void)feedBackTapped:(id)sender{
+    
+    if (![MFMailComposeViewController canSendMail]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Cannot send email"
+                                                       message:@"Please check email configuration"
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles: nil] ;
+        [alert show];
+    }
+    else{
+        
+        MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc]init];
+        mailVC.mailComposeDelegate = self;
+        [mailVC setSubject:@"Feedback for Health Axioms"];
+        NSString *toItem = @"info@goinvo.com";
+        [mailVC setToRecipients:[NSArray arrayWithObject:toItem]];
+//getting Parent ViewController
+        UIViewController *parentVC = (id)[[[self nextResponder] nextResponder] nextResponder];
+        
+        [parentVC presentViewController:mailVC
+                           animated:YES
+                         completion:nil];
+    }
+}
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
+    UIViewController *parentVC = (id)[[[self nextResponder] nextResponder] nextResponder];
+    [parentVC dismissViewControllerAnimated:YES
+                             completion:nil];
 }
 
 @end
